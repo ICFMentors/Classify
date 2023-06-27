@@ -1,0 +1,17 @@
+<!-- index.html -->
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Program Selection</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Welcome to Program Selection</h1>
+        <div class="button-container">
+            <a href="/students"><button class="selection-button">Student Log</button></a>
+            <a href="/tasks"><button class="selection-button">Task Manager</button></a>
+        </div>
+    </div>
+{% endblock %}
