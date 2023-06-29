@@ -1,8 +1,8 @@
 /* main.css */
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    font-family:'Courier New', Courier, monospace;
+    background-color: #151221;
     margin: 0;
     padding: 0;
 }
@@ -11,13 +11,14 @@ body {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #fff;
+    background-color: #37324e;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 h1, h2 {
-    color: #333;
+    color: #fff;
     text-align: center;
+    font-family:'Courier New', Courier, monospace;
 }
 
 form {
@@ -44,10 +45,11 @@ table {
 th, td {
     padding: 10px;
     text-align: left;
+    font-family:'Courier New', Courier, monospace;
 }
 
 th {
-    background-color: #333;
+    background-color: #151221;
     color: #fff;
 }
 
@@ -56,11 +58,26 @@ td {
 }
 
 a {
-    color: #333;
+    color: #151221;
     text-decoration: none;
     margin-right: 10px;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+.form-group {
+    color: #fff;
+}
+
+.update, .delete {
+    color:#ddd;
+    font-family:'Courier New', Courier, monospace;
+}
+
+
+.task{
+    color: #fff;
+    font-family:'Courier New', Courier, monospace;
 }

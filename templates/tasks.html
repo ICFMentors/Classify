@@ -32,7 +32,7 @@
                 <option value="Other">Other</option>
             </select>
         </div>
-        <button type="submit">Add Task</button>
+        <button type="submit" class="btn btn-light">Add Task</button>
     </form>
 
     <h2>Task List</h2>
@@ -48,7 +48,7 @@
         <tr>
             <td>
                 <form action="{{ url_for('complete', id=task.id) }}" method="POST">
-                    <button type="submit" class="complete-button">Complete</button>
+                    <button type="submit" class="complete-button btn btn-light">Complete</button>
                 </form>
             </td>
             <td>{{ task.content }}</td>
@@ -71,8 +71,8 @@
         </tr>
         {% for task in completed_tasks %}
         <tr>
-            <td>{{ task.content }}</td>
-            <td>{{ task.completion_time.strftime('%Y-%m-%d %I:%M %p') }}</td>
+            <td class="task">{{ task.content }}</td>
+            <td class="task">{{ task.completion_time.strftime('%Y-%m-%d %I:%M %p') }}</td>
             <td>
                 <a href="{{ url_for('delete', id=task.id) }}">Delete</a>
             </td>
