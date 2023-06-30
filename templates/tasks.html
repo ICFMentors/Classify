@@ -51,9 +51,9 @@
                     <button type="submit" class="complete-button btn btn-light">Complete</button>
                 </form>
             </td>
-            <td>{{ task.content }}</td>
-            <td>{{ task.category }}</td>
-            <td>{{ task.due_date.strftime('%Y-%m-%d %I:%M %p') }}</td>
+            <td class="task">{{ task.content }}</td>
+            <td class="task">{{ task.category }}</td>
+            <td class="task">{{ task.due_date.strftime('%Y-%m-%d %I:%M %p') }}</td>
             <td>
                 <a href="{{ url_for('update', id=task.id) }}">Update</a>
                 <a href="{{ url_for('delete', id=task.id) }}">Delete</a>
