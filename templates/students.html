@@ -15,11 +15,11 @@
     <form action="{{ url_for('students') }}" method="POST">
         <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" style="color: lavender;" required>
         </div>
         <div class="form-group">
             <label for="grade">Grade:</label>
-            <input type="number" id="grade" name="grade" min="1" max="12" required>
+            <input type="number" id="grade" name="grade" min="1" max="12" style="color: lavender;" required>
         </div>
         <button type="submit" class="btn btn-light">Add Student</button>
     </form>
@@ -32,8 +32,8 @@
         </tr>
         {% for student in students %}
         <tr>
-            <td>{{ student.name }}</td>
-            <td>{{ student.grade }}</td>
+            <td style="color: lavender;">{{ student.name }}</td>
+            <td style="color: lavender;">{{ student.grade }}</td>
         </tr>
         {% endfor %}
     </table>
