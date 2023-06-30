@@ -55,8 +55,9 @@
             <td class="task">{{ task.category }}</td>
             <td class="task">{{ task.due_date.strftime('%Y-%m-%d %I:%M %p') }}</td>
             <td>
-                <button class="btn btn-light" onclick="window.location.href='/update'">Update</button>
-                <button class="btn btn-light" onclick="window.location.href='/delete'">Delete</button>
+                <a href="{{ url_for('update', id=task.id) }}" style="color: lavender;">Update</a>
+                <a href="{{ url_for('delete', id=task.id) }}" style="color: lavender;">Delete</a>
+
             </td>
         </tr>
         {% endfor %}
