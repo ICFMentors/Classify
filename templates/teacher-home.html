@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-1eK4oRl2GjkpZGJ2+hvW8SPx7kYFj+H4T/Kk7SwwhEiHHRhGrzlw+BBp5FF+I6eX" crossorigin="anonymous"></script>
+
+    <title>Teacher Home</title>
+
+    <!-- Bootstrap core CSS -->
+    <!-- <link href="../Teacher Home/css.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- Custom styles for this template -->
+    
+    
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1113.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1113.0">
+
+    <div class="container">
+
+        <header>
+            <img class="logo" src="icflogo.png">
+
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button>
+            <button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button>
+          </div>
+
+          <h1 class="title">Al-Ma'rifah</h1>
+          </header>
+
+        <div class="row">
+        <div class="featured-class col">
+            <h4>This Month's Featured Class:</h4>
+
+            <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+
+    
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+      <div class="carousel-item">
+        <img src="arduino flyer.png" alt="Arduino Camp" class="d-block" style="width:100%; padding-bottom: 100px;">
+      </div>
+      <div class="carousel-item">
+        <img src="Camp tawheed.png" alt="Camp Tawheed" class="d-block" style="width:100%; padding-bottom: 100px;">
+      </div>
+      <div class="carousel-item active">
+        <img src="python flyer.png" alt="Python Camp" class="d-block" style="width:100%; padding-bottom: 100px;">
+      </div>
+    </div>
+    
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+  </div>
+        </div>
+        
+        <div class="col">
+
+
+            <h2 class="my-classes">My Classes</h2>
+
+            <table class="table table-striped">
+                <tr>
+                    <td><a target="_blank" href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
+                    <td><button class="btn btn-basic"><i class="bi-megaphone"></i></button></td>
+                    <td><button class="btn btn-basic"><i class="bi-exclamation-lg"></i></button></td>
+                    <td><button class="btn btn-basic"><i class="bi-list-ul"></i></button></td>
+                </tr>
+
+                <tr>
+                    <td><a target="_blank" href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
+                    <td><button class="btn btn-basic"><i class="bi-megaphone"></i></button></td>
+                    <td><button class="btn btn-basic"><i class="bi-exclamation-lg"></i></button></td>
+                    <td><button class="btn btn-basic"><i class="bi-list-ul"></i></button></td>
+                </tr>
+
+                <tr>
+                    <td><a target="_blank" href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
+                    <td><button class="btn btn-basic"><i class="bi-megaphone"></i></button></td>
+                    <td><button class="btn btn-basic"><i class="bi-exclamation-lg"></i></button></td>
+                    <td><button class="btn btn-basic"><i class="bi-list-ul"></i></button></td>
+                </tr>
+
+            </table>
+            <div class="calendar"><p>My Calendar</p><iframe src="https://calendar.google.com/calendar/embed?height=330&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&src=Z295YXNlZW5raGFuQGdtYWlsLmNvbQ&src=Y2xhc3Nyb29tMTA5ODI3MjQwODMwMTAzNDc2MjEwQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&src=ZDFmZWU5ZTA2M2E5NWRjZmI3MGQxMGFhZGQ2MGI0M2NmN2ZiMzM4NzBlMTQzM2YzZmQ3MjkyYmE1MWVmNjcwN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=YWRkcmVzc2Jvb2sjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udXNhI2hvbGlkYXlAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29t&src=Y2xhc3Nyb29tMTA4Mzc4MDQyOTEyODM5NTQ4NzYwQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23039BE5&color=%23137333&color=%23D50000&color=%2333B679&color=%230B8043&color=%230047a8" style="border:solid 1px #777" width="250" height="330" frameborder="0" scrolling="no"></iframe></div>
+            
+            <div><button class= "add"><i class="bi-plus-circle"></i> More Classes</button></div>
+
+        </div>
+
+        </div>
+
+        <div class="row marketing">
+        </div>
+
+        <footer class="footer">
+        </footer>
+    </div> <!-- /container -->
+  
+</body>
+</html>
