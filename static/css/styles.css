@@ -1,31 +1,28 @@
-/* style.css */
+/* styles.css */
 
-/* Reset default form styles */
-form {
-  margin: 0;
-  padding: 0;
-}
-
-/* Form container */
-.form-container {
+body {
+  background-color: #222;
+  color: #222;
+  font-family: Arial, sans-serif;
   display: flex;
-  justify-content: center;
   align-items: center;
-  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  height: 130vh;
 }
 
-/* Form styling */
-form.form-horizontal {
-  width: 400px;
-  padding: 20px;
-  background-color: #f2f2f2;
+.form-container {
+  background-color: #333;
   border-radius: 10px;
+  padding: 20px;
+  width: 800px;
 }
 
 legend {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #fff;
 }
 
 .form-group {
@@ -37,27 +34,24 @@ label.control-label {
   font-size: 16px;
   display: block;
   margin-bottom: 10px;
+  color: #fff;
 }
 
-input.form-control {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 90%;
-  font-size: 16px;
-}
-
+input.form-control,
 select.form-control {
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 96%;
+  border: none;
+  background-color: #444;
+  color: #444;
+  width: 100%;
   font-size: 16px;
 }
 
 div.radio-inline {
   display: flex;
   align-items: center;
+  background-color: #444;
 }
 
 button.btn.btn-primary {
@@ -66,7 +60,7 @@ button.btn.btn-primary {
   border-radius: 5px;
   border: none;
   background-color: #007bff;
-  color: #fff;
+  color: #444;
   cursor: pointer;
 }
 
