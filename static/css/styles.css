@@ -1,6 +1,75 @@
+/* style.css */
+
+/* Reset default form styles */
+form {
+  margin: 0;
+  padding: 0;
+}
+
+/* Form container */
 .form-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Form styling */
+form.form-horizontal {
+  width: 400px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+}
+
+legend {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label.control-label {
+  font-weight: bold;
+  font-size: 16px;
+  display: block;
+  margin-bottom: 10px;
+}
+
+input.form-control {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 90%;
+  font-size: 16px;
+}
+
+select.form-control {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 96%;
+  font-size: 16px;
+}
+
+div.radio-inline {
+  display: flex;
+  align-items: center;
+}
+
+button.btn.btn-primary {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.btn.btn-primary:hover {
+  background-color: #0069d9;
+}
