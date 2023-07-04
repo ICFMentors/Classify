@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registration Form</title>
+  <!-- <link rel="stylesheet" type="text/css" href="style.css"> -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  
+</head>
+<body>
+  <div class="form-container">
+    <form class="form-horizontal">
+      <fieldset>
+
+        <!-- Form Name -->
+        <legend>Sign Up</legend>
+
+        <!-- Text input -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Name</label>  
+          <div class="col-md-4">
+            <input id="textinput" name="textinput" type="text" placeholder="First" class="form-control input-md" required="">
+          </div>
+        </div>
+
+        <!-- Text input -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput"></label>  
+          <div class="col-md-4">
+            <input id="textinput" name="textinput" type="text" placeholder="Last" class="form-control input-md">
+          </div>
+        </div>
+
+        <!-- Text input -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Email</label>  
+          <div class="col-md-4">
+            <input id="textinput" name="textinput" type="text" class="form-control input-md" required="">
+          </div>
+        </div>
+
+        <!-- Text input -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="textinput">Username</label>  
+          <div class="col-md-4">
+            <input id="textinput" name="textinput" type="text" placeholder="" class="form-control input-md" required="">
+          </div>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="passwordinput">Password</label>
+          <div class="col-md-4">
+            <input id="passwordinput" name="passwordinput" type="password" placeholder="" class="form-control input-md" required="">
+          </div>
+        </div>
+
+        <!-- Select Basic -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="selectbasic">Age</label>
+          <div class="col-md-4">
+            <input type="number" id="grade" name="grade" min="1" max="100" required>
+          </div>
+        </div>
+
+        <!-- Multiple Radios (inline) -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="radios">Gender</label>
+          <div class="col-md-4"> 
+            <label class="radio-inline" for="radios-0">
+              <input type="radio" name="radios" id="radios-0" value="1" checked="checked">
+              Male
+            </label> 
+            <label class="radio-inline" for="radios-1">
+              <input type="radio" name="radios" id="radios-1" value="2">
+              Female
+            </label>
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="singlebutton"></label>
+          <div class="col-md-4">
+            <button id="singlebutton" name="singlebutton" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+</body>
+</html>
