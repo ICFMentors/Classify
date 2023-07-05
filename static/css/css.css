@@ -1,5 +1,7 @@
+
 .btn-group {
     float: right;
+    padding-right: 10px;
 }
 
 .my-classes {
@@ -15,10 +17,9 @@
 
 .logo {
     margin-top: 10px;
-}
-
-.classes {
-    color: #000;
+    padding-left: 10px;
+    height: 80px;
+    width: auto;
 }
 
 carousel-item {
@@ -28,10 +29,13 @@ carousel-item {
 
 .calendar {
     padding: 20px;
-    float: right;
+    float: left;
     border-style: solid;
     border-width: 2px;
     border-color: #000;
+    background-color:beige;
+    color:#000;
+    margin: 10px;
 }
 
 .title {
@@ -45,30 +49,40 @@ carousel-item {
 
 body {
     font-family: 'Times New Roman', Times, serif;
-    background-color: aliceblue
+    background-color:#35b442;
+    color: white;
+    
 }
 
 header {
     padding-left: 100;
     padding-right: 100;
-    background-color: white;
+    background-color:beige;
+    padding-bottom: 30px;
 }
 
 .add {
     display: block;
     width: 200px;
     border: none;
-    background-color: #457dff;
-    color: white;
+    background-color: beige;
+    color: black;
     padding: 20px;
     margin: 15px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
-    height: 421px;
+    height: 200px;
   }
   
   .add:hover {
-    background-color: #4335fe;
-    color: white;
+    background-color: #e2c984;
+  }
+
+  .classtable {
+    background-color: beige;
+    color: #000;
+    padding: 10px;
+    border-style: solid;
+    margin: 10px;
   }
