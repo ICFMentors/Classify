@@ -1,69 +1,33 @@
-/* styles.css */
-
-body {
-  background-color: #222;
-  color: #222;
-  font-family: Arial, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  height: 130vh;
-}
-
-.form-container {
-  background-color: #333;
-  border-radius: 10px;
-  padding: 20px;
-  width: 800px;
-}
-
-legend {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #fff;
-}
-
-.form-group {
-  margin-bottom: 20px;
-}
-
-label.control-label {
-  font-weight: bold;
-  font-size: 16px;
-  display: block;
-  margin-bottom: 10px;
-  color: #fff;
-}
-
-input.form-control,
-select.form-control {
+form{
+  width: 600px ;
+  margin: 0 auto;
+  border: 3px solid #0c7f02;
   padding: 10px;
-  border-radius: 5px;
-  border: none;
-  background-color: #444;
-  color: #444;
-  width: 100%;
-  font-size: 16px;
+}
+label { 
+  text-align:left; 
+  width:100px; 
+}
+input { 
+  margin-left: 10px; 
 }
 
-div.radio-inline {
-  display: flex;
-  align-items: center;
-  background-color: #444;
+.form-control {
+  width:550px;
 }
 
-button.btn.btn-primary {
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: none;
-  background-color: #007bff;
-  color: #444;
-  cursor: pointer;
+.form-control2 {
+  width:550px;
+  margin-left: 10px;
+  padding: 10px;
 }
 
-button.btn.btn-primary:hover {
-  background-color: #0069d9;
-}
+body{
+  background-color: rgb(191, 243, 182);
+} 
+legend {
+  width: 190px;
+            padding: 2px;
+            margin-left: calc(47% - 35px - 8px);
+        
+      }
