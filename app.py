@@ -15,11 +15,15 @@ def login():
     return render_template('log-in.html')
 
 @app.route('/student-home')
-def studenthome():
+def studentHome():
     return render_template('student-home.html')
 
+@app.route('/student-profile')
+def studentProfile():
+    return render_template('student-profile.html')
+
 @app.route('/teacher-home')
-def teacherhome():
+def teacherHome():
     return render_template('teacher-home.html')
 
 @app.route('/course-catalog')
