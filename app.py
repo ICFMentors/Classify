@@ -22,5 +22,9 @@ def studenthome():
 def teacherhome():
     return render_template('teacher-home.html')
 
+@app.route('/course-catalog')
+def courseCatalog():
+    return render_template('course-catalog.html')
+
 if __name__ == '__main__':
     app.run()
