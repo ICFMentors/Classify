@@ -23,9 +23,7 @@ body {
     font-family: 'Times New Roman', Times, serif;
     background-color:#35b442;
     color: white;
-    margin: 0px;
-    padding: 0px;
-    
+
 }
 
 header {
@@ -52,13 +50,14 @@ header {
 
 .calendar {
     padding: 20px;
-    float: left;
     border-style: solid;
     border-width: 2px;
     border-color: #000;
     background-color:beige;
     color:#000;
-    margin: 10px;
+    margin: 20px;
+    width: auto;
+    text-align: center;
 }
 
 .title {
@@ -72,12 +71,14 @@ header {
 
 .add {
     display: block;
-    width: 1090px;
+    width: 1200px;
     border: none;
     background-color: beige;
     color: black;
     padding: 10px;
-    margin: 15px;
+    margin: 20px;
+    margin-right: 30px;
+    margin-left: 40px;
     font-size: 16px;
     cursor: pointer;
     text-align: center;
@@ -93,5 +94,5 @@ header {
     color: #000;
     padding: 10px;
     border-style: solid;
-    margin-top: 20px;
+    margin: 20px;
   }
