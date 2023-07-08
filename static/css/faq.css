@@ -1,0 +1,126 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family:'Times New Roman', Times, serif;
+  }
+
+.btn-group {
+    float: right;
+    padding-right: 10px;
+}
+
+
+.logo {
+    margin-top: 10px;
+    padding-left: 10px;
+    height: 80px;
+    width: auto;
+}
+
+
+body {
+    font-family: 'Times New Roman', Times, serif;
+    background-color:#35b442;
+    color: white;
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+header {
+    padding-left: 100;
+    padding-right: 100;
+    background-color:beige;
+    padding-bottom: 30px;
+    margin: 0px;
+}
+
+.FAQ {
+    border-style: solid;
+    border-color: black;
+    background-color: beige;
+    color: black;
+    margin: 20px;
+    padding: 20px;
+    width: 1000px;
+    float: left;
+    margin-left: 50px;
+}
+
+.title {
+    text-align: center;
+    color: black;
+}
+
+
+.wrapper {
+  max-width: 35%;
+}
+
+
+
+.accordion {
+  background-color: white;
+  color: rgba(0, 0, 0, 0.8);
+  cursor: pointer;
+  width: 100%;
+  padding: 2rem 2.5rem;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+  height: 30px;
+}
+
+
+.active,
+.accordion:hover {
+  background-color: #f1f7f5;
+}
+.pannel {
+  padding: 0 2rem 2.5rem 2rem;
+  background-color: white;
+  overflow: hidden;
+  background-color: #f1f7f5;
+  display: none;
+}
+.pannel p {
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.4;
+}
+
+.faq {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 10px 0;
+}
+.faq.active {
+  border: none;
+}
+
+
+.aaq {
+    border-style: solid;
+    border-color: black;
+    background-color: beige;
+    color: black;
+    margin: 20px;
+    padding: 20px;
+    width: 1000px;
+    float: right;
+    margin-right: 50px;
+}
+
+#textarea {
+    width: 500px;
+    height: 300px;
+    margin: 10px;
+}
+
+.label {
+    margin: 10px;
+    margin-bottom: 5px;
+}
