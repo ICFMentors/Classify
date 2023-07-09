@@ -30,5 +30,9 @@ def teacherHome():
 def courseCatalog():
     return render_template('course-catalog.html')
 
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
+
 if __name__ == '__main__':
     app.run()
