@@ -43,7 +43,7 @@ def courseCatalog():
 @app.route('/faq', methods=['POST', 'GET'])
 def FAQ():
     faq = faqs.query.all()
-    return render_template('faq.html')
+    return render_template('faq.html', faq=faq)
 
 
 @app.route('/about-us')
