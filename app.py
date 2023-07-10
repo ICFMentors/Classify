@@ -25,10 +25,18 @@ def studentProfile():
 @app.route('/teacher-home')
 def teacherHome():
     return render_template('teacher-home.html')
+ 
+@app.route('/teacher-settings')
+def teacherSettings():
+    return render_template('teacher-settings.html')
 
 @app.route('/course-catalog')
 def courseCatalog():
     return render_template('course-catalog.html')
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
 
 if __name__ == '__main__':
     app.run()

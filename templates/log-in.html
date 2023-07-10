@@ -5,8 +5,6 @@
     <link href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
-
 <body>
     <div class="container">
         <div class="logo">
@@ -22,7 +20,10 @@
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            <div class="btn-group btn-block" role="group" aria-label="Login Options">
+                <button type="submit" class="btn btn-primary">Teacher Login</button>
+                <button type="submit" class="btn btn-primary">Student Login</button>
+            </div>
         </form>
     </div>
 
