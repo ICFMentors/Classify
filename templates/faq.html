@@ -29,118 +29,70 @@
     <header>
         <img class="logo" src="../static/images/icfLogo.png">
 
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button>
+            <button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button>
+        </div>
 
-    <div class="btn-group">
-        <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button>
-        <button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button>
-      </div>
+        <h1 class="title">Questions and Answers</h1>
+    </header>
 
-      <h1 class="title">Questions and Answers</h1>
-      </header>
-
-      <div class="wrapper FAQ col">
+    <div class="wrapper FAQ col">
         <h3>Frequently Asked Questions</h3>
-  
+
+        {% for row in faq_data %}
         <div class="faq">
-          <button class="accordion">
-            Q: How can I sign up for classes?
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="pannel">
-            <p>
-              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
-            </p>
-          </div>
+            <button class="accordion">
+                Q: {{ row.question }}
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="pannel">
+                <p>
+                    A: {{ row.answer }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+
+    <div class="aaq col">
+        <!-- Textarea -->
+        <div class="form-group">
+            <label class="col-md-4 control-label label" for="textarea">Ask Us a Question</label>
+            <div class="col-md-4">                     
+                <textarea class="form-control" id="textarea" name="question"></textarea>
+            </div>
         </div>
 
-        <div class="faq">
-          <button class="accordion">
-            Q: How can I sign up for classes?
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="pannel">
-            <p>
-              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
-            </p>
-          </div>
-        </div>
-
-        <div class="faq">
-          <button class="accordion">
-            Q: How can I sign up for classes?
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="pannel">
-            <p>
-              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
-            </p>
-          </div>
-        </div>
-
-        <div class="faq">
-          <button class="accordion">
-            Q: How can I sign up for classes?
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="pannel">
-            <p>
-              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
-            </p>
-          </div>
-        </div>
-
-        <div class="faq">
-          <button class="accordion">
-            Q: How can I sign up for classes?
-            <i class="fa-solid fa-chevron-down"></i>
-          </button>
-          <div class="pannel">
-            <p>
-              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
-            </p>
-          </div>
-        </div>
-
-        </div>
-
-        <div class="aaq col">
-
-          <!-- Textarea -->
-      <div class="form-group">
-        <label class="col-md-4 control-label label" for="textarea">Ask Us a Question</label>
-        <div class="col-md-4">                     
-          <textarea class="form-control" id="textarea" name="question"></textarea>
-        </div>
-      </div>
-
-          <!-- Button (Double) -->
-          <div class="form-group">
+        <!-- Button (Double) -->
+        <div class="form-group">
             <label class="col-md-4 control-label" for="button1id"></label>
             <div class="col-md-8">
-              <button id="button1id" name="button1id" class="btn btn-success">Submit</button>
-              <button id="button2id" name="button2id" class="btn btn-danger">Cancel</button>
+                <button id="button1id" name="button1id" class="btn btn-success">Submit</button>
+                <button id="button2id" name="button2id" class="btn btn-danger">Cancel</button>
             </div>
-          </div>
         </div>
+    </div>
 
-  <script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
 
-    for (i = 0; i < acc.length; i++) {
-      acc[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        this.parentElement.classList.toggle("active");
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                this.parentElement.classList.toggle("active");
 
-        var pannel = this.nextElementSibling;
+                var pannel = this.nextElementSibling;
 
-        if (pannel.style.display === "block") {
-          pannel.style.display = "none";
-        } else {
-          pannel.style.display = "block";
+                if (pannel.style.display === "block") {
+                    pannel.style.display = "none";
+                } else {
+                    pannel.style.display = "block";
+                }
+            });
         }
-      });
-    }
-  </script>
+    </script>
 </body>
 </html>
