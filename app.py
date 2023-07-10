@@ -40,7 +40,7 @@ def teacherSettings():
 def courseCatalog():
     return render_template('course-catalog.html')
 
-@app.route('/faq', methods=['POST'])
+@app.route('/faq', methods=['POST', 'GET'])
 def faq():
     return render_template('faq.html')
 
