@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 import sqlite3
+import sys
 
 app = Flask(__name__)
 
@@ -53,7 +54,8 @@ def faq():
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    traceback.print_exc()
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    app.logger.error("An internal server error occurred: %s", exc_value)
     return "Internal Server Error", 500
 
 if __name__ == '__main__':
