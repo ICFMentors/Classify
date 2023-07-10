@@ -3,6 +3,9 @@ import sqlite3
 import sys
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+db = SQLAlchemy(app)
+
 
 # Connect to the database
 conn = sqlite3.connect('data.db')
