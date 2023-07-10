@@ -1,6 +1,11 @@
 from flask import Flask, render_template
+import sqlite3
 
 app = Flask(__name__)
+
+# Connect to the database
+conn = sqlite3.connect('data.db')
+cursor = conn.cursor()
 
 @app.route('/')
 def index():
@@ -36,10 +41,6 @@ def courseCatalog():
 
 @app.route('/faq')
 def faq():
-    # Connect to the database
-    conn = sqlite3.connect('data.db')
-    cursor = conn.cursor()
-
     # Fetch data from the faq table
     cursor.execute('SELECT question, answer FROM faq')
     faq_data = cursor.fetchall()
@@ -49,6 +50,10 @@ def faq():
     conn.close()
 
     return render_template('faq.html', faq_data=faq_data)
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return str(e)
 
 if __name__ == '__main__':
     app.run()
