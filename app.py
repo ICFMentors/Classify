@@ -36,7 +36,19 @@ def courseCatalog():
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    # Connect to the database
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+
+    # Fetch data from the faq table
+    cursor.execute('SELECT question, answer FROM faq')
+    faq_data = cursor.fetchall()
+
+    # Close the database connection
+    cursor.close()
+    conn.close()
+
+    return render_template('faq.html', faq_data=faq_data)
 
 if __name__ == '__main__':
     app.run()
