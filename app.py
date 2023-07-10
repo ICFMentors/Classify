@@ -1,15 +1,12 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
+from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 db = SQLAlchemy(app)
 
-
-# Connect to the database
-conn = sqlite3.connect('data.db')
-cursor = conn.cursor()
 
 @app.route('/')
 def index():
@@ -43,17 +40,9 @@ def teacherSettings():
 def courseCatalog():
     return render_template('course-catalog.html')
 
-@app.route('/faq')
+@app.route('/faq', methods=['POST'])
 def faq():
-    # Fetch data from the faq table
-    cursor.execute('SELECT question, answer FROM faq')
-    faq_data = cursor.fetchall()
-
-    # Close the database connection
-    cursor.close()
-    conn.close()
-
-    return render_template('faq.html', faq_data=faq_data)
+    return render_template('faq.html')
 
 
 @app.route('/about-us')
