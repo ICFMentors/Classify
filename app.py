@@ -3,6 +3,9 @@ import sqlite3
 import sys
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+db = SQLAlchemy(app)
+
 
 # Connect to the database
 conn = sqlite3.connect('data.db')
@@ -52,15 +55,16 @@ def faq():
 
     return render_template('faq.html', faq_data=faq_data)
 
+
+@app.route('/about-us')
+def aboutUs():
+    return render_template('about-us.html')    
+
 @app.errorhandler(500)
 def internal_server_error(e):
     exc_type, exc_value, exc_traceback = sys.exc_info()
     app.logger.error("An internal server error occurred: %s", exc_value)
     return "Internal Server Error", 500
-
-@app.route('/about-us')
-def aboutUs():
-    return render_template('about-us.html')    
 
 if __name__ == '__main__':
     app.run()
