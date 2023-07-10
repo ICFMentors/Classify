@@ -38,5 +38,9 @@ def courseCatalog():
 def faq():
     return render_template('faq.html')
 
+@app.route('/about-us')
+def aboutUs():
+    return render_template('about-us.html')    
+
 if __name__ == '__main__':
     app.run()
