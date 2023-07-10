@@ -103,9 +103,28 @@
 
         </div>
 
+
+
         <div class="aaq col">
 
-          <!-- Textarea -->
+          <!-- <div class="wrapper FAQ col">
+        <h3>Frequently Asked Questions</h3>
+
+        {% for row in faq_data %}
+        <div class="faq">
+            <button class="accordion">
+                Q: {{ row.question }}
+                <i class="fa-solid fa-chevron-down"></i>
+            </button>
+            <div class="pannel">
+                <p>
+                    A: {{ row.answer }}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div> -->
       <div class="form-group">
         <label class="col-md-4 control-label label" for="textarea">Ask Us a Question</label>
         <div class="col-md-4">                     
