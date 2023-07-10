@@ -53,7 +53,8 @@ def faq():
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return str(e)
+    traceback.print_exc()
+    return "Internal Server Error", 500
 
 if __name__ == '__main__':
     app.run()
