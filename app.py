@@ -1,6 +1,12 @@
 from flask import Flask, render_template
+import sqlite3
+import sys
 
 app = Flask(__name__)
+
+# Connect to the database
+conn = sqlite3.connect('data.db')
+cursor = conn.cursor()
 
 @app.route('/')
 def index():
@@ -36,7 +42,21 @@ def courseCatalog():
 
 @app.route('/faq')
 def faq():
-    return render_template('faq.html')
+    # Fetch data from the faq table
+    cursor.execute('SELECT question, answer FROM faq')
+    faq_data = cursor.fetchall()
+
+    # Close the database connection
+    cursor.close()
+    conn.close()
+
+    return render_template('faq.html', faq_data=faq_data)
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+    app.logger.error("An internal server error occurred: %s", exc_value)
+    return "Internal Server Error", 500
 
 @app.route('/about-us')
 def aboutUs():
