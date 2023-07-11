@@ -2,11 +2,16 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 db = SQLAlchemy(app)
 
+class FAQ(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(255), nullable=False)
+    answer = db.Column(db.String(255), nullable=False)
 
 @app.route('/')
 def index():
@@ -40,10 +45,10 @@ def teacherSettings():
 def courseCatalog():
     return render_template('course-catalog.html')
 
-@app.route('/faq', methods=['POST', 'GET'])
-def faq():
-    faq = faqs.query.all()
-    return render_template('faq.html', faq=faq)
+@app.route('/faq')
+def display_faq():
+    faq_entries = FAQ.query.all()
+    return render_template('faq.html', faq_entries=faq_entries)
 
 
 @app.route('/about-us')
@@ -56,5 +61,10 @@ def internal_server_error(e):
     app.logger.error("An internal server error occurred: %s", exc_value)
     return "Internal Server Error", 500
 
+
+if not os.path.exists('test.db'):  # Check if the database file doesn't exist
+    db.create_all()
+
 if __name__ == '__main__':
     app.run()
+
