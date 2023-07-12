@@ -60,6 +60,12 @@ def display_faq():
     faq_entries = FAQ.query.all()
     return render_template('faq.html', faq_entries=faq_entries)
 
+@app.route('/submit-question', methods=['POST'])
+def submit_question():
+    question = request.form['question']
+    send_email(question)
+    return redirect('/faq')
+
 
 @app.route('/about-us')
 def aboutUs():
