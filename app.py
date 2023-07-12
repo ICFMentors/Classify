@@ -27,8 +27,42 @@ class User(db.Model):
 def index():
     return render_template('index.html')
 
-@app.route('/sign-up')
+@app.route('/sign-up', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'POST':
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        username = request.form['username']
+        password = request.form['password']
+        age = int(request.form['selectbasic'])
+        gender = request.form['radios']
+
+        # Check if a user with the same username or email already exists
+        existing_user = User.query.filter(
+            (User.username == username) | (User.email == email)
+        ).first()
+
+        if existing_user:
+            error_message = 'Username or email already exists. Please choose a different one.'
+            return render_template('sign-up.html', error_message=error_message)
+        
+        # Create a new user and add it to the database
+        new_user = User(
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            username=username,
+            password=password,
+            age=age,
+            gender=gender
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        
+        # Redirect to the desired page after successful registration
+        return redirect('/student-home')
+
     return render_template('sign-up.html')
 
 @app.route('/log-in')
