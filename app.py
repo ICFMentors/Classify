@@ -13,6 +13,16 @@ class FAQ(db.Model):
     question = db.Column(db.String(255), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
 
+class User(db.Model):
+    userID = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(255), nullable=False)
+    last_name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), nullable=False)
+    username = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)
+    age = db.Column(db.Integer, primary_key=True)
+    gender = db.Column(db.String(255), nullable=False)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -49,6 +59,12 @@ def courseCatalog():
 def display_faq():
     faq_entries = FAQ.query.all()
     return render_template('faq.html', faq_entries=faq_entries)
+
+@app.route('/submit-question', methods=['POST'])
+def submit_question():
+    question = request.form['question']
+    send_email(question)
+    return redirect('/faq')
 
 
 @app.route('/about-us')
