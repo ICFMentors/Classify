@@ -2,24 +2,13 @@
 <html>
 <head>
     <title>Login Page</title>
-    <link rel="stylesheet" href="style.css">
+    <link href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-
-<style>
-
-body {
-
-    background-color: rgb(191, 243, 182);
-}
-    
-</style>
-
-
 <body>
     <div class="container">
         <div class="logo">
-            <img class="header" src="ICF-Logo.png" alt="Your Logo" width="350" height="auto">
+            <img class="header" src="../static/images/icfLogo.png" alt="ICF Logo" width="350" height="auto">
         </div>
         <h2 class="text-center">Login</h2>
         <form>
@@ -31,7 +20,10 @@ body {
                 <label for="password">Password:</label>
                 <input type="password" class="form-control" id="password" required>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Log In</button>
+            <div class="btn-group btn-block" role="group" aria-label="Login Options">
+                <button type="submit" class="btn btn-primary">Teacher Login</button>
+                <button type="submit" class="btn btn-primary">Student Login</button>
+            </div>
         </form>
     </div>
 

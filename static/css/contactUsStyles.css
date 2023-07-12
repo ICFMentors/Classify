@@ -1,0 +1,54 @@
+/* CSS for Meet the Team page */
+
+/* Center align the heading */
+h1 {
+    text-align: center;
+  }
+  
+  /* Create a grid layout for team members */
+  .team-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
+  
+  /* Limit three team members per row */
+  @media (min-width: 768px) {
+    .team-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  /* Style each team member's profile */
+  .team-member {
+    text-align: center;
+  }
+  
+  .team-member img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .team-member h2 {
+    margin: 0;
+  }
+  
+  .team-member p {
+    margin: 5px 0;
+  }
+  
+  .intro-buttons {
+    float: right
+  }
+  
+  .container {
+    float: left
+  }
+  
+  
+  /* Add any additional CSS styles as per your requirements */
+  
