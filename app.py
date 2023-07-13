@@ -62,8 +62,10 @@ def signup():
         
         # Redirect to the desired page after successful registration
         return redirect('/student-home')
-
-    return render_template('sign-up.html')
+    else:
+        user = User.query.all()
+        return render_template('sign-up.html', user=user)
+        #return render_template('sign-up.html')
 
 @app.route('/log-in')
 def login():
