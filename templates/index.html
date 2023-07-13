@@ -3,22 +3,14 @@
 
 {% block head %}
     <title>HTML Viewer</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block body %}
     <div class="container">
         <h1>Choose and HTML page to view</h1>
         <div class="button-container">
-            <a href="/sign-up"><button class="selection-button">Sign Up</button></a>
-            <a href="/log-in"><button class="selection-button">Log In</button></a>
-            <a href="/student-home"><button class="selection-button">Student Home</button></a>
-            <a href="/student-profile"><button class="selection-button">Student Profile</button></a>
-            <a href="/teacher-home"><button class="selection-button">Teacher Home</button></a>
-            <a href="/course-catalog"><button class="selection-button">Course Catalog</button></a>
-            <a href="/faq"><button class="selection-button">Frequently Asked Questions</button></a>
-            <a href="/about-us"><button class="selection-button">About Us</button></a>
-
-        </div>
+            <a href="/sign-up"><button class="button-56">Sign Up</button></a>
+            <a href="/log-in"><button class="button-56">Log In</button></a>
     </div>
 {% endblock %}
