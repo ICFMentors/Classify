@@ -36,13 +36,14 @@ def index():
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        # Retrieve form data
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         email = request.form['email']
         username = request.form['username']
         password = request.form['password']
-        age = int(request.form['age'])
-        gender = request.form['gender']
+        age = int(request.form['selectbasic'])
+        gender = request.form['radios']
 
         # Check if a user with the same username or email already exists
         existing_user = User.query.filter(
@@ -52,7 +53,7 @@ def signup():
         if existing_user:
             error_message = 'Username or email already exists. Please choose a different one.'
             return render_template('sign-up.html', error_message=error_message)
-        
+
         # Create a new user and add it to the database
         new_user = User(
             first_name=first_name,
@@ -67,16 +68,13 @@ def signup():
         try:
             db.session.add(new_user)
             db.session.commit()
-            return redirect('/sign-up')
-        except:
-            return 'There was an issue signing you up'
-        
-        # Redirect to the desired page after successful registration
-        return redirect('/student-home')
+            return redirect('/student-home')
+        except Exception as e:
+            error_message = 'There was an issue signing you up. Please try again later.'
+            return render_template('sign-up.html', error_message=error_message)
     else:
-        signup = User.query.all()
-        return render_template('sign-up.html', signup=signup)
-        #return render_template('sign-up.html')
+        return render_template('sign-up.html')
+
 
 @app.route('/log-in')
 def login():
