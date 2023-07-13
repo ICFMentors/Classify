@@ -20,7 +20,7 @@ class User(db.Model):
     email = db.Column(db.String(255), nullable=False)
     username = db.Column(db.String(255), nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    age = db.Column(db.Integer, primary_key=True)
+    age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(255), nullable=False)
 
 @app.route('/')
