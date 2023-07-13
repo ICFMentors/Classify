@@ -13,6 +13,9 @@ class FAQ(db.Model):
     question = db.Column(db.String(255), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
 
+    def __repr__(self):
+        return '<FAQ %r>' % self.id
+
 class User(db.Model):
     userID = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(255), nullable=False)
@@ -22,6 +25,9 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return '<User %r>' % self.id
 
 @app.route('/')
 def index():
@@ -35,8 +41,8 @@ def signup():
         email = request.form['email']
         username = request.form['username']
         password = request.form['password']
-        age = int(request.form['selectbasic'])
-        gender = request.form['radios']
+        age = int(request.form['age'])
+        gender = request.form['gender']
 
         # Check if a user with the same username or email already exists
         existing_user = User.query.filter(
@@ -57,14 +63,19 @@ def signup():
             age=age,
             gender=gender
         )
-        db.session.add(new_user)
-        db.session.commit()
+
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect('/sign-up')
+        except:
+            return 'There was an issue signing you up'
         
         # Redirect to the desired page after successful registration
         return redirect('/student-home')
     else:
-        user = User.query.all()
-        return render_template('sign-up.html', user=user)
+        signup = User.query.all()
+        return render_template('sign-up.html', signup=signup)
         #return render_template('sign-up.html')
 
 @app.route('/log-in')
