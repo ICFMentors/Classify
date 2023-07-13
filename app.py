@@ -114,7 +114,7 @@ def internal_server_error(e):
     return "Internal Server Error", 500
 
 
-if not os.path.exists('test.db'):  # Check if the database file doesn't exist
+if not os.path.exists('data.db'):  # Check if the database file doesn't exist
     db.create_all()
 
 if __name__ == '__main__':
