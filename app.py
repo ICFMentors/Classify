@@ -62,8 +62,10 @@ def signup():
         
         # Redirect to the desired page after successful registration
         return redirect('/student-home')
-
-    return render_template('sign-up.html')
+    else:
+        user = User.query.all()
+        return render_template('sign-up.html', user=user)
+        #return render_template('sign-up.html')
 
 @app.route('/log-in')
 def login():
@@ -112,7 +114,7 @@ def internal_server_error(e):
     return "Internal Server Error", 500
 
 
-if not os.path.exists('test.db'):  # Check if the database file doesn't exist
+if not os.path.exists('data.db'):  # Check if the database file doesn't exist
     db.create_all()
 
 if __name__ == '__main__':
