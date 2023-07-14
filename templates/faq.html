@@ -1,72 +1,150 @@
-<!--student faq-->
-
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-1eK4oRl2GjkpZGJ2+hvW8SPx7kYFj+H4T/Kk7SwwhEiHHRhGrzlw+BBp5FF+I6eX" crossorigin="anonymous"></script>
+    
     <title>FAQ Page</title>
+    
     <link href="../static/css/faq.css" rel="stylesheet">
 </head>
 
 <body class="row">
+
     <header>
-        <a href="/student-home"><img class="logo" src="../static/images/icfLogo.png"></a>
+        <img class="logo" src="../static/images/icfLogo.png">
+
+
         <div class="btn-group">
-            <a href="/about-us" class="btn btn-primary">Contact Us!</a>
-            <a href="/faq"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
-            <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
+        <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button>
+        <button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button>
         </div>
+
         <h1 class="title">Questions and Answers</h1>
     </header>
 
     <div class="wrapper FAQ col">
         <h3>Frequently Asked Questions</h3>
 
-        {% for entry in faq_entries %}
+        <div class="faq">
+          <button class="accordion">
+            Q: How can I sign up for classes?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="accordion">
+            Q: How can I sign up for classes?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="accordion">
+            Q: How can I sign up for classes?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="accordion">
+            Q: How can I sign up for classes?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq">
+          <button class="accordion">
+            Q: How can I sign up for classes?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="pannel">
+            <p>
+              A: You can go to the course catalog <a target="_blank" href="https://www.google.com">here</a> or you can press "Add classes" on the homepage to access all of our classes.
+            </p>
+          </div>
+        </div>
+
+        </div>
+
+
+
+        <div class="aaq col">
+
+          <!-- <div class="wrapper FAQ col">
+        <h3>Frequently Asked Questions</h3>
+
+        {% for row in faq_data %}
         <div class="faq">
             <button class="accordion">
-                Q: {{ entry.question }}
+                Q: {{ row.question }}
                 <i class="fa-solid fa-chevron-down"></i>
             </button>
             <div class="pannel">
                 <p>
-                    A: {{ entry.answer }}
+                    A: {{ row.answer }}
                 </p>
             </div>
         </div>
         {% endfor %}
-    </div>
 
-    <div class="aaq col">
-        <!-- Textarea -->
+    </div> -->
         <div class="form-group">
             <label class="col-md-4 control-label label" for="textarea">Ask Us a Question</label>
-            <form action="/submit-question" method="POST">
                 <div class="col-md-4">
                     <textarea class="form-control" id="textarea" name="question"></textarea>
                 </div>
+      </div>
+
+          <!-- Button (Double) -->
                 <div class="form-group">
+            <label class="col-md-4 control-label" for="button1id"></label>
                     <div class="col-md-8">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="button" class="btn btn-danger" onclick="clearTextarea()">Cancel</button>
-                    </div>
-                </div>
+              <form action="mailto:goyaseenkhan@gmail.com" method="post" enctype="text/plain"
+              <input type="submit" value="Send">
             </form>
-        </div>
+              <button id="button2id" name="button2id" class="btn btn-danger">Cancel</button>
+            </div>
+          </div>
     </div>
 
     <script>
-        function clearTextarea() {
-            document.getElementById("textarea").value = "";
-        }
-        
         var acc = document.getElementsByClassName("accordion");
         var i;
 
@@ -75,12 +153,12 @@
                 this.classList.toggle("active");
                 this.parentElement.classList.toggle("active");
 
-                var panel = this.nextElementSibling;
+        var pannel = this.nextElementSibling;
 
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
+        if (pannel.style.display === "block") {
+          pannel.style.display = "none";
                 } else {
-                    panel.style.display = "block";
+          pannel.style.display = "block";
                 }
             });
         }
