@@ -105,6 +105,11 @@ def display_faq():
     faq_entries = FAQ.query.all()
     return render_template('faq.html', faq_entries=faq_entries)
 
+@app.route('/faq-student')
+def faqStudent():
+    faq_entries = FAQ.query.all()
+    return render_template('faq-student.html', faq_entries=faq_entries)
+
 @app.route('/submit-question', methods=['POST'])
 def submit_question():
     question = request.form['question']
