@@ -21,6 +21,68 @@
     <!-- Form Name -->
     <legend>Teacher Settings </legend>
     
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="first_name">First Name</label>
+      <div class="col-md-4">
+        <input id="first_name" name="first_name" type="text" placeholder="First" class="form-control" required="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="last_name">Last Name</label>
+      <div class="col-md-4">
+        <input id="last_name" name="last_name" type="text" placeholder="Last" class="form-control" required="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="email">Email</label>
+      <div class="col-md-4">
+        <input id="email" name="email" type="email" placeholder="Email" class="form-control" required="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="username">Username</label>
+      <div class="col-md-4">
+        <input id="username" name="username" type="text" placeholder="Username" class="form-control" required="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="password">Password</label>
+      <div class="col-md-4">
+        <input id="password" name="password" type="password" placeholder="Password" class="form-control" required="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="selectbasic">Age</label>
+      <div class="col-md-4">
+        <select id="selectbasic" name="selectbasic" class="form-control">
+          {% for age in range(1, 101) %}
+          <option value="{{ age }}">{{ age }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="radios">Gender</label>
+      <div class="col-md-4"> 
+        <label class="radio-inline" for="male">
+          <input type="radio" name="radios" id="male" value="1" checked="checked">
+          Male
+        </label> 
+        <label class="radio-inline" for="female">
+          <input type="radio" name="radios" id="female" value="2">
+          Female
+        </label>
+      </div>
+    </div>
+
+    
     <!-- Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="singlebutton"></label>
