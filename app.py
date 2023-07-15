@@ -76,9 +76,28 @@ def signup():
         return render_template('sign-up.html')
 
 
-@app.route('/log-in')
+@app.route('/log-in', methods=['GET', 'POST'])
 def login():
-    return render_template('log-in.html')
+    if request.method == 'POST':
+        # Retrieve form data
+        username = request.form['username']
+        password = request.form['password']
+
+        # Check if the user exists in the database
+        user = User.query.filter_by(username=username, password=password).first()
+
+        if user:
+            # Redirect the user to the appropriate home page based on their role
+            if user.role == 'teacher':
+                return redirect('/teacher-home')
+            else:
+                return redirect('/student-home')
+        else:
+            error_message = 'Invalid username or password. Please try again.'
+            return render_template('log-in.html', error_message=error_message)
+    else:
+        return render_template('log-in.html')
+
 
 @app.route('/student-home')
 def studentHome():
@@ -104,6 +123,11 @@ def courseCatalog():
 def display_faq():
     faq_entries = FAQ.query.all()
     return render_template('faq.html', faq_entries=faq_entries)
+
+@app.route('/faq-student')
+def faqStudent():
+    faq_entries = FAQ.query.all()
+    return render_template('faq-student.html', faq_entries=faq_entries)
 
 @app.route('/submit-question', methods=['POST'])
 def submit_question():
