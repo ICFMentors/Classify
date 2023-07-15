@@ -11,14 +11,14 @@
             <a href="/index"><img class="header" src="../static/images/icfLogo.png" alt="ICF Logo" width="350" height="auto"></a>
         </div>
         <h2 class="text-center">Login</h2>
-        <form>
+        <form method="POST" action="/log-in">
             <div class="form-group">
                 <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" required>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" required>
+                <input type="password" class="form-control" id="password" name="password" required>
             </div>
             <div class="btn-group btn-block" role="group" aria-label="Login Options">
                 <button type="submit" class="btn btn-primary">Teacher Login</button>
