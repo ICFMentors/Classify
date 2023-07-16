@@ -138,6 +138,10 @@ def login():
         return render_template('log-in.html')
 
 
+@app.route('/create')
+def createClass():
+    return render_template('create.html')
+
 @app.route('/student-home')
 def studentHome():
     return render_template('student-home.html')
