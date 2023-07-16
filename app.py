@@ -9,12 +9,41 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 db = SQLAlchemy(app)
 
 class FAQ(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    faqID = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(255), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
         return '<FAQ %r>' % self.id
+    
+class Course(db.Model):
+    courseID = db.Column(db.Integer, primary_key=True)
+    courseName = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    section = db.Column(db.String(10), nullable=False)
+    totalSeats = db.Column(db.Integer, nullable=False)
+    seatsTaken = db.Column(db.Integer, nullable=False)
+    teacherID = db.Column(db.Integer, db.ForeignKey('Teacher.teacherID'), nullable=False)
+    dates = db.Column(db.String(255), nullable=False)
+    timings = db.Column(db.String(255), nullable=False)
+
+    teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
+
+    def __repr__(self):
+        return '<Course %r>' % self.courseID
+
+class Teacher(db.Model):
+    teacherID = db.Column(db.Integer, primary_key=True)
+    qualifications = db.Column(db.String(400), nullable=False)
+    experience = db.Column(db.String(400), nullable=False)
+    department = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(255), nullable=False)
+    userID = db.Column(db.Integer, db.ForeignKey('User.userID'), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('Teacher', lazy=True))
+
+    def __repr__(self):
+        return '<Teacher %r>' % self.teacherID
 
 class User(db.Model):
     userID = db.Column(db.Integer, primary_key=True)
@@ -117,7 +146,12 @@ def teacherSettings():
 
 @app.route('/course-catalog')
 def courseCatalog():
-    return render_template('course-catalog.html')
+    conn = sqlite3.connect('data.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM course')
+    courses = cursor.fetchall()
+    conn.close()
+    return render_template('course-catalog.html', courses=courses)
 
 @app.route('/faq')
 def display_faq():

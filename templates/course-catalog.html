@@ -23,30 +23,19 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Course data will be dynamically populated here -->
+                {% for course in courses %}
                 <tr>
-                    <td>1</td>
-                    <td>Mathematics</td>
-                    <td>Introductory course in mathematics</td>
-                    <td>001</td>
-                    <td>30</td>
-                    <td>20</td>
-                    <td>John Smith</td>
-                    <td>Mon/Wed/Fri</td>
-                    <td>10:00 AM - 11:30 AM</td>
+                    <td>{{ course[0] }}</td>
+                    <td>{{ course[1] }}</td>
+                    <td>{{ course[2] }}</td>
+                    <td>{{ course[3] }}</td>
+                    <td>{{ course[4] }}</td>
+                    <td>{{ course[5] }}</td>
+                    <td>{{ course[6] }}</td>
+                    <td>{{ course[7] }}</td>
+                    <td>{{ course[8] }}</td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Physics</td>
-                    <td>Introduction to physics principles</td>
-                    <td>002</td>
-                    <td>25</td>
-                    <td>15</td>
-                    <td>Sarah Johnson</td>
-                    <td>Tue/Thu</td>
-                    <td>1:00 PM - 2:30 PM</td>
-                </tr>
-                <!-- Add more courses here -->
+                {% endfor %}
             </tbody>
         </table>
     </div>
