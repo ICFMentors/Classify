@@ -138,10 +138,6 @@ def login():
         return render_template('log-in.html')
 
 
-@app.route('/create')
-def createClass():
-    return render_template('create.html')
-
 @app.route('/student-home')
 def studentHome():
     return render_template('student-home.html')
@@ -166,6 +162,50 @@ def courseCatalog():
     courses = cursor.fetchall()
     conn.close()
     return render_template('course-catalog.html', courses=courses)
+
+@app.route('/create-class', methods=['GET', 'POST'])
+def createClass():
+    if request.method == 'POST':
+        # Retrieve form data
+        courseName = request.form['courseName']
+        description = request.form['description']
+        section = request.form['section']
+        totalSeats = int(request.form['totalSeats'])
+        seatsTaken = int(request.form['seatsTaken'])
+        teacher_id = int(request.form['teacher'])  # Assuming the teacher ID is an integer
+        dates = request.form['dates']
+        timings = request.form['timings']
+
+        # Retrieve the corresponding Teacher object based on the provided teacher ID
+        teacher = Teacher.query.get(teacher_id)
+
+        if teacher is None:
+            error_message = 'Invalid teacher ID. Please enter a valid teacher ID.'
+            return render_template('create-class.html', error_message=error_message)
+
+        # Create a new course and add it to the database
+        new_course = Course(
+            courseName=courseName,
+            description=description,
+            section=section,
+            totalSeats=totalSeats,
+            seatsTaken=seatsTaken,
+            teacher=teacher,
+            dates=dates,
+            timings=timings
+        )
+
+        try:
+            db.session.add(new_course)
+            db.session.commit()
+            return redirect('/course-catalog')
+        except Exception as e:
+            error_message = 'There was an issue adding the class. Please try again later.'
+            return render_template('create-class.html', error_message=error_message)
+    else:
+        return render_template('create-class.html')
+
+
 
 @app.route('/faq')
 def display_faq():
