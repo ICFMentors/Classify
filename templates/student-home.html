@@ -63,6 +63,26 @@ body, html {
   height: 100%;
 }
 
+.add {
+    display: block;
+    width: 1200px;
+    border: none;
+    background-color: beige;
+    color: black;
+    padding: 10px;
+    margin: 20px;
+    margin-right: 30px;
+    margin-left: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    height: 100px;
+  }
+
+  .add:hover {
+    background-color: #e2c984;
+  }
+
 .parallax {
   /* The image used */
   /*background-image: url("../images/qiyamNight.png"); */
@@ -197,14 +217,9 @@ body, html {
 
         <div class="row marketing">
             <div class="col">
-                <h2 class="my-classes">Class Catalog</h2>
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label for="classSearch" class="sr-only">Search for Classes</label>
-                        <input type="text" class="form-control" id="classSearch" placeholder="Enter a course, teacher, or ID...">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Search</button>
-                </form>
+                <div class="col">
+                    <div><a href="/course-catalog"><button class= "add"><i class="bi-plus-circle"></i> Add Class</button></a></div>
+                  </div>
             </div>
         </div>
 
