@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Class</title>
+    <link rel="stylesheet" href="static/css/styles.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Create Class</h1>
+        <form method="POST" action="/create-class">
+            <div class="form-group">
+                <label for="courseName">Course Name</label>
+                <input type="text" class="form-control" id="courseName" name="courseName" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="section">Section</label>
+                <input type="text" class="form-control" id="section" name="section" required>
+            </div>
+            <div class="form-group">
+                <label for="totalSeats">Total Seats</label>
+                <input type="number" class="form-control" id="totalSeats" name="totalSeats" required>
+            </div>
+            <div class="form-group">
+                <label for="seatsTaken">Seats Taken</label>
+                <input type="number" class="form-control" id="seatsTaken" name="seatsTaken" required>
+            </div>
+            <div class="form-group">
+                <label for="teacher">Teacher</label>
+                <input type="text" class="form-control" id="teacher" name="teacher" required>
+            </div>
+            <div class="form-group">
+                <label for="dates">Dates</label>
+                <input type="text" class="form-control" id="dates" name="dates" required>
+            </div>
+            <div class="form-group">
+                <label for="timings">Timings</label>
+                <input type="text" class="form-control" id="timings" name="timings" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Class</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
