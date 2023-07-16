@@ -8,42 +8,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 db = SQLAlchemy(app)
 
-class FAQ(db.Model):
-    faqID = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(255), nullable=False)
-    answer = db.Column(db.String(255), nullable=False)
-
-    def __repr__(self):
-        return '<FAQ %r>' % self.id
-    
-class Course(db.Model):
-    courseID = db.Column(db.Integer, primary_key=True)
-    courseName = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255), nullable=False)
-    section = db.Column(db.String(10), nullable=False)
-    totalSeats = db.Column(db.Integer, nullable=False)
-    seatsTaken = db.Column(db.Integer, nullable=False)
-    teacherID = db.Column(db.Integer, db.ForeignKey('Teacher.teacherID'), nullable=False)
-    dates = db.Column(db.String(255), nullable=False)
-    timings = db.Column(db.String(255), nullable=False)
-
-    teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
-
-    def __repr__(self):
-        return '<Course %r>' % self.courseID
-
-class Teacher(db.Model):
-    teacherID = db.Column(db.Integer, primary_key=True)
-    qualifications = db.Column(db.String(400), nullable=False)
-    experience = db.Column(db.String(400), nullable=False)
-    department = db.Column(db.String(255), nullable=False)
-    status = db.Column(db.String(255), nullable=False)
-    userID = db.Column(db.Integer, db.ForeignKey('User.userID'), nullable=False)
-
-    user = db.relationship('User', backref=db.backref('Teacher', lazy=True))
-
-    def __repr__(self):
-        return '<Teacher %r>' % self.teacherID
 
 class User(db.Model):
     userID = db.Column(db.Integer, primary_key=True)
@@ -58,9 +22,55 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.id
 
+
+class Teacher(db.Model):
+    teacherID = db.Column(db.Integer, primary_key=True)
+    qualifications = db.Column(db.String(400), nullable=False)
+    experience = db.Column(db.String(400), nullable=False)
+    department = db.Column(db.String(255), nullable=False)
+    status = db.Column(db.String(255), nullable=False)
+    userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('Teacher', lazy=True))
+
+    def __repr__(self):
+        return '<Teacher %r>' % self.teacherID
+
+
+class Course(db.Model):
+    courseID = db.Column(db.Integer, primary_key=True)
+    courseName = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    section = db.Column(db.String(10), nullable=False)
+    totalSeats = db.Column(db.Integer, nullable=False)
+    seatsTaken = db.Column(db.Integer, nullable=False)
+    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
+    dates = db.Column(db.String(255), nullable=False)
+    timings = db.Column(db.String(255), nullable=False)
+
+    teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
+
+    def __repr__(self):
+        return '<Course %r>' % self.courseID
+
+
+class FAQ(db.Model):
+    faqID = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(255), nullable=False)
+    answer = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return '<FAQ %r>' % self.id
+
+
+if not os.path.exists('data.db'):  # Check if the database file doesn't exist
+    db.create_all()
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signup():
@@ -180,9 +190,6 @@ def internal_server_error(e):
     app.logger.error("An internal server error occurred: %s", exc_value)
     return "Internal Server Error", 500
 
-
-if not os.path.exists('data.db'):  # Check if the database file doesn't exist
-    db.create_all()
 
 if __name__ == '__main__':
     app.run()
