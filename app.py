@@ -172,9 +172,16 @@ def createClass():
         section = request.form['section']
         totalSeats = int(request.form['totalSeats'])
         seatsTaken = int(request.form['seatsTaken'])
-        teacher = request.form['teacher']
+        teacher_id = int(request.form['teacher'])  # Assuming the teacher ID is an integer
         dates = request.form['dates']
         timings = request.form['timings']
+
+        # Retrieve the corresponding Teacher object based on the provided teacher ID
+        teacher = Teacher.query.get(teacher_id)
+
+        if teacher is None:
+            error_message = 'Invalid teacher ID. Please enter a valid teacher ID.'
+            return render_template('create-class.html', error_message=error_message)
 
         # Create a new course and add it to the database
         new_course = Course(
@@ -197,6 +204,7 @@ def createClass():
             return render_template('create-class.html', error_message=error_message)
     else:
         return render_template('create-class.html')
+
 
 
 @app.route('/faq')
