@@ -11,16 +11,17 @@
 
     <title>Create Class</title>
     
-    <link href="add.css" rel="stylesheet">
+    <link href="/static/css/add.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <img class="logo" src="../icfLogo.png">
+        <a href="/teacher-home"><img class="logo" src="/static/images/icfLogo.png"></a>
 
 
     <div class="btn-group">
-        <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button>
-        <button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button>
+      <a href="/about-us" class="btn btn-primary">Contact Us!</a>
+      <a href="/faq"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
+      <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
       </div>
 
       <h1 class="title">Create a Class</h1>
@@ -176,13 +177,22 @@
             </div>
           </div>
 
-          <div class="form-group"></div>
-            <div class="date">From: *
-            <input type="datetime-local" id="date" required="">
-            </div>
-            <div class="date">To: 
-            <input type="datetime-local" id="date">
-            </div>
+          <!-- Text input-->
+        <div class="form-group">
+          <label class="col-md-4 control-label" for="From">From: *</label>  
+          <div class="col-md-4">
+          <input id="From" name="From" type="text" placeholder="e.g. 7/19/23" class="form-control input-md" required="">
+</div></div>
+
+            <!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="To">To: </label>  
+  <div class="col-md-4">
+  <input id="To" name="To" type="text" placeholder="e.g. 7/16/23" class="form-control input-md">
+    
+  </div>
+</div>
+
 
             <!-- Multiple Checkboxes -->
 <div class="form-group">
