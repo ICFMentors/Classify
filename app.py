@@ -71,6 +71,22 @@ if not os.path.exists('data.db'):  # Check if the database file doesn't exist
 def index():
     return render_template('index.html')
 
+@app.route('/student-home')
+def studentHome():
+    return render_template('student-home.html')
+
+@app.route('/student-profile')
+def studentProfile():
+    return render_template('student-profile.html')
+
+@app.route('/teacher-home')
+def teacherHome():
+    return render_template('teacher-home.html')
+ 
+@app.route('/teacher-settings')
+def teacherSettings():
+    return render_template('teacher-settings.html')
+
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signup():
@@ -121,38 +137,25 @@ def login():
         # Retrieve form data
         username = request.form['username']
         password = request.form['password']
+        login_role = request.form['login_role']
 
         # Check if the user exists in the database
         user = User.query.filter_by(username=username, password=password).first()
 
         if user:
-            # Redirect the user to the appropriate home page based on their role
-            if user.role == 'teacher':
+            if login_role == 'student':
+                return redirect('/student-home')
+            elif login_role == 'teacher':
                 return redirect('/teacher-home')
             else:
-                return redirect('/student-home')
+                error_message = 'Invalid login role. Please try again.'
         else:
             error_message = 'Invalid username or password. Please try again.'
-            return render_template('log-in.html', error_message=error_message)
+
+        return render_template('log-in.html', error_message=error_message)
     else:
         return render_template('log-in.html')
 
-
-@app.route('/student-home')
-def studentHome():
-    return render_template('student-home.html')
-
-@app.route('/student-profile')
-def studentProfile():
-    return render_template('student-profile.html')
-
-@app.route('/teacher-home')
-def teacherHome():
-    return render_template('teacher-home.html')
- 
-@app.route('/teacher-settings')
-def teacherSettings():
-    return render_template('teacher-settings.html')
 
 @app.route('/course-catalog')
 def courseCatalog():
