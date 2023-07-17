@@ -218,11 +218,12 @@ def faqStudent():
     faq_entries = FAQ.query.all()
     return render_template('faq-student.html', faq_entries=faq_entries)
 
+'''
 @app.route('/submit-question', methods=['POST'])
 def submitQuestion():
     question = request.form['question']
     send_email(question)
-    return redirect('/faq')
+    return redirect('/faq')'''
 
 @app.route('/about-us')
 def aboutUs():
