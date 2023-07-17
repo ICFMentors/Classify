@@ -89,7 +89,7 @@ def teacherSettings():
 
 
 @app.route('/sign-up', methods=['GET', 'POST'])
-def signup():
+def signUp():
     if request.method == 'POST':
         # Retrieve form data
         first_name = request.form['first_name']
@@ -132,7 +132,7 @@ def signup():
 
 
 @app.route('/log-in', methods=['GET', 'POST'])
-def login():
+def logIn():
     if request.method == 'POST':
         # Retrieve form data
         username = request.form['username']
@@ -208,12 +208,10 @@ def createClass():
     else:
         return render_template('create-class.html')
 
-
-
-@app.route('/faq')
-def display_faq():
+@app.route('/faq-teacher')
+def faqTeacher():
     faq_entries = FAQ.query.all()
-    return render_template('faq.html', faq_entries=faq_entries)
+    return render_template('faq-teacher.html', faq_entries=faq_entries)
 
 @app.route('/faq-student')
 def faqStudent():
@@ -221,11 +219,10 @@ def faqStudent():
     return render_template('faq-student.html', faq_entries=faq_entries)
 
 @app.route('/submit-question', methods=['POST'])
-def submit_question():
+def submitQuestion():
     question = request.form['question']
     send_email(question)
     return redirect('/faq')
-
 
 @app.route('/about-us')
 def aboutUs():
