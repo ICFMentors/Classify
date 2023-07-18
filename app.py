@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
@@ -6,6 +6,7 @@ import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.secret_key = 'your_secret_key'  # Set a secret key for session security
 db = SQLAlchemy(app)
 
 
@@ -71,21 +72,55 @@ if not os.path.exists('data.db'):  # Check if the database file doesn't exist
 def index():
     return render_template('index.html')
 
+
 @app.route('/student-home')
 def studentHome():
-    return render_template('student-home.html')
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('student-home.html', user=user)
+
 
 @app.route('/student-profile')
 def studentProfile():
-    return render_template('student-profile.html')
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('student-profile.html', user=user)
+
 
 @app.route('/teacher-home')
 def teacherHome():
-    return render_template('teacher-home.html')
- 
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+    return render_template('teacher-home.html', teacher=teacher)
+
+
 @app.route('/teacher-settings')
 def teacherSettings():
-    return render_template('teacher-settings.html')
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+    return render_template('teacher-settings.html', teacher=teacher)
+
+@app.route('/update-teacher', methods=['POST'])
+def updateTeacher():
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+    
+    if teacher:
+        # Update teacher information from the form data
+        teacher.qualifications = request.form['qualifications']
+        teacher.experience = request.form['experience']
+        teacher.department = request.form['department']
+        teacher.status = request.form['status']
+        
+        try:
+            db.session.commit()
+            return redirect('/teacher-settings')
+        except Exception as e:
+            error_message = 'There was an issue updating the teacher information. Please try again later.'
+            return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
+    else:
+        error_message = 'Teacher not found.'
+        return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
 
 
 @app.route('/sign-up', methods=['GET', 'POST'])
@@ -123,6 +158,10 @@ def signUp():
         try:
             db.session.add(new_user)
             db.session.commit()
+
+            # Store the user ID in the session
+            session['user_id'] = new_user.userID
+
             return redirect('/student-home')
         except Exception as e:
             error_message = 'There was an issue signing you up. Please try again later.'
@@ -143,6 +182,9 @@ def logIn():
         user = User.query.filter_by(username=username, password=password).first()
 
         if user:
+            # Store the user ID in the session
+            session['user_id'] = user.userID
+
             if login_role == 'student':
                 return redirect('/student-home')
             elif login_role == 'teacher':
@@ -165,6 +207,7 @@ def courseCatalog():
     courses = cursor.fetchall()
     conn.close()
     return render_template('course-catalog.html', courses=courses)
+
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def createClass():
@@ -208,26 +251,23 @@ def createClass():
     else:
         return render_template('create-class.html')
 
+
 @app.route('/faq-teacher')
 def faqTeacher():
     faq_entries = FAQ.query.all()
     return render_template('faq-teacher.html', faq_entries=faq_entries)
+
 
 @app.route('/faq-student')
 def faqStudent():
     faq_entries = FAQ.query.all()
     return render_template('faq-student.html', faq_entries=faq_entries)
 
-'''
-@app.route('/submit-question', methods=['POST'])
-def submitQuestion():
-    question = request.form['question']
-    send_email(question)
-    return redirect('/faq')'''
 
 @app.route('/about-us')
 def aboutUs():
-    return render_template('about-us.html')    
+    return render_template('about-us.html')
+
 
 @app.errorhandler(500)
 def internal_server_error(e):
@@ -238,4 +278,3 @@ def internal_server_error(e):
 
 if __name__ == '__main__':
     app.run()
-

@@ -16,7 +16,7 @@
 
 <div class="btn-group">
   <a href="/about-us" class="btn btn-primary">Contact Us!</a>
-  <a href="/faq"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
+  <a href="/faq-teacher"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
   <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
   <a href="/index"><button type="button" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i></button></a>
 </div>
@@ -24,86 +24,28 @@
  <!--<div class="d-flex justify-content-center">-->
   
   
-  <form class="form-horizontal">
+  <form class="form-horizontal" method="POST" action="/update-teacher">
     <fieldset>
     
     <!-- Form Name -->
     <legend>Teacher Settings </legend>
-    
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="first_name">First Name</label>
-      <div class="col-md-4">
-        <input id="first_name" name="first_name" type="text" placeholder="First" class="form-control" required="">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="last_name">Last Name</label>
-      <div class="col-md-4">
-        <input id="last_name" name="last_name" type="text" placeholder="Last" class="form-control" required="">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="email">Email</label>
-      <div class="col-md-4">
-        <input id="email" name="email" type="email" placeholder="Email" class="form-control" required="">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="username">Username</label>
-      <div class="col-md-4">
-        <input id="username" name="username" type="text" placeholder="Username" class="form-control" required="">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="password">Password</label>
-      <div class="col-md-4">
-        <input id="password" name="password" type="password" placeholder="Password" class="form-control" required="">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="selectbasic">Age</label>
-      <div class="col-md-4">
-        <select id="selectbasic" name="selectbasic" class="form-control">
-          {% for age in range(1, 101) %}
-          <option value="{{ age }}">{{ age }}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="radios">Gender</label>
-      <div class="col-md-4"> 
-        <label class="radio-inline" for="male">
-          <input type="radio" name="radios" id="male" value="1" checked="checked">
-          Male
-        </label> 
-        <label class="radio-inline" for="female">
-          <input type="radio" name="radios" id="female" value="2">
-          Female
-        </label>
-      </div>
-    </div>
 
     <!-- Textarea -->
     <div class="form-group">
       <label class="col-md-4 control-label" for="textarea">Qualifications</label>
       <div class="col-md-4">                     
-        <textarea class="form-control" id="textarea" name="textarea"></textarea>
+        <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+        <input id="qualifications" name="qualifications" type="text" placeholder="qualifications" class="form-control" required="" value="{{ teacher.qualifications }}">
       </div>
     </div>
 
+
     <!-- Textarea -->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textarea">Experiance</label>
+      <label class="col-md-4 control-label" for="textarea">Experience</label>
       <div class="col-md-4">                     
-        <textarea class="form-control" id="textarea" name="textarea"></textarea>
+        <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+        <input id="experience" name="experience" type="text" placeholder="experience" class="form-control" required="" value="{{ teacher.experience }}">
       </div>
     </div>
 
@@ -112,27 +54,28 @@
     <div class="form-group">
       <label class="col-md-4 control-label" for="textarea">Department</label>
       <div class="col-md-4">                     
-        <textarea class="form-control" id="textarea" name="textarea"></textarea>
+        <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+        <input id="department" name="department" type="text" placeholder="department" class="form-control" required="" value="{{ teacher.department }}">
       </div>
     </div>
 
-  
     
     <!-- Textarea -->
     <div class="form-group">
       <label class="col-md-4 control-label" for="textarea">Status</label>
       <div class="col-md-4">                     
-        <textarea class="form-control" id="textarea" name="textarea"></textarea>
+        <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+        <input id="status" name="status" type="text" placeholder="status" class="form-control" required="" value="{{ teacher.status }}">
       </div>
     </div>
 
-    <!-- Button -->
-<div class="form-group">
-  <label class="col-md-4 control-label" for="singlebutton"></label>
-  <div class="col-md-4">
-    <button id="singlebutton" name="singlebutton" class="button-17">Save</button>
+  <!-- Button -->
+  <div class="form-group">
+    <label class="col-md-4 control-label" for="singlebutton"></label>
+    <div class="col-md-4">
+        <button id="singlebutton" name="singlebutton" class="button-17" type="submit">Save</button>
+    </div>
   </div>
-</div>
     
     </fieldset>
     </form>
