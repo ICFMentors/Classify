@@ -289,9 +289,13 @@ def faqStudent():
     return render_template('faq-student.html', faq_entries=faq_entries)
 
 
-@app.route('/about-us')
-def aboutUs():
-    return render_template('about-us.html')
+@app.route('/about-us-student')
+def aboutUsStudent():
+    return render_template('about-us-student.html')
+
+@app.route('/about-us-teacher')
+def aboutUsTeacher():
+    return render_template('about-us-teacher.html')
 
 
 @app.errorhandler(500)
