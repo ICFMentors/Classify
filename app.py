@@ -86,6 +86,31 @@ def studentProfile():
     user = User.query.get(user_id)
     return render_template('student-profile.html', user=user)
 
+@app.route('/update-user', methods=['POST'])
+def updateUser():
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    
+    if user:
+        # Update user information from the form data
+        user.first_name = request.form['first']
+        user.last_name = request.form['last']
+        user.email = request.form['email']
+        user.username = request.form['username']
+        user.age = int(request.form['selectbasic'])
+        user.gender = request.form['radios']
+        
+        try:
+            db.session.commit()
+            return redirect('/student-profile')
+        except Exception as e:
+            error_message = 'There was an issue updating the user information. Please try again later.'
+            return render_template('user-settings.html', user=user, error_message=error_message)
+    else:
+        error_message = 'User not found.'
+        return render_template('user-settings.html', user=user, error_message=error_message)
+
+
 
 @app.route('/teacher-home')
 def teacherHome():
@@ -264,9 +289,13 @@ def faqStudent():
     return render_template('faq-student.html', faq_entries=faq_entries)
 
 
-@app.route('/about-us')
-def aboutUs():
-    return render_template('about-us.html')
+@app.route('/about-us-student')
+def aboutUsStudent():
+    return render_template('about-us-student.html')
+
+@app.route('/about-us-teacher')
+def aboutUsTeacher():
+    return render_template('about-us-teacher.html')
 
 
 @app.errorhandler(500)

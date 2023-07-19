@@ -17,13 +17,13 @@
   
   <body>
     <header>
-      <a href="/student-home"><img class="logo" src="../static/images/icfLogo.png"></a>
+      <a href="/student-home"><img class="logo" src="../static/images/classifylogoside.png"></a>
 
 
   <div class="btn-group">
-      <a href="/about-us" class="btn btn-primary">Contact Us!</a>
-      <a href="/faq"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
-      <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
+      <a href="/about-us-student" class="btn btn-primary">About Us!</a>
+      <a href="/faq-student"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
+      <!-- <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a> -->
       <a href="/"><button type="button" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i></button></a>
     </div>
     </header>
@@ -33,62 +33,79 @@
       <fieldset>
         <legend>Profile Settings</legend>
         
-        <!-- Text input - Name -->
+        <!-- Text input - First Name -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput">Name</label>  
-          <div class="col-md-4">
-            <input id="textinput" name="textinput" type="text" placeholder="First" class="form-control" required="">
+          <label class="col-md-4 control-label" for="first">First Name</label>
+          <div class="col-md-4">                     
+            <input id="first" name="first" type="text" placeholder="First Name" class="form-control" required="" value="{{ user.first_name }}">
           </div>
         </div>
         
         <!-- Text input - Last Name -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput"></label>  
-          <div class="col-md-4">
-            <input id="textinput" name="textinput" type="text" placeholder="Last" class="form-control" required="">
+          <label class="col-md-4 control-label" for="last">Last Name</label>
+          <div class="col-md-4">                     
+            <input id="last" name="last" type="text" placeholder="Last Name" class="form-control" required="" value="{{ user.last_name }}">
           </div>
         </div>
         
         <!-- Text input - Email -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput"></label>  
-          <div class="col-md-4">
-            <input id="textinput" name="textinput" type="text" placeholder="Email" class="form-control" required="">
+          <label class="col-md-4 control-label" for="email">Email</label>
+          <div class="col-md-4">                     
+            <input id="email" name="email" type="text" placeholder="Email" class="form-control" required="" value="{{ user.email }}">
           </div>
         </div>
         
         <!-- Text input - Username -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="textinput"></label>  
-          <div class="col-md-4">
-            <input id="textinput" name="textinput" type="text" placeholder="Username" class="form-control" required="">
+          <label class="col-md-4 control-label" for="username">Username</label>
+          <div class="col-md-4">                     
+            <input id="username" name="username" type="text" placeholder="Username" class="form-control" required="" value="{{ user.username }}">
           </div>
         </div>
         
         <!-- Password input - New Password -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="passwordinput">New Password</label>
-          <div class="col-md-4">
-            <input id="passwordinput" name="passwordinput" type="password" placeholder="New Password" class="form-control" required="">
+          <label class="col-md-4 control-label" for="new_password">New Password</label>
+          <div class="col-md-4">                     
+            <input id="new_password" name="new_password" type="password" placeholder="New Password" class="form-control" required>
           </div>
         </div>
-        
+
         <!-- Password input - Confirm Password -->
         <div class="form-group">
-          <label class="col-md-4 control-label" for="passwordinput">Confirm Password</label>
-          <div class="col-md-4">
-            <input id="passwordinput" name="passwordinput" type="password" placeholder="Confirm Password" class="form-control" required="">
+          <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
+          <div class="col-md-4">                     
+            <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm Password" class="form-control" required>
           </div>
         </div>
+
+        <script>
+          // Form validation
+          const form = document.querySelector('.form-container');
+
+          form.addEventListener('submit', function(event) {
+            const newPassword = document.getElementById('new_password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            if (newPassword !== confirmPassword) {
+              event.preventDefault(); // Prevent form submission
+              alert('New password and confirm password do not match!');
+            }
+          });
+        </script>
         
+        
+      
         <!-- Select Basic - Age -->
         <div class="form-group">
           <label class="col-md-4 control-label" for="selectbasic">Age</label>
           <div class="col-md-4">
             <select id="selectbasic" name="selectbasic" class="form-control2">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <!-- Add more age options here if needed -->
+              {% for age in range(1, 101) %}
+                <option value="{{ age }}" {% if user.age == age %}selected{% endif %}>{{ age }}</option>
+              {% endfor %}
             </select>
           </div>
         </div>
@@ -110,8 +127,9 @@
         
         <!-- Button - Update Settings -->
         <div class="form-group">
+          <label class="col-md-4 control-label" for="singlebutton"></label>
           <div class="col-md-4">
-            <button type="submit" class="btn btn-primary">Update Settings</button>
+              <button id="singlebutton" name="singlebutton" class="button-17" type="submit">Save</button>
           </div>
         </div>
         
