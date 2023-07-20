@@ -71,7 +71,7 @@ header {
 
 .add {
     display: block;
-    width: 400px;
+    width: 1200px;
     border: none;
     background-color: beige;
     color: black;
@@ -82,7 +82,7 @@ header {
     font-size: 16px;
     cursor: pointer;
     text-align: center;
-    height: 600px;
+    height: 100px;
   }
   
   .add:hover {
