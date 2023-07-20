@@ -80,14 +80,14 @@ def studentHome():
     return render_template('student-home.html', user=user)
 
 
-@app.route('/student-profile')
-def studentProfile():
+@app.route('/student-settings')
+def studentSettings():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    return render_template('student-profile.html', user=user)
+    return render_template('student-settings.html', user=user)
 
-@app.route('/update-user', methods=['POST'])
-def updateUser():
+@app.route('/update-student', methods=['POST'])
+def updateStudent():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     
@@ -99,16 +99,17 @@ def updateUser():
         user.username = request.form['username']
         user.age = int(request.form['selectbasic'])
         user.gender = request.form['radios']
+        user.password = request.form['new_password']
         
         try:
             db.session.commit()
-            return redirect('/student-profile')
+            return redirect('/student-settings')
         except Exception as e:
             error_message = 'There was an issue updating the user information. Please try again later.'
-            return render_template('user-settings.html', user=user, error_message=error_message)
+            return render_template('student-settings.html', user=user, error_message=error_message)
     else:
         error_message = 'User not found.'
-        return render_template('user-settings.html', user=user, error_message=error_message)
+        return render_template('student-settings.html', user=user, error_message=error_message)
 
 
 
