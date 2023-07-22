@@ -103,7 +103,7 @@ def updateStudent():
         
         try:
             db.session.commit()
-            return redirect('/student-settings')
+            return redirect('/student-home')
         except Exception as e:
             error_message = 'There was an issue updating the user information. Please try again later.'
             return render_template('student-settings.html', user=user, error_message=error_message)
@@ -144,7 +144,7 @@ def updateTeacher():
         
         try:
             db.session.commit()
-            return redirect('/teacher-settings')
+            return redirect('/teacher-home')
         except Exception as e:
             error_message = 'There was an issue updating the teacher information. Please try again later.'
             return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
