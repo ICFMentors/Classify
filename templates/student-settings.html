@@ -134,13 +134,14 @@
         </div>
 
         <script>
-          // Form validation
-          const form2 = document.querySelector('.form-container');
-
+          const form = document.querySelector('.form-container');
+          const existingPassword = "{{ user.password }}";
+        
           form.addEventListener('submit', function(event) {
             const currentPassword = document.getElementById('current_password').value;
-
-            if (currentPassword !== user.password) {
+            
+        
+            if (currentPassword !== existingPassword) {
               event.preventDefault(); // Prevent form submission
               alert('Current password is incorrect!');
             }

@@ -124,12 +124,16 @@ def teacherHome():
 def teacherSettings():
     teacher_id = session.get('user_id')
     teacher = Teacher.query.get(teacher_id)
-    return render_template('teacher-settings.html', teacher=teacher)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('teacher-settings.html', teacher=teacher, user=user)
 
 @app.route('/update-teacher', methods=['POST'])
 def updateTeacher():
     teacher_id = session.get('user_id')
     teacher = Teacher.query.get(teacher_id)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
     
     if teacher:
         # Update teacher information from the form data
