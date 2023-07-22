@@ -96,3 +96,13 @@ header {
     border-style: solid;
     margin: 20px;
   }
+
+  .carousel-container, .carous {
+    width: 450px;
+    padding: 10px;
+    margin: 10px
+}
+    .carousel-image {
+    width: 100%;
+    height: auto;
+}
