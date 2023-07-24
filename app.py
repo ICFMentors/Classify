@@ -5,7 +5,7 @@ import sys
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data2.db'
 app.secret_key = 'your_secret_key'  # Set a secret key for session security
 db = SQLAlchemy(app)
 
@@ -80,7 +80,7 @@ class FAQ(db.Model):
         return '<FAQ %r>' % self.id
 
 
-if not os.path.exists('data.db'):  # Check if the database file doesn't exist
+if not os.path.exists('data2.db'):  # Check if the database file doesn't exist
     db.create_all()
 
 
