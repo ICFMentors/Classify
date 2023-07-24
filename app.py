@@ -310,6 +310,14 @@ def faqStudent():
     faq_entries = FAQ.query.all()
     return render_template('faq-student.html', faq_entries=faq_entries)
 
+@app.route('/teacher-profile')
+def teacherSettings():
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('teacher-profile.html', teacher=teacher, user=user)
+
 
 @app.route('/about-us-student')
 def aboutUsStudent():
