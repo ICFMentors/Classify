@@ -81,8 +81,8 @@ class FAQ(db.Model):
         return '<FAQ %r>' % self.id
 
 
-#if not os.path.exists('data.db'):  # Check if the database file doesn't exist
-db.create_all()
+if not os.path.exists('data.db'):  # Check if the database file doesn't exist
+    db.create_all()
 
 
 @app.route('/')
