@@ -5,7 +5,7 @@ import sys
 import os
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data2.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.secret_key = 'your_secret_key'  # Set a secret key for session security
 db = SQLAlchemy(app)
 
@@ -45,10 +45,11 @@ class Parent(db.Model):
     student3ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
     student4ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
-    student1ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
-    student2ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
-    student3ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
-    student4ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
+    # Define the relationships and specify the join conditions
+    student1 = db.relationship('User', foreign_keys=[student1ID], backref=db.backref('Parent1', lazy=True))
+    student2 = db.relationship('User', foreign_keys=[student2ID], backref=db.backref('Parent2', lazy=True))
+    student3 = db.relationship('User', foreign_keys=[student3ID], backref=db.backref('Parent3', lazy=True))
+    student4 = db.relationship('User', foreign_keys=[student4ID], backref=db.backref('Parent4', lazy=True))
 
     def __repr__(self):
         return '<Parent %r>' % self.parentID
@@ -80,8 +81,8 @@ class FAQ(db.Model):
         return '<FAQ %r>' % self.id
 
 
-if not os.path.exists('data2.db'):  # Check if the database file doesn't exist
-    db.create_all()
+#if not os.path.exists('data.db'):  # Check if the database file doesn't exist
+db.create_all()
 
 
 @app.route('/')
