@@ -326,3 +326,7 @@ legend {
 .h1 {
   background-color: #111;
 }
+
+.btn-group {
+  float: right;
+}
