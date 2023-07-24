@@ -12,10 +12,9 @@
 
 
 .logo {
-    margin-top: 10px;
-    padding-left: 10px;
-    height: 80px;
-    width: auto;
+    width: 300px; 
+    height: auto; 
+   padding: 10px;
 }
 
 
