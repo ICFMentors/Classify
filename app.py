@@ -36,6 +36,22 @@ class Teacher(db.Model):
 
     def __repr__(self):
         return '<Teacher %r>' % self.teacherID
+    
+
+class Parent(db.Model):
+    parentID = db.Column(db.Integer, primary_key=True)
+    student1ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    student2ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    student3ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+    student4ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+
+    student1ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
+    student2ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
+    student3ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
+    student4ID = db.relationship('User', backref=db.backref('Parent', lazy=True))
+
+    def __repr__(self):
+        return '<Parent %r>' % self.parentID
 
 
 class Course(db.Model):
