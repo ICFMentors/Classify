@@ -311,7 +311,7 @@ def faqStudent():
     return render_template('faq-student.html', faq_entries=faq_entries)
 
 @app.route('/teacher-profile')
-def teacherSettings():
+def teacherprofile():
     teacher_id = session.get('user_id')
     teacher = Teacher.query.get(teacher_id)
     user_id = session.get('user_id')
