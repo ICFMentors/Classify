@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title>Teacher Settings</title>
+    <title>Parent Settings</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link href="static/css/styles.css" rel="stylesheet" type="text/css"/> 
@@ -13,7 +13,6 @@
         }
       }
     </script>
-    <title>My Logo</title>
   </head>
   
   <body>
@@ -23,7 +22,7 @@
 <div class="btn-group">
   <a href="/about-us-parent" class="btn btn-primary">About Us!</a>
   <a href="/faq-parent"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
-  <!-- <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a> -->
+  <!-- <a href="/parent-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a> -->
   <a href="/"><button type="button" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i></button></a>
 </div>
 </header>
@@ -34,51 +33,85 @@
     <fieldset>
     
     <!-- Form Name -->
-    <legend>Parent Settings </legend>
+    <legend>Parent Settings</legend>
 
     <!-- Textarea -->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="textarea">Student 1</label>
-      <div class="col-md-4">                     
-        <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
-        <input id="student1" name="student1" type="text" placeholder="student1" class="form-control" required="">
-      </div>
-    </div>
-
-
-    <!-- Textarea -->
-    <div class="form-group">
-        <label class="col-md-4 control-label" for="textarea">Student 2</label>
+        <label class="col-md-4 control-label" for="textarea">Student 1 Username</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
-          <input id="student2" name="student2" type="text" placeholder="student2" class="form-control" required="">
+          <input id="student1" name="student1" type="text" placeholder="Username" class="form-control" required="">
         </div>
       </div>
-    
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Student 1 Password</label>
+        <div class="col-md-4">                     
+          <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+          <input id="student1password" name="student1password" type="text" placeholder="Password" class="form-control" required="">
+        </div>
+      </div>
+      <br>
+
+
+    <!-- Textarea -->
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Student 2 Username</label>
+        <div class="col-md-4">                     
+          <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+          <input id="student2" name="student2" type="text" placeholder="Username" class="form-control" required="">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Student 2 Password</label>
+        <div class="col-md-4">                     
+          <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+          <input id="student2password" name="student2password" type="text" placeholder="Password" class="form-control" required="">
+        </div>
+      </div>
+      <br>
     <!-- Textarea -->
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 3</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
-          <input id="student3" name="student3" type="text" placeholder="student3" class="form-control" required="">
+          <input id="student3" name="student3" type="text" placeholder="Username" class="form-control" required="">
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Student 3 Password</label>
+        <div class="col-md-4">                     
+          <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+          <input id="student3password" name="student3password" type="text" placeholder="Password" class="form-control" required="">
+        </div>
+      </div>
+      <br>
     
     <!-- Textarea -->
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 4</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
-          <input id="student4" name="student4" type="text" placeholder="student4" class="form-control" required="">
+          <input id="student4" name="student4" type="text" placeholder="Username" class="form-control" required="">
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="textarea">Student 4 Password</label>
+        <div class="col-md-4">                     
+          <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
+          <input id="student4password" name="student4password" type="text" placeholder="Password" class="form-control" required="">
+        </div>
+      </div>
+      <br>
+
     <!-- Password input - Old Password -->
     <div class="form-group">
-      <label class="col-md-4 control-label" for="current_password">Current Password</label>
+      <label class="col-md-4 control-label" for="current_password">Parent Current Password</label>
       <div class="col-md-4">                     
-        <input id="current_password" name="current_password" type="password" placeholder="Current Password" class="form-control" required>
+        <input id="current_password" name="current_password" type="password" placeholder="Parent Password" class="form-control" required>
       </div>
     </div>
 

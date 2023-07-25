@@ -176,6 +176,12 @@ def parentHome():
     user = User.query.get(user_id)
     return render_template('parent-home.html', user=user)
 
+@app.route('/parent-settings')
+def parentSettings():
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('parent-settings.html', user=user)
+
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signUp():
