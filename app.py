@@ -236,6 +236,8 @@ def logIn():
                 return redirect('/student-home')
             elif login_role == 'teacher':
                 return redirect('/teacher-home')
+            elif login_role == 'parent':
+                return redirect('/parent-home')
             else:
                 error_message = 'Invalid login role. Please try again.'
         else:
