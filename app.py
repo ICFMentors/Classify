@@ -170,6 +170,13 @@ def updateTeacher():
         return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
 
 
+@app.route('/parent-home')
+def parentHome():
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('parent-home.html', user=user)
+
+
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signUp():
     if request.method == 'POST':
@@ -312,8 +319,13 @@ def faqStudent():
     faq_entries = FAQ.query.all()
     return render_template('faq-student.html', faq_entries=faq_entries)
 
+@app.route('/faq-parent')
+def faqParent():
+    faq_entries = FAQ.query.all()
+    return render_template('faq-parent.html', faq_entries=faq_entries)
+
 @app.route('/teacher-profile')
-def teacherSettings():
+def teacherprofile():
     teacher_id = session.get('user_id')
     teacher = Teacher.query.get(teacher_id)
     user_id = session.get('user_id')
@@ -328,6 +340,10 @@ def aboutUsStudent():
 @app.route('/about-us-teacher')
 def aboutUsTeacher():
     return render_template('about-us-teacher.html')
+
+@app.route('/about-us-parent')
+def aboutUsParent():
+    return render_template('about-us-parent.html')
 
 
 @app.errorhandler(500)
