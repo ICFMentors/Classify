@@ -133,9 +133,10 @@ def updateStudent():
 
 @app.route('/teacher-home')
 def teacherHome():
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    return render_template('teacher-home.html', teacher=teacher)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    courses = Course.query.join(Teacher).join(User).filter(User.userID == user_id).all()
+    return render_template('teacher-home.html', user=user, courses=courses)
 
 
 @app.route('/teacher-settings')
