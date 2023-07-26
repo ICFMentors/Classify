@@ -68,8 +68,6 @@ class Course(db.Model):
 
     teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
 
-    course_entries = course.query.all()
-
     def __repr__(self):
         return '<Course %r>' % self.courseID
 
