@@ -94,7 +94,8 @@ def index():
 def studentHome():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    return render_template('student-home.html', user=user)
+    courses = Course.query.filter_by(teacherID=user_id).all()
+    return render_template('student-home.html', user=user, courses=courses)
 
 
 @app.route('/student-settings')
