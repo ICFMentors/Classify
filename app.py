@@ -94,7 +94,7 @@ def index():
 def studentHome():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    courses = Course.query.filter_by(teacherID=user_id).all()
+    courses = Course.query.join(Teacher).join(User).filter(User.userID == user_id).all()
     return render_template('student-home.html', user=user, courses=courses)
 
 

@@ -64,22 +64,10 @@
                     <tbody>
                         {% for course in courses %}
                         <tr>
-                            <td><a target="_blank"  href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
-                            <td><a href="/teacher-profile"><button class="btn btn-basic"><i class="bi-person-badge"></i></button></a></td>
-                            <td><button class="btn btn-basic"><i class="bi bi-person-check"></i></button></td>
-                            <td>{{ course.timings }}</td>
-                        </tr>
-                        <tr>
-                            <td><a target="_blank"  href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
-                            <td><a href="/teacher-profile"><button class="btn btn-basic"><i class="bi-person-badge"></i></button></a></td>
-                            <td><button class="btn btn-basic"><i class="bi bi-person-check"></i></button></td>
-                            <td>{{ course.timings }}</td>
-                        </tr>
-                        <tr>
-                            <td><a target="_blank"  href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
-                            <td><a href="/teacher-profile"><button class="btn btn-basic"><i class="bi-person-badge"></i></button></a></td>
-                            <td><button class="btn btn-basic"><i class="bi bi-person-check"></i></button></td>
-                            <td>{{ course.timings }}</td>
+                        <td>{{ course.courseName }}</td>
+                        <td><a href="/teacher-profile">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</a></td>
+                        <td>{{ course.assignments_due }}</td>
+                        <td>{{ course.timings }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
