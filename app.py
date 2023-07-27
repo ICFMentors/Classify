@@ -282,15 +282,17 @@ def createClass():
         section = request.form['section']
         totalSeats = int(request.form['totalSeats'])
         seatsTaken = int(request.form['seatsTaken'])
-        teacher_id = int(request.form['teacher'])  # Assuming the teacher ID is an integer
+        teacher_username = request.form['teacher']  # Assuming the teacher's username is provided in the form
         dates = request.form['dates']
         timings = request.form['timings']
 
-        # Retrieve the corresponding Teacher object based on the provided teacher ID
-        teacher = Teacher.query.get(teacher_id)
+        # Find the teacher by username
+        teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
 
-        if teacher is None:
-            error_message = 'Invalid teacher ID. Please enter a valid teacher ID.'
+        if not teacher:
+            # If the teacher doesn't exist, you can choose to create a new teacher or show an error message.
+            # For simplicity, let's assume the teacher must exist in the database.
+            error_message = 'Teacher not found. Please enter a valid teacher username.'
             return render_template('create-class.html', error_message=error_message)
 
         # Create a new course and add it to the database
@@ -300,7 +302,7 @@ def createClass():
             section=section,
             totalSeats=totalSeats,
             seatsTaken=seatsTaken,
-            teacher=teacher,
+            teacher=teacher,  # Set the teacher object in the new course
             dates=dates,
             timings=timings
         )
@@ -308,12 +310,13 @@ def createClass():
         try:
             db.session.add(new_course)
             db.session.commit()
-            return redirect('/course-catalog')
+            return redirect('/course-catalog')  # Redirect to the course catalog page after adding the class
         except Exception as e:
             error_message = 'There was an issue adding the class. Please try again later.'
             return render_template('create-class.html', error_message=error_message)
     else:
         return render_template('create-class.html')
+
 
 
 @app.route('/faq-teacher')
