@@ -9,6 +9,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.secret_key = 'your_secret_key'  # Set a secret key for session security
 db = SQLAlchemy(app)
 
+registration = db.Table(
+    'registration',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.userID'), primary_key=True),
+    db.Column('course_id', db.Integer, db.ForeignKey('course.courseID'), primary_key=True),
+    extend_existing=True  # Set extend_existing=True to avoid redefining the table
+)
 
 class User(db.Model):
     userID = db.Column(db.Integer, primary_key=True)
@@ -74,7 +80,6 @@ class Course(db.Model):
     def __repr__(self):
         return '<Course %r>' % self.courseID
 
-
 class FAQ(db.Model):
     faqID = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(255), nullable=False)
@@ -111,6 +116,7 @@ def studentSettings():
 def updateStudent():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
+    pass
     
     if user:
         # Update user information from the form data
@@ -156,6 +162,7 @@ def updateTeacher():
     teacher = Teacher.query.get(teacher_id)
     user_id = session.get('user_id')
     user = User.query.get(user_id)
+    pass
     
     if teacher:
         # Update teacher information from the form data
@@ -186,12 +193,6 @@ def parentSettings():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     return render_template('parent-settings.html', user=user)
-
-registration = db.Table(
-    'registration',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.userID'), primary_key=True),
-    db.Column('course_id', db.Integer, db.ForeignKey('course.courseID'), primary_key=True)
-)
 
 
 @app.route('/sign-up', methods=['GET', 'POST'])
@@ -296,7 +297,7 @@ def createClass():
         dates = request.form['dates']
         timings = request.form['timings']
 
-        # Find the teacher by username
+        # Find the teacher by usernamef
         teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
 
         if not teacher:
@@ -377,24 +378,30 @@ def internal_server_error(e):
 if __name__ == '__main__':
     app.run(debug=True)
 
-@app.route('/register-course/<int:course_id>', methods=['GET', 'POST'])
-@login_required  # This decorator ensures that only logged-in users can access this route
+@app.route('/register-course/<int:course_id>', methods=['POST'])
 def register_course(course_id):
+    # Check if the user is logged in
+    if not current_user.is_authenticated:
+        return redirect(url_for('log_in'))  # Redirect to login page if not logged in
+    pass
+
+    # Get the course with the given course_id from the database
     course = Course.query.get(course_id)
-    
-    if course is None:
-        flash('Course not found.', 'error')
-        return redirect('/course-catalog')
 
+    # Check if the course exists
+    if not course:
+        # Handle the case where the course doesn't exist (e.g., display an error message)
+        pass
+
+    # Check if the user is already registered for the course
     if current_user in course.students:
-        flash('You are already registered for this course.', 'info')
-    elif course.seatsTaken >= course.totalSeats:
-        flash('No seats available for this course.', 'info')
-    else:
-        course.students.append(current_user)
-        course.seatsTaken += 1
-        db.session.commit()
-        flash('Successfully registered for the course.', 'success')
+        # Handle the case where the user is already registered for the course
+        pass
 
-    return redirect('/course-catalog')
+    # Register the current user for the course (add the user to the course's students relationship)
+    course.students.append(current_user)
+    db.session.commit()
+
+    # Optionally, you can add a success message here and redirect to the course catalog
+    return redirect(url_for('course_catalog'))
 
