@@ -19,6 +19,8 @@ class User(db.Model):
     password = db.Column(db.String(255), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(255), nullable=False)
+    courses = db.relationship('Course', secondary=registration, backref=db.backref('students', lazy='dynamic'))
+
 
     def __repr__(self):
         return '<User %r>' % self.id
@@ -67,6 +69,7 @@ class Course(db.Model):
     timings = db.Column(db.String(255), nullable=False)
 
     teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
+    students = db.relationship('User', secondary=registration, backref=db.backref('registered_courses', lazy='dynamic'))
 
     def __repr__(self):
         return '<Course %r>' % self.courseID
@@ -93,9 +96,9 @@ def index():
 @app.route('/student-home')
 def studentHome():
     user_id = session.get('user_id')
-    user = User.query.get(user_id)
-    courses = Course.query.join(Teacher).join(User).filter(User.userID == user_id).all()
-    return render_template('student-home.html', user=user, courses=courses)
+    student = User.query.get(user_id)
+    courses = student.courses
+    return render_template('student-home.html', student=student, courses=courses)
 
 
 @app.route('/student-settings')
@@ -184,6 +187,12 @@ def parentSettings():
     user = User.query.get(user_id)
     return render_template('parent-settings.html', user=user)
 
+registration = db.Table(
+    'registration',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.userID'), primary_key=True),
+    db.Column('course_id', db.Integer, db.ForeignKey('course.courseID'), primary_key=True)
+)
+
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signUp():
@@ -270,6 +279,7 @@ def courseCatalog():
     cursor.execute('SELECT * FROM course')
     courses = cursor.fetchall()
     conn.close()
+    courses = Course.query.all()
     return render_template('course-catalog.html', courses=courses)
 
 
@@ -366,4 +376,25 @@ def internal_server_error(e):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+@app.route('/register-course/<int:course_id>', methods=['GET', 'POST'])
+@login_required  # This decorator ensures that only logged-in users can access this route
+def register_course(course_id):
+    course = Course.query.get(course_id)
+    
+    if course is None:
+        flash('Course not found.', 'error')
+        return redirect('/course-catalog')
+
+    if current_user in course.students:
+        flash('You are already registered for this course.', 'info')
+    elif course.seatsTaken >= course.totalSeats:
+        flash('No seats available for this course.', 'info')
+    else:
+        course.students.append(current_user)
+        course.seatsTaken += 1
+        db.session.commit()
+        flash('Successfully registered for the course.', 'success')
+
+    return redirect('/course-catalog')
 
