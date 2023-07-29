@@ -1,35 +1,77 @@
 from flask import Flask, render_template, request, redirect, session
+from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
 import os
+from flask_login import LoginManager, UserMixin
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.secret_key = 'your_secret_key'  # Set a secret key for session security
 db = SQLAlchemy(app)
 
-registration = db.Table(
-    'registration',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.userID'), primary_key=True),
-    db.Column('course_id', db.Integer, db.ForeignKey('course.courseID'), primary_key=True),
-    extend_existing=True  # Set extend_existing=True to avoid redefining the table
-)
+############################################################################3
 
-class User(db.Model):
-    userID = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255), nullable=False)
-    last_name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
-    username = db.Column(db.String(255), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(255), nullable=False)
-    courses = db.relationship('Course', secondary=registration, backref=db.backref('students', lazy='dynamic'))
+# Initialize Flask-Login
+login_manager = LoginManager(app)
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Ensure the User class inherits from UserMixin
+
+
+    ##########################################################################
+
+class Registration(db.Model):
+    __tablename__ = 'registration'
+    user_id = db.Column(db.Integer, db.ForeignKey('user.userID'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.courseID'), primary_key=True)
+    # Add any additional fields related to the registration if needed
+
+    # Add relationships to User and Course models
+    user = db.relationship('User', backref=db.backref('registrations', lazy=True))
+    course = db.relationship('Course', backref=db.backref('registrations', lazy=True))
 
     def __repr__(self):
-        return '<User %r>' % self.id
+        return f'<Registration user_id={self.user_id} course_id={self.course_id}>'
+
+class User(db.Model, UserMixin):
+    userID = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
+    role = db.Column(db.String(20), nullable=False, default='student')
+
+    # Add the enrolled_courses relationship to represent the courses a user is enrolled in
+    enrolled_courses = db.relationship('Course', secondary='registration', backref=db.backref('students', lazy='dynamic'))
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
+class Course(db.Model):
+    __tablename__ = 'course'
+    courseID = db.Column(db.Integer, primary_key=True)
+    courseName = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    section = db.Column(db.String(10), nullable=False)
+    totalSeats = db.Column(db.Integer, nullable=False)
+    seatsTaken = db.Column(db.Integer, nullable=False)
+    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
+    dates = db.Column(db.String(255), nullable=False)
+    timings = db.Column(db.String(255), nullable=False)
+
+    teacher = db.relationship('Teacher', backref=db.backref('courses', lazy=True))
+
+    def __repr__(self):
+        return '<Course %r>' % self.courseID
 
 
 class Teacher(db.Model):
@@ -40,11 +82,10 @@ class Teacher(db.Model):
     status = db.Column(db.String(255), nullable=False)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
-    user = db.relationship('User', backref=db.backref('Teacher', lazy=True))
+    user = db.relationship('User', backref=db.backref('teacher', uselist=False))
 
     def __repr__(self):
         return '<Teacher %r>' % self.teacherID
-    
 
 class Parent(db.Model):
     parentID = db.Column(db.Integer, primary_key=True)
@@ -63,23 +104,6 @@ class Parent(db.Model):
         return '<Parent %r>' % self.parentID
 
 
-class Course(db.Model):
-    courseID = db.Column(db.Integer, primary_key=True)
-    courseName = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255), nullable=False)
-    section = db.Column(db.String(10), nullable=False)
-    totalSeats = db.Column(db.Integer, nullable=False)
-    seatsTaken = db.Column(db.Integer, nullable=False)
-    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
-    dates = db.Column(db.String(255), nullable=False)
-    timings = db.Column(db.String(255), nullable=False)
-
-    teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
-    students = db.relationship('User', secondary=registration, backref=db.backref('registered_courses', lazy='dynamic'))
-
-    def __repr__(self):
-        return '<Course %r>' % self.courseID
-
 class FAQ(db.Model):
     faqID = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(255), nullable=False)
@@ -88,9 +112,6 @@ class FAQ(db.Model):
     def __repr__(self):
         return '<FAQ %r>' % self.id
 
-
-if not os.path.exists('data.db'):  # Check if the database file doesn't exist
-    db.create_all()
 
 
 @app.route('/')
@@ -102,7 +123,7 @@ def index():
 def studentHome():
     user_id = session.get('user_id')
     student = User.query.get(user_id)
-    courses = student.courses
+    courses = student.enrolled_courses  # Change this to student.enrolled_courses
     return render_template('student-home.html', student=student, courses=courses)
 
 
@@ -243,7 +264,7 @@ def signUp():
 
 
 @app.route('/log-in', methods=['GET', 'POST'])
-def logIn():
+def log_in():                  #WE CHANGED logIn to log_in ##########################3
     if request.method == 'POST':
         # Retrieve form data
         username = request.form['username']
@@ -275,13 +296,8 @@ def logIn():
 
 @app.route('/course-catalog')
 def courseCatalog():
-    conn = sqlite3.connect('data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM course')
-    courses = cursor.fetchall()
-    conn.close()
     courses = Course.query.all()
-    return render_template('course-catalog.html', courses=courses)
+    return render_template('course-catalog.html', courses=courses, url_for=url_for)
 
 
 @app.route('/create-class', methods=['GET', 'POST'])
@@ -297,7 +313,7 @@ def createClass():
         dates = request.form['dates']
         timings = request.form['timings']
 
-        # Find the teacher by usernamef
+        # Find the teacher by username
         teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
 
         if not teacher:
@@ -375,15 +391,12 @@ def internal_server_error(e):
     return "Internal Server Error", 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 @app.route('/register-course/<int:course_id>', methods=['POST'])
 def register_course(course_id):
     # Check if the user is logged in
     if not current_user.is_authenticated:
         return redirect(url_for('log_in'))  # Redirect to login page if not logged in
-    pass
 
     # Get the course with the given course_id from the database
     course = Course.query.get(course_id)
@@ -405,3 +418,9 @@ def register_course(course_id):
     # Optionally, you can add a success message here and redirect to the course catalog
     return redirect(url_for('course_catalog'))
 
+if __name__ == '__main__':
+    # Create all tables if they don't exist
+    if not os.path.exists('data.db'):
+        db.create_all()
+
+    app.run(debug=True)
