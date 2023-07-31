@@ -9,8 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="/student-home"><img class="logo" src="../static/images/classifylogoside
-            .png"></a>
+        <a href="/student-home"><img class="logo" src="../static/images/classifylogoside.png"></a>
 
 
     <div class="btn-group">
@@ -34,7 +33,7 @@
                             <p>Section: {{ course.section }}</p>
                             <p>Seats Available: {{ course.totalSeats - course.seatsTaken }}</p>
                                 <form action="{{ url_for('register_course', course_id=course.courseID) }}" method="POST">
-                                    <button type="submit" class="btn btn-primary">Register</button>
+                                    <button type="submit" class="button-56">Register</button>
                                 </form>
                         </div>
                     </div>
@@ -44,7 +43,6 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 
