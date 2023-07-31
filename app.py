@@ -1,27 +1,77 @@
 from flask import Flask, render_template, request, redirect, session
+from flask_login import current_user
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
 import os
+from flask_login import LoginManager, UserMixin
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.secret_key = 'your_secret_key'  # Set a secret key for session security
 db = SQLAlchemy(app)
 
+############################################################################3
 
-class User(db.Model):
-    userID = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(255), nullable=False)
-    last_name = db.Column(db.String(255), nullable=False)
-    email = db.Column(db.String(255), nullable=False)
-    username = db.Column(db.String(255), nullable=False)
-    password = db.Column(db.String(255), nullable=False)
-    age = db.Column(db.Integer, nullable=False)
-    gender = db.Column(db.String(255), nullable=False)
+# Initialize Flask-Login
+login_manager = LoginManager(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+# Ensure the User class inherits from UserMixin
+
+
+    ##########################################################################
+
+class Registration(db.Model):
+    __tablename__ = 'registration'
+    user_id = db.Column(db.Integer, db.ForeignKey('user.userID'), primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.courseID'), primary_key=True)
+    # Add any additional fields related to the registration if needed
+
+    # Add relationships to User and Course models
+    user = db.relationship('User', backref=db.backref('registrations', lazy=True))
+    course = db.relationship('Course', backref=db.backref('registrations', lazy=True))
 
     def __repr__(self):
-        return '<User %r>' % self.id
+        return f'<Registration user_id={self.user_id} course_id={self.course_id}>'
+
+class User(db.Model, UserMixin):
+    userID = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    gender = db.Column(db.String(10), nullable=False)
+    role = db.Column(db.String(20), nullable=False, default='student')
+
+    # Add the enrolled_courses relationship to represent the courses a user is enrolled in
+    enrolled_courses = db.relationship('Course', secondary='registration', backref=db.backref('students', lazy='dynamic'))
+
+    def __repr__(self):
+        return f'<User {self.username}>'
+
+class Course(db.Model):
+    __tablename__ = 'course'
+    courseID = db.Column(db.Integer, primary_key=True)
+    courseName = db.Column(db.String(255), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    section = db.Column(db.String(10), nullable=False)
+    totalSeats = db.Column(db.Integer, nullable=False)
+    seatsTaken = db.Column(db.Integer, nullable=False)
+    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
+    dates = db.Column(db.String(255), nullable=False)
+    timings = db.Column(db.String(255), nullable=False)
+
+    teacher = db.relationship('Teacher', backref=db.backref('courses', lazy=True))
+
+    def __repr__(self):
+        return '<Course %r>' % self.courseID
 
 
 class Teacher(db.Model):
@@ -32,11 +82,10 @@ class Teacher(db.Model):
     status = db.Column(db.String(255), nullable=False)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
-    user = db.relationship('User', backref=db.backref('Teacher', lazy=True))
+    user = db.relationship('User', backref=db.backref('teacher', uselist=False))
 
     def __repr__(self):
         return '<Teacher %r>' % self.teacherID
-    
 
 class Parent(db.Model):
     parentID = db.Column(db.Integer, primary_key=True)
@@ -55,23 +104,6 @@ class Parent(db.Model):
         return '<Parent %r>' % self.parentID
 
 
-class Course(db.Model):
-    courseID = db.Column(db.Integer, primary_key=True)
-    courseName = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(255), nullable=False)
-    section = db.Column(db.String(10), nullable=False)
-    totalSeats = db.Column(db.Integer, nullable=False)
-    seatsTaken = db.Column(db.Integer, nullable=False)
-    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
-    dates = db.Column(db.String(255), nullable=False)
-    timings = db.Column(db.String(255), nullable=False)
-
-    teacher = db.relationship('Teacher', backref=db.backref('Courses', lazy=True))
-
-    def __repr__(self):
-        return '<Course %r>' % self.courseID
-
-
 class FAQ(db.Model):
     faqID = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(255), nullable=False)
@@ -80,9 +112,6 @@ class FAQ(db.Model):
     def __repr__(self):
         return '<FAQ %r>' % self.id
 
-
-if not os.path.exists('data.db'):  # Check if the database file doesn't exist
-    db.create_all()
 
 
 @app.route('/')
@@ -93,8 +122,9 @@ def index():
 @app.route('/student-home')
 def studentHome():
     user_id = session.get('user_id')
-    user = User.query.get(user_id)
-    return render_template('student-home.html', user=user)
+    student = User.query.get(user_id)
+    courses = student.enrolled_courses  # Change this to student.enrolled_courses
+    return render_template('student-home.html', student=student, courses=courses)
 
 
 @app.route('/student-settings')
@@ -107,6 +137,7 @@ def studentSettings():
 def updateStudent():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
+    pass
     
     if user:
         # Update user information from the form data
@@ -132,9 +163,10 @@ def updateStudent():
 
 @app.route('/teacher-home')
 def teacherHome():
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    return render_template('teacher-home.html', teacher=teacher)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    courses = Course.query.join(Teacher).join(User).filter(User.userID == user_id).all()
+    return render_template('teacher-home.html', user=user, courses=courses)
 
 
 @app.route('/teacher-settings')
@@ -151,6 +183,7 @@ def updateTeacher():
     teacher = Teacher.query.get(teacher_id)
     user_id = session.get('user_id')
     user = User.query.get(user_id)
+    pass
     
     if teacher:
         # Update teacher information from the form data
@@ -231,7 +264,7 @@ def signUp():
 
 
 @app.route('/log-in', methods=['GET', 'POST'])
-def logIn():
+def log_in():                  #WE CHANGED logIn to log_in ##########################3
     if request.method == 'POST':
         # Retrieve form data
         username = request.form['username']
@@ -263,12 +296,13 @@ def logIn():
 
 @app.route('/course-catalog')
 def courseCatalog():
-    conn = sqlite3.connect('data.db')
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM course')
-    courses = cursor.fetchall()
-    conn.close()
-    return render_template('course-catalog.html', courses=courses)
+    courses = Course.query.all()
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    registered_course_ids = [course.courseID for course in user.enrolled_courses]
+
+    return render_template('course-catalog.html', courses=courses, registered_course_ids=registered_course_ids)
 
 
 @app.route('/create-class', methods=['GET', 'POST'])
@@ -280,15 +314,17 @@ def createClass():
         section = request.form['section']
         totalSeats = int(request.form['totalSeats'])
         seatsTaken = int(request.form['seatsTaken'])
-        teacher_id = int(request.form['teacher'])  # Assuming the teacher ID is an integer
+        teacher_username = request.form['teacher']  # Assuming the teacher's username is provided in the form
         dates = request.form['dates']
         timings = request.form['timings']
 
-        # Retrieve the corresponding Teacher object based on the provided teacher ID
-        teacher = Teacher.query.get(teacher_id)
+        # Find the teacher by username
+        teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
 
-        if teacher is None:
-            error_message = 'Invalid teacher ID. Please enter a valid teacher ID.'
+        if not teacher:
+            # If the teacher doesn't exist, you can choose to create a new teacher or show an error message.
+            # For simplicity, let's assume the teacher must exist in the database.
+            error_message = 'Teacher not found. Please enter a valid teacher username.'
             return render_template('create-class.html', error_message=error_message)
 
         # Create a new course and add it to the database
@@ -298,7 +334,7 @@ def createClass():
             section=section,
             totalSeats=totalSeats,
             seatsTaken=seatsTaken,
-            teacher=teacher,
+            teacher=teacher,  # Set the teacher object in the new course
             dates=dates,
             timings=timings
         )
@@ -306,12 +342,13 @@ def createClass():
         try:
             db.session.add(new_course)
             db.session.commit()
-            return redirect('/course-catalog')
+            return redirect('/course-catalog')  # Redirect to the course catalog page after adding the class
         except Exception as e:
             error_message = 'There was an issue adding the class. Please try again later.'
             return render_template('create-class.html', error_message=error_message)
     else:
         return render_template('create-class.html')
+
 
 
 @app.route('/faq-teacher')
@@ -359,6 +396,36 @@ def internal_server_error(e):
     return "Internal Server Error", 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
+@app.route('/register-course/<int:course_id>', methods=['POST'])
+def register_course(course_id):
+    # Check if the user is logged in
+    if not current_user.is_authenticated:
+        return redirect('/log-in')  # Redirect to login page if not logged in
+
+    # Get the course with the given course_id from the database
+    course = Course.query.get(course_id)
+
+    # Check if the course exists
+    if not course:
+        # Handle the case where the course doesn't exist (e.g., display an error message)
+        pass
+
+    # Check if the user is already registered for the course
+    if current_user in course.students:
+        # Handle the case where the user is already registered for the course
+        pass
+
+    # Register the current user for the course (add the user to the course's students relationship)
+    course.students.append(current_user)
+    db.session.commit()
+
+    # Optionally, you can add a success message here and redirect to the course catalog
+    return redirect('/course_catalog')
+
+if __name__ == '__main__':
+    # Create all tables if they don't exist
+    if not os.path.exists('data.db'):
+        db.create_all()
+
+    app.run(debug=True)

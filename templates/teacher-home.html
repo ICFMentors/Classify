@@ -1,84 +1,125 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-1eK4oRl2GjkpZGJ2+hvW8SPx7kYFj+H4T/Kk7SwwhEiHHRhGrzlw+BBp5FF+I6eX" crossorigin="anonymous"></script>
+    <link rel="icon" href="../../../../favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <title>Teacher Home</title>
+    <title>Student Home</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/css/css.css" rel="stylesheet">
+    <link href="../static/css/css.css" rel="stylesheet" type="text/css">
+ 
+    <style>
+         .carousel-container, .carous {
+            width: 450px;
+            padding: 10px;
+            margin: 10px
+        }
+            .carousel-image {
+            width: 100%;
+            height: auto;
+        }
+    </style>     
 
-    <!-- Custom styles for this template -->
-    
-    
 
 </head>
 
-<body data-new-gr-c-s-check-loaded="14.1113.0" data-gr-ext-installed="" data-new-gr-c-s-loaded="14.1113.0">
-
+<body>
+    
         <header>
             <img class="logo" src="../static/images/classifylogoside.png">
 
 
         <div class="btn-group">
-            <a href="/about-us-teacher" class="btn btn-primary">About Us!</a>
-            <a href="/faq-teacher"><button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
-            <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
+            <a href="/about-us-student">        <button type="button" class="btn btn-primary">About Us!</button></a>
+            <a href="/faq-student">     <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
+            <a href="/student-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
             <a href="/">                <button type="button" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i></button></a>
           </div>
           </header>
-
-
-          <div class="classtable">
-            <h2 class="my-classes">My Classes</h2>
-
-            <table class="table table-striped">
-                <tr>
-                    <td><a target="_blank" href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
-                    <td><button class="btn btn-basic"><i class="bi-megaphone"></i></button></td>
-                    <td><button class="btn btn-basic"><i class="bi-exclamation-lg"></i></button></td>
-                    <td><button class="btn btn-basic"><i class="bi-list-ul"></i></button></td>
-                </tr>
-
-                <tr>
-                    <td><a target="_blank" href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
-                    <td><button class="btn btn-basic"><i class="bi-megaphone"></i></button></td>
-                    <td><button class="btn btn-basic"><i class="bi-exclamation-lg"></i></button></td>
-                    <td><button class="btn btn-basic"><i class="bi-list-ul"></i></button></td>
-                </tr>
-
-                <tr>
-                    <td><a target="_blank" href="https://classroom.google.com/" class="classes">Google Classroom</a></td>
-                    <td><button class="btn btn-basic"><i class="bi-megaphone"></i></button></td>
-                    <td><button class="btn btn-basic"><i class="bi-exclamation-lg"></i></button></td>
-                    <td><button class="btn btn-basic"><i class="bi-list-ul"></i></button></td>
-                </tr>
-
-            </table>
-          </div>
-
-            <div class="row">
-        
-              <div class="col">
-            <div class="calendar"><p>My Calendar</p><iframe class="thecalendar" src="https://calendar.google.com/calendar/embed?height=400&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showNav=1&showTitle=0&showTz=0&showPrint=0&showTabs=1&showCalendars=0&src=ZDFmZWU5ZTA2M2E5NWRjZmI3MGQxMGFhZGQ2MGI0M2NmN2ZiMzM4NzBlMTQzM2YzZmQ3MjkyYmE1MWVmNjcwN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D50000" style="border:solid 1px #777" width="1052 auto" height="400" frameborder="0" scrolling="no"></iframe></div>
+      
+       <div class="row">
+        </div>
             
-            <div class="col">
-            <div><a href="/create-class"><button class= "add"><i class="bi-plus-circle"></i> Create Class</button></a></div>
-          </div>
-          </div>
+        <div class="col">
+            <div class="classtable">
+                <h2 class="my-classes">My Classes</h2>
+    
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Class</th>
+                            <th>Dates</th>
+                            <th>Students (Enrolled/Capacity)</th>
+                            <th>Timings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for course in courses %}
+                        <tr>
+                        <td>{{ course.courseName }}</td>
+                        <td>{{ course.dates }}</a></td>
+                        <td>{{ course.seatsTaken }} / {{ course.totalSeats }}</td>
+                        <td>{{ course.timings }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </div> 
+<row>
+                <div class="col">
+                    <div class="calendar"><h2 class="my-classes">Upcoming Events, Classes and More!</h2><iframe class="thecalendar" src="https://calendar.google.com/calendar/embed?height=400&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showNav=1&showTitle=0&showTz=0&showPrint=0&showTabs=1&showCalendars=0&src=ZDFmZWU5ZTA2M2E5NWRjZmI3MGQxMGFhZGQ2MGI0M2NmN2ZiMzM4NzBlMTQzM2YzZmQ3MjkyYmE1MWVmNjcwN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D50000" style="border:solid 1px #777" width="1052" height="460" frameborder="0" scrolling="no"></iframe></div>
+                </div>
+<div class="row">
+                <div class="col carous">
+                    <h4 class="my-classes">This Month's Featured Classes and Events!</h4>
+                    <div id="demo" class="carousel slide carousel-container" data-bs-ride="carousel">
+                        <!-- Indicators/dots -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+                        </div>
+    
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="../static/images/arduino_camp.png" alt="No Featured Class at the Moment!" class="carousel-image">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../static/images/Camp_Tawheed_Flyer.png" alt="No Featured Class at the Moment!" class="carousel-image">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../static/images/pythoncamp.png" alt="No Featured Class at the Moment!" class="carousel-image">
+                            </div>
+                        </div>
+    
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
 
+                    <div><a href="/create-class"><button class= "add"><i class="bi-plus-circle"></i> Create Class</button></a></div>
+                </div>
+            </div>
+            </div>
+</row>
 
-
-        </div>
-
-        </div>
-
-  
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
