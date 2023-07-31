@@ -29,7 +29,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ course.courseName }}</h5>
                             <p class="card-text">{{ course.description }}</p>
-                            <p>Teacher: {{ course.teacher.username }}</p>
+                            <p>Teacher: {{ course.teacher.user.first_name }} {{course.teacher.user.last_name }}</p>
                             <p>Section: {{ course.section }}</p>
                             <p>Seats Available: {{ course.totalSeats - course.seatsTaken }}</p>
                                 <form action="{{ url_for('register_course', course_id=course.courseID) }}" method="POST">
