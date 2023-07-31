@@ -297,7 +297,12 @@ def log_in():                  #WE CHANGED logIn to log_in #####################
 @app.route('/course-catalog')
 def courseCatalog():
     courses = Course.query.all()
-    return render_template('course-catalog.html', courses=courses, url_for=url_for)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    registered_course_ids = [course.courseID for course in user.enrolled_courses]
+
+    return render_template('course-catalog.html', courses=courses, registered_course_ids=registered_course_ids)
 
 
 @app.route('/create-class', methods=['GET', 'POST'])
@@ -396,7 +401,7 @@ def internal_server_error(e):
 def register_course(course_id):
     # Check if the user is logged in
     if not current_user.is_authenticated:
-        return redirect(url_for('log_in'))  # Redirect to login page if not logged in
+        return redirect('/log-in')  # Redirect to login page if not logged in
 
     # Get the course with the given course_id from the database
     course = Course.query.get(course_id)
@@ -416,7 +421,7 @@ def register_course(course_id):
     db.session.commit()
 
     # Optionally, you can add a success message here and redirect to the course catalog
-    return redirect(url_for('course_catalog'))
+    return redirect('/course_catalog')
 
 if __name__ == '__main__':
     # Create all tables if they don't exist
