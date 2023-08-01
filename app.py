@@ -347,7 +347,7 @@ def createClass():
             error_message = 'There was an issue adding the class. Please try again later.'
             return render_template('create-class.html', error_message=error_message)
     else:
-        return render_template('teacher-home.html')
+        return render_template('create-class.html')
 
 
 
