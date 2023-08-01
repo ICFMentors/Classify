@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
-from flask_login import current_user
+from flask_login import current_user, login_user
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
@@ -53,8 +53,8 @@ class User(db.Model, UserMixin):
     # Add the enrolled_courses relationship to represent the courses a user is enrolled in
     enrolled_courses = db.relationship('Course', secondary='registration', backref=db.backref('students', lazy='dynamic'))
 
-    def __repr__(self):
-        return f'<User {self.username}>'
+    def get_id(self):
+        return str(self.userID)
 
 class Course(db.Model):
     __tablename__ = 'course'
@@ -276,7 +276,7 @@ def log_in():                  #WE CHANGED logIn to log_in #####################
 
         if user:
             # Store the user ID in the session
-            session['user_id'] = user.userID
+            login_user(user)
 
             if login_role == 'student':
                 return redirect('/student-home')
@@ -421,7 +421,7 @@ def register_course(course_id):
     db.session.commit()
 
     # Optionally, you can add a success message here and redirect to the course catalog
-    return redirect('/course_catalog')
+    return redirect('/course-catalog')
 
 if __name__ == '__main__':
     # Create all tables if they don't exist
