@@ -347,7 +347,7 @@ def createClass():
             error_message = 'There was an issue adding the class. Please try again later.'
             return render_template('create-class.html', error_message=error_message)
     else:
-        return render_template('create-class.html')
+        return render_template('teacher-home.html')
 
 
 
@@ -421,7 +421,7 @@ def register_course(course_id):
     db.session.commit()
 
     # Optionally, you can add a success message here and redirect to the course catalog
-    return redirect('/course-catalog')
+    return redirect('/student_home')
 
 if __name__ == '__main__':
     # Create all tables if they don't exist
