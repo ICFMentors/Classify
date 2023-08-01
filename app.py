@@ -429,3 +429,20 @@ if __name__ == '__main__':
         db.create_all()
 
     app.run(debug=True)
+
+@app.route('/delete_course/<int:course_id>', methods=['POST'])
+def delete_course(course_id):
+
+    if not current_user.is_authenticated:
+        return redirect('/log-in')
+    
+    course = Course.query.get(course_id)
+
+    if not course:
+        pass
+
+    if current_user != course.teacher.user:
+        pass
+
+    db.session.delete(course)
+    db.session.commit

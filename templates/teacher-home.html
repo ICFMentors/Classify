@@ -68,6 +68,9 @@
                         <td>{{ course.dates }}</a></td>
                         <td>{{ course.seatsTaken }} / {{ course.totalSeats }}</td>
                         <td>{{ course.timings }}</td>
+                        <td><form action="/delete_course/{{ course.courseID }}" method="POST">
+                            <input type="submit" value="Delete Course">
+                        </form></td>
                         </tr>
                         {% endfor %}
                     </tbody>
