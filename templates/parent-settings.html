@@ -53,8 +53,11 @@
       </div>
       <br>
 
+      <button id="addstudent2" name="addstudent2" class="button-17" type="buttonn" onclick="addstudent2()">Add student</button>
+
 
     <!-- Textarea -->
+  <div id="student2">
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 2 Username</label>
         <div class="col-md-4">                     
@@ -71,14 +74,36 @@
         </div>
       </div>
       <br>
+      <button id="addstudent3" name="addstudent3" class="button-17" type="buttonn" onclick="addstudent3()">Add student</button>
+
+  </div>
+
+      <script>
+        document.getElementById('student2').innerHTML="";
+        document.getElementById('student3').innerHTML="";
+        document.getElementById('student4').innerHTML="";
+  
+        function addstudent2(){
+          document.getElementById("addstudent2").innerHTML = student2 ;
+        }
+        function addstudent3(){
+          document.getElementById('addstudent2').innerHTML =  student3 ;
+        }
+        function addstudent4(){
+          document.getElementById('addstudent2').innerHTML = student4 ;
+        }
+      </script>
+
     <!-- Textarea -->
+  <div id="student3">
     <div class="form-group">
-        <label class="col-md-4 control-label" for="textarea">Student 3</label>
+        <label class="col-md-4 control-label" for="textarea">Student 3 Username</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
           <input id="student3" name="student3" type="text" placeholder="Username" class="form-control" required="">
         </div>
       </div>
+
 
       <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 3 Password</label>
@@ -88,10 +113,13 @@
         </div>
       </div>
       <br>
+      <button id="addstudent4" name="addstudent4" class="button-17" type="buttonn" onclick="addstudent4()">Add student</button>
+  </div> 
     
     <!-- Textarea -->
+  <div id="student4">
     <div class="form-group">
-        <label class="col-md-4 control-label" for="textarea">Student 4</label>
+        <label class="col-md-4 control-label" for="textarea">Student 4 Username</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
           <input id="student4" name="student4" type="text" placeholder="Username" class="form-control" required="">
@@ -106,6 +134,7 @@
         </div>
       </div>
       <br>
+  </div>
 
     <!-- Password input - Old Password -->
     <div class="form-group">
@@ -114,6 +143,7 @@
         <input id="current_password" name="current_password" type="password" placeholder="Parent Password" class="form-control" required>
       </div>
     </div>
+
 
     <script>
       const form = document.querySelector('.form-container');
