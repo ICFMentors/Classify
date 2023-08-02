@@ -50,15 +50,30 @@
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
           <input id="student1password" name="student1password" type="text" placeholder="Password" class="form-control" required="">
-        </div>
-      </div>
+        </div>    
       <br>
+      <button id="addstudent2" name="addstudent2" class="button-17" type="button" onclick="addstudent2()">Add student</button>
+    </div>
+    <br>
 
-      <button id="addstudent2" name="addstudent2" class="button-17" type="buttonn" onclick="addstudent2()">Add student</button>
+      <script>
 
 
+        function addstudent2() {
+          document.getElementById("student2").style.display = "block";
+          document.getElementById("addstudent2").style.display = "none"; // You can also use "inline-block" or "flex" based on your layout.
+        }
+        
+        function addstudent3(){
+          document.getElementByid('addstudent2').innerHTML =  student3 ;
+        }
+        function addstudent4(){
+          document.getElementById('addstudent2').innerHTML = student4 ;
+        }
+    
+      </script>
     <!-- Textarea -->
-  <div id="student2">
+  <div id="student2" style="display:none">
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 2 Username</label>
         <div class="col-md-4">                     
@@ -75,28 +90,12 @@
         </div>
       </div>
       <br>
-      <button id="addstudent3" name="addstudent3" class="button-17" type="buttonn" onclick="addstudent3()">Add student</button>
+      <button id="addstudent3" name="addstudent3" class="button-17" type="button" onclick="addstudent3()">Add student</button>
 
   </div>
 
-      <script>
-        document.getElementById('student2').innerHTML="";
-        document.getElementById('student3').innerHTML="";
-        document.getElementById('student4').innerHTML="";
-  
-        function addstudent2(){
-          document.getElementById("addstudent2").innerHTML = student2 ;
-        }
-        function addstudent3(){
-          document.getElementById('addstudent2').innerHTML =  student3 ;
-        }
-        function addstudent4(){
-          document.getElementById('addstudent2').innerHTML = student4 ;
-        }
-      </script>
-
     <!-- Textarea -->
-  <div id="student3">
+  <div id="student3" style="display:none">
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 3 Username</label>
         <div class="col-md-4">                     
@@ -114,11 +113,11 @@
         </div>
       </div>
       <br>
-      <button id="addstudent4" name="addstudent4" class="button-17" type="buttonn" onclick="addstudent4()">Add student</button>
+      <button id="addstudent4" name="addstudent4" class="button-17" type="button" onclick="addstudent4()">Add student</button>
   </div> 
     
     <!-- Textarea -->
-  <div id="student4">
+  <div id="student4" style="display:none">
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 4 Username</label>
         <div class="col-md-4">                     
@@ -159,6 +158,9 @@
           alert('Current password is incorrect!');
         }
       });
+
+
+
     </script>
     
   <!-- Button -->
