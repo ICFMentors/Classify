@@ -430,6 +430,8 @@ if __name__ == '__main__':
 
     app.run(debug=True)
 
+
+
 @app.route('/delete_course/<int:course_id>', methods=['POST'])
 def delete_course(course_id):
 
