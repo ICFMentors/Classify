@@ -49,43 +49,13 @@
         <label class="col-md-4 control-label" for="textarea">Student 1 Password</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
-          <input id="student1password" name="student1password" type="text" placeholder="Password" class="form-control" required="">  
-        </div> 
-      </div>
-    <br>
-
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="singlebutton"></label>
-      <div class="col-md-4">
-        <div id="addstudent2" style="display: block;">
-          <button class="button-17 ws-btn w3-block" onclick="addstudent2()">Add another student</button>
+          <input id="student1password" name="student1password" type="text" placeholder="Password" class="form-control" required="">
         </div>
       </div>
-    </div>
-
-      <script>
+      <br>
 
 
-        function addstudent2() {
-          document.getElementById("student2").style.display = "block";
-          document.getElementById("addstudent2").style.display = "none"; // You can also use "inline-block" or "flex" based on your layout.
-        }
-        
-        function addstudent3(){
-          document.getElementById("student3").style.display = "block";
-          document.getElementById("addstudent3").style.display = "none"; 
-        }
-        function addstudent4(){
-          document.getElementById("student4").style.display = "block";
-          document.getElementById("addstudent4").style.display = "none"; 
-        }
-
-
-
-    
-      </script>
     <!-- Textarea -->
-  <div id="student2" style="display:none">
     <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 2 Username</label>
         <div class="col-md-4">                     
@@ -102,28 +72,14 @@
         </div>
       </div>
       <br>
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <div class="col-md-4">
-          <div id="addstudent3" style="display: block;">
-            <button class="button-17 ws-btn w3-block" onclick="addstudent3()">Add another student</button>
-          </div>
-        </div>
-      </div>
-  </div>
-
-
-
     <!-- Textarea -->
-  <div id="student3" style="display:none">
     <div class="form-group">
-        <label class="col-md-4 control-label" for="textarea">Student 3 Username</label>
+        <label class="col-md-4 control-label" for="textarea">Student 3</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
           <input id="student3" name="student3" type="text" placeholder="Username" class="form-control" required="">
         </div>
       </div>
-
 
       <div class="form-group">
         <label class="col-md-4 control-label" for="textarea">Student 3 Password</label>
@@ -133,20 +89,10 @@
         </div>
       </div>
       <br>
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="singlebutton"></label>
-        <div class="col-md-4">
-          <div id="addstudent4" style="display: block;">
-            <button class="button-17 ws-btn w3-block" onclick="addstudent4()">Add another student</button>
-          </div>
-        </div>
-      </div>
-    </div> 
     
     <!-- Textarea -->
-  <div id="student4" style="display:none">
     <div class="form-group">
-        <label class="col-md-4 control-label" for="textarea">Student 4 Username</label>
+        <label class="col-md-4 control-label" for="textarea">Student 4</label>
         <div class="col-md-4">                     
           <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
           <input id="student4" name="student4" type="text" placeholder="Username" class="form-control" required="">
@@ -161,7 +107,6 @@
         </div>
       </div>
       <br>
-  </div>
 
     <!-- Password input - Old Password -->
     <div class="form-group">
@@ -170,7 +115,6 @@
         <input id="current_password" name="current_password" type="password" placeholder="Parent Password" class="form-control" required>
       </div>
     </div>
-
 
     <script>
       const form = document.querySelector('.form-container');
@@ -185,9 +129,6 @@
           alert('Current password is incorrect!');
         }
       });
-
-
-
     </script>
     
   <!-- Button -->

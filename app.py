@@ -421,7 +421,7 @@ def register_course(course_id):
     db.session.commit()
 
     # Optionally, you can add a success message here and redirect to the course catalog
-    return redirect('/student-home')
+    return redirect('/student_home')
 
 if __name__ == '__main__':
     # Create all tables if they don't exist
@@ -429,8 +429,6 @@ if __name__ == '__main__':
         db.create_all()
 
     app.run(debug=True)
-
-
 
 @app.route('/delete_course/<int:course_id>', methods=['POST'])
 def delete_course(course_id):

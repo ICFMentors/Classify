@@ -34,6 +34,7 @@
                             <p>Section: {{ course.section }}</p>
                             <p>Seats Available: {{ course.totalSeats - course.seatsTaken }}</p>
                                 <form action="{{ url_for('register_course', course_id=course.courseID) }}" method="POST">
+                                    
                                     <button type="submit" class="button-56">Register</button>
                                 </form>
                         </div>
