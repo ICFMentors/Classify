@@ -66,7 +66,7 @@
                         {% for course in courses %}
                         <tr>
                             <td>{{ course.courseName }}</td>
-                            <td><a href="/teacher-profile">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</a></td>
+                            <td><a href="/teacher-profile/{{ course.teacher.teacherID }}">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</a></td>
                             <td>{{ course.assignments_due }}</td>
                             <td>{{ course.timings }}</td>
                         </tr>

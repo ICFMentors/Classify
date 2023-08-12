@@ -201,7 +201,13 @@ def updateTeacher():
     else:
         error_message = 'Teacher not found.'
         return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
-
+    
+@app.route('/teacher-profile/<int:teacher_id>')
+def teacher_profile(teacher_id):
+    teacher = Teacher.query.get(teacher_id)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    return render_template('teacher-profile.html', teacher=teacher, user=user)
 
 @app.route('/parent-home')
 def parentHome():
@@ -214,7 +220,6 @@ def parentSettings():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     return render_template('parent-settings.html', user=user)
-
 
 @app.route('/sign-up', methods=['GET', 'POST'])
 def signUp():
@@ -262,7 +267,6 @@ def signUp():
     else:
         return render_template('sign-up.html')
 
-
 @app.route('/log-in', methods=['GET', 'POST'])
 def log_in():                  #WE CHANGED logIn to log_in ##########################3
     if request.method == 'POST':
@@ -293,15 +297,12 @@ def log_in():                  #WE CHANGED logIn to log_in #####################
     else:
         return render_template('log-in.html')
 
-
 @app.route('/course-catalog')
 def courseCatalog():
     courses = Course.query.all()
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-
     registered_course_ids = [course.courseID for course in user.enrolled_courses]
-
     return render_template('course-catalog.html', courses=courses, registered_course_ids=registered_course_ids)
 
 
@@ -349,13 +350,10 @@ def createClass():
     else:
         return render_template('create-class.html')
 
-
-
 @app.route('/faq-teacher')
 def faqTeacher():
     faq_entries = FAQ.query.all()
     return render_template('faq-teacher.html', faq_entries=faq_entries)
-
 
 @app.route('/faq-student')
 def faqStudent():
@@ -366,15 +364,6 @@ def faqStudent():
 def faqParent():
     faq_entries = FAQ.query.all()
     return render_template('faq-parent.html', faq_entries=faq_entries)
-
-@app.route('/teacher-profile')
-def teacherprofile():
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
-    return render_template('teacher-profile.html', teacher=teacher, user=user)
-
 
 @app.route('/about-us-student')
 def aboutUsStudent():
