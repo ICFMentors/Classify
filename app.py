@@ -112,6 +112,12 @@ class FAQ(db.Model):
     def __repr__(self):
         return '<FAQ %r>' % self.id
 
+class announcements(db.Model):
+    announcementID = db.Column(db.Integer, primary_key=True)
+    announcement_text = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return '<announcements %r>' % self.id
 
 
 @app.route('/')
@@ -165,7 +171,7 @@ def updateStudent():
 def teacherHome():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    courses = Course.query.join(Teacher).join(User).filter(User.userID == user_id).all()
+    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
     return render_template('teacher-home.html', user=user, courses=courses)
 
 
