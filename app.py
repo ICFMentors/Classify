@@ -375,6 +375,10 @@ def faqParent():
 def aboutUsStudent():
     return render_template('about-us-student.html')
 
+@app.route('/create-announcement')
+def createAnnouncement():
+    return render_template('create-announcement.html')
+
 @app.route('/about-us-teacher')
 def aboutUsTeacher():
     return render_template('about-us-teacher.html')
