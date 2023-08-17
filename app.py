@@ -349,7 +349,7 @@ def createClass():
         try:
             db.session.add(new_course)
             db.session.commit()
-            return redirect('/course-catalog')  # Redirect to the course catalog page after adding the class
+            return redirect('/teacher-home')  # Redirect the course catalog page after adding the class
         except Exception as e:
             error_message = 'There was an issue adding the class. Please try again later.'
             return render_template('create-class.html', error_message=error_message)
