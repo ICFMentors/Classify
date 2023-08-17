@@ -320,18 +320,19 @@ def createClass():
         description = request.form['description']
         section = request.form['section']
         totalSeats = int(request.form['totalSeats'])
-        seatsTaken = int(request.form['seatsTaken'])
-        teacher_username = request.form['teacher']  # Assuming the teacher's username is provided in the form
         dates = request.form['dates']
+        days = request.form['days']
         timings = request.form['timings']
+        teacher_id = session.get('user_id')
+        teacher = Teacher.query.get(teacher_id)
 
         # Find the teacher by username
-        teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
+        #teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
 
         if not teacher:
             # If the teacher doesn't exist, you can choose to create a new teacher or show an error message.
             # For simplicity, let's assume the teacher must exist in the database.
-            error_message = 'Teacher not found. Please enter a valid teacher username.'
+            error_message = 'You do not have access to the teacher role. Please contact admin at bagdadihadi@gmail.com.'
             return render_template('create-class.html', error_message=error_message)
 
         # Create a new course and add it to the database
@@ -340,10 +341,11 @@ def createClass():
             description=description,
             section=section,
             totalSeats=totalSeats,
-            seatsTaken=seatsTaken,
-            teacher=teacher,  # Set the teacher object in the new course
+            seatsTaken=0,
             dates=dates,
-            timings=timings
+            days=days,
+            timings=timings,
+            teacher=teacher  # Set the teacher object in the new course
         )
 
         try:
