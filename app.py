@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, session
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
@@ -265,6 +265,7 @@ def signUp():
 
             # Store the user ID in the session
             session['user_id'] = new_user.userID
+            login_user(new_user)
 
             return redirect('/student-home')
         except Exception as e:
@@ -287,6 +288,7 @@ def log_in():                  #WE CHANGED logIn to log_in #####################
         if user:
             # Store the user ID in the session
             login_user(user)
+            session['user_id'] = user.userID
 
             if login_role == 'student':
                 return redirect('/student-home')
@@ -302,6 +304,13 @@ def log_in():                  #WE CHANGED logIn to log_in #####################
         return render_template('log-in.html', error_message=error_message)
     else:
         return render_template('log-in.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')  # Redirect to the main page after logging out
+
 
 @app.route('/course-catalog')
 def courseCatalog():
@@ -390,39 +399,54 @@ def aboutUsParent():
     return render_template('about-us-parent.html')
 
 
+@app.route('/register-course/<int:course_id>', methods=['POST'])
+@login_required  # Ensure the user is logged in before registering
+def register_course(course_id):
+    course = Course.query.get(course_id)
+
+    if not course:
+        return "Course not found", 404  # Handle the case where the course doesn't exist
+
+    if current_user in course.students:
+        return "Already registered for this course", 400  # Handle the case where the user is already registered
+
+    course.students.append(current_user)
+    db.session.commit()
+
+    return redirect('/student-home')  # Redirect to the student's home page
+
+@app.route('/delete_course/<int:course_id>', methods=['POST'])
+@login_required
+def delete_course(course_id):
+    course = Course.query.get(course_id)
+
+    if not course:
+        return "Course not found", 404
+
+    if current_user != course.teacher.user:
+        return "You don't have permission to delete this course", 403
+
+    db.session.delete(course)
+    db.session.commit()
+
+    return redirect('/teacher-home')  # Redirect to the teacher's home page
+
+
+
+
 @app.errorhandler(500)
 def internal_server_error(e):
     exc_type, exc_value, exc_traceback = sys.exc_info()
     app.logger.error("An internal server error occurred: %s", exc_value)
     return "Internal Server Error", 500
 
+@app.errorhandler(404)
+def not_found_error(error):
+    return "Page not found", 404
 
-
-@app.route('/register-course/<int:course_id>', methods=['POST'])
-def register_course(course_id):
-    # Check if the user is logged in
-    if not current_user.is_authenticated:
-        return redirect('/log-in')  # Redirect to login page if not logged in
-
-    # Get the course with the given course_id from the database
-    course = Course.query.get(course_id)
-
-    # Check if the course exists
-    if not course:
-        # Handle the case where the course doesn't exist (e.g., display an error message)
-        pass
-
-    # Check if the user is already registered for the course
-    if current_user in course.students:
-        # Handle the case where the user is already registered for the course
-        pass
-
-    # Register the current user for the course (add the user to the course's students relationship)
-    course.students.append(current_user)
-    db.session.commit()
-
-    # Optionally, you can add a success message here and redirect to the course catalog
-    return redirect('/student-home')
+@app.errorhandler(403)
+def forbidden_error(error):
+    return "Forbidden", 403
 
 if __name__ == '__main__':
     # Create all tables if they don't exist
@@ -431,19 +455,3 @@ if __name__ == '__main__':
 
     app.run(debug=True)
 
-@app.route('/delete_course/<int:course_id>', methods=['POST'])
-def delete_course(course_id):
-
-    if not current_user.is_authenticated:
-        return redirect('/log-in')
-    
-    course = Course.query.get(course_id)
-
-    if not course:
-        pass
-
-    if current_user != course.teacher.user:
-        pass
-
-    db.session.delete(course)
-    db.session.commit
