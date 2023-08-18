@@ -323,6 +323,10 @@ def courseCatalog():
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def createClass():
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
     if request.method == 'POST':
         # Retrieve form data
         courseName = request.form['courseName']
@@ -332,8 +336,6 @@ def createClass():
         dates = request.form['dates']
         days = request.form['days']
         timings = request.form['timings']
-        teacher_id = session.get('user_id')
-        teacher = Teacher.query.get(teacher_id)
 
         # Find the teacher by username
         #teacher = Teacher.query.join(User).filter(User.username == teacher_username).first()
