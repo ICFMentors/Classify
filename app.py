@@ -64,9 +64,10 @@ class Course(db.Model):
     section = db.Column(db.String(10), nullable=False)
     totalSeats = db.Column(db.Integer, nullable=False)
     seatsTaken = db.Column(db.Integer, nullable=False)
-    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
     dates = db.Column(db.String(255), nullable=False)
+    days = db.Column(db.String(255), nullable=False)
     timings = db.Column(db.String(255), nullable=False)
+    teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
 
     teacher = db.relationship('Teacher', backref=db.backref('courses', lazy=True))
 
