@@ -25,6 +25,7 @@
         <h1 class="text-center">Course Catalog</h1>
         <div class="row">
             {% for course in courses %}
+            {% if course.active == 1 %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <div class="card-body">

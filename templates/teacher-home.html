@@ -64,6 +64,7 @@
                     </thead>
                     <tbody>
                         {% for course in courses %}
+                        {% if course.active == 1 %}
                         <tr>
                         <td>{{ course.courseName }}</td>
                         <td>{{ course.dates }}</a></td>

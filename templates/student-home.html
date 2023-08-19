@@ -64,6 +64,7 @@
                     </thead>
                     <tbody>
                         {% for course in courses %}
+                        {% if course.active == 1 %}
                         <tr>
                             <td>{{ course.courseName }}</td>
                             <td><a href="/teacher-profile/{{ course.teacher.teacherID }}">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</a></td>
