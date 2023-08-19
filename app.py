@@ -67,6 +67,7 @@ class Course(db.Model):
     dates = db.Column(db.String(255), nullable=False)
     days = db.Column(db.String(255), nullable=False)
     timings = db.Column(db.String(255), nullable=False)
+    active = db.Column(db.String(255), nullable=False)
     teacherID = db.Column(db.Integer, db.ForeignKey('teacher.teacherID'), nullable=False)
 
     teacher = db.relationship('Teacher', backref=db.backref('courses', lazy=True))
@@ -357,7 +358,8 @@ def createClass():
             dates=dates,
             days=days,
             timings=timings,
-            teacher=teacher  # Set the teacher object in the new course
+            teacher=teacher,  # Set the teacher object in the new course
+            active=1
         )
 
         try:
@@ -429,7 +431,7 @@ def delete_course(course_id):
     if current_user != course.teacher.user:
         return "You don't have permission to delete this course", 403
 
-    db.session.delete(course)
+    course.active=0
     db.session.commit()
 
     return redirect('/teacher-home')  # Redirect to the teacher's home page
