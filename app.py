@@ -416,6 +416,7 @@ def register_course(course_id):
         return "Already registered for this course", 400  # Handle the case where the user is already registered
 
     course.students.append(current_user)
+    course.seatsTaken += 1
     db.session.commit()
 
     return redirect('/student-home')  # Redirect to the student's home page
