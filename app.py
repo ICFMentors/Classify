@@ -114,12 +114,13 @@ class FAQ(db.Model):
     def __repr__(self):
         return '<FAQ %r>' % self.id
 
-class announcements(db.Model):
+class Announcement(db.Model):
     announcementID = db.Column(db.Integer, primary_key=True)
-    announcement_text = db.Column(db.String(255), nullable=False)
+    courseID = db.Column(db.Integer, db.ForeignKey('course.courseID'), nullable=False)
+    text = db.Column(db.String(255), nullable=False)
 
     def __repr__(self):
-        return '<announcements %r>' % self.id
+        return f'<Announcement {self.announcementID}>'
 
 
 @app.route('/')
@@ -132,7 +133,11 @@ def studentHome():
     user_id = session.get('user_id')
     student = User.query.get(user_id)
     courses = student.enrolled_courses  # Change this to student.enrolled_courses
-    return render_template('student-home.html', student=student, courses=courses)
+
+    # Fetch announcements for the courses the student is enrolled in
+    course_ids = [course.courseID for course in courses]
+    announcements = Announcement.query.filter(Announcement.courseID.in_(course_ids)).all()
+    return render_template('student-home.html', student=student, courses=courses, announcements=announcements)
 
 
 @app.route('/student-settings')
@@ -391,9 +396,40 @@ def faqParent():
 def aboutUsStudent():
     return render_template('about-us-student.html')
 
-@app.route('/create-announcement')
-def createAnnouncement():
-    return render_template('create-announcement.html')
+@app.route('/create-announcement', methods=['GET', 'POST'])
+@login_required
+def create_announcement():
+    if request.method == 'POST':
+        user_id = session.get('user_id')
+        teacher = User.query.get(user_id)
+        
+        course_id = int(request.form['course_id'])
+        announcement_text = request.form['announcement_text']
+
+        # Check if the teacher is the instructor of the selected course
+        course = Course.query.get(course_id)
+        if course.teacherID != teacher.teacherID:
+            error_message = 'You are not authorized to create announcements for this course.'
+            return render_template('create-announcement.html', error_message=error_message)
+
+        # Create a new announcement and add it to the database
+        new_announcement = Announcement(courseID=course_id, text=announcement_text)
+
+        try:
+            db.session.add(new_announcement)
+            db.session.commit()
+            return redirect('/teacher-home')  # Redirect to teacher's home page
+        except Exception as e:
+            error_message = 'There was an issue creating the announcement. Please try again later.'
+            return render_template('create-announcement.html', error_message=error_message)
+
+    else:
+        # Fetch courses taught by the teacher
+        user_id = session.get('user_id')
+        teacher = User.query.get(user_id)
+        courses = course.query.all()
+        return render_template('create-announcement.html', courses=courses)
+
 
 @app.route('/about-us-teacher')
 def aboutUsTeacher():
