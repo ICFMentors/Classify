@@ -404,9 +404,11 @@ def aboutUsStudent():
 @login_required
 def create_announcement():
     if request.method == 'POST':
+        # Fetch courses taught by the teacher
         user_id = session.get('user_id')
         teacher = User.query.get(user_id)
-        courses = Course.query.all()
+        user = User.query.get(user_id)
+        courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
         
         course_id = int(request.form['course_id'])
         announcement_text = request.form['announcement_text']
@@ -415,7 +417,7 @@ def create_announcement():
         course = Course.query.get(course_id)
         if course.teacherID != teacher.teacherID:
             error_message = 'You are not authorized to create announcements for this course.'
-            return render_template('create-announcement.html', courses=courses, error_message=error_message)
+            return render_template('create-announcement.html', user=user, courses=courses, error_message=error_message)
 
         # Create a new announcement and add it to the database
         new_announcement = Announcement(courseID=course_id, text=announcement_text)
@@ -426,14 +428,15 @@ def create_announcement():
             return redirect('/teacher-home')  # Redirect to teacher's home page
         except Exception as e:
             error_message = 'There was an issue creating the announcement. Please try again later.'
-            return render_template('create-announcement.html', courses=courses, error_message=error_message)
+            return render_template('create-announcement.html', user=user, courses=courses, error_message=error_message)
 
     else:
         # Fetch courses taught by the teacher
         user_id = session.get('user_id')
         teacher = User.query.get(user_id)
-        courses = Course.query.all()
-        return render_template('create-announcement.html', courses=courses)
+        user = User.query.get(user_id)
+        courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
+        return render_template('create-announcement.html', user=user, courses=courses)
 
 
 @app.route('/about-us-teacher')

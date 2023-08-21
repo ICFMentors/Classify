@@ -27,14 +27,14 @@
       </header>
 
 
-      <div class="container">
+    <div class="container">
         <!-- Select Class to announce to -->
         <div class="form-group">
             <label class="col-md-4 control-label" for="course">Select Course:</label>
             <div class="col-md-4">
             <select id="course_id" name="course_id" class="form-control2">
                 {% for course in courses %}
-                    <!-- {% if course.teacherID == user_id %} -->
+                    <!-- {% if course.teacherID == user.userID %} -->
                     <option value="{{ course.courseID }}">{{ course.courseName }}</option>
                     <!-- {% endif %} -->
                 {% endfor %}
