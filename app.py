@@ -407,7 +407,7 @@ def aboutUsStudent():
 def create_announcement():
     # Fetch courses taught by the teacher
     user_id = session.get('user_id')
-    teacher = User.query.get(user_id)
+    teacher = Teacher.query.get(user_id)
     user = User.query.get(user_id)
     courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
 
