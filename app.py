@@ -193,7 +193,11 @@ def teacherHome():
     user_id = session.get('user_id')
     user = User.query.get(user_id)
     courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
-    return render_template('teacher-home.html', user=user, courses=courses)
+    course_ids = [course.courseID for course in courses]
+    announcements = Announcement.query.filter(Announcement.courseID.in_(course_ids),Announcement.active == 1).all()
+
+    return render_template('teacher-home.html', teacher=teacher, courses=courses, announcements=announcements)
+
 
 
 @app.route('/teacher-settings')
