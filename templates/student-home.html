@@ -82,13 +82,15 @@
                 <div class="col">
                     <div class="calendar"><h2 class="my-classes">Upcoming Events, Classes and More!</h2><iframe class="thecalendar" src="https://calendar.google.com/calendar/embed?height=400&wkst=1&bgcolor=%23ffffff&ctz=America%2FLos_Angeles&showNav=1&showTitle=0&showTz=0&showPrint=0&showTabs=1&showCalendars=0&src=ZDFmZWU5ZTA2M2E5NWRjZmI3MGQxMGFhZGQ2MGI0M2NmN2ZiMzM4NzBlMTQzM2YzZmQ3MjkyYmE1MWVmNjcwN0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23D50000" style="border:solid 1px #777" width="689" height="460" frameborder="0" scrolling="no"></iframe></div>
                 </div>
-                <div class="announcements">
-                    <h2>My Announcements</h2>
-                    <ul>
-                        {% for announcement in announcements %}
-                            <li>{{ announcement.text }}</li>
-                        {% endfor %}
-                    </ul>
+                <div class="col">
+                    <div class="my-classes">
+                        <h2 class="my-classes">My Announcements</h2>
+                        <ul>
+                            {% for announcement in announcements %}
+                                <li>{{ announcement.text }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
 <div class="row">
                 <div class="col carous">
