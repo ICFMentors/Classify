@@ -5,6 +5,7 @@ import sqlite3
 import sys
 import os
 from flask_login import LoginManager, UserMixin
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -122,11 +123,18 @@ class Announcement(db.Model):
     announcementID = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(255), nullable=False)
     courseID = db.Column(db.Integer, db.ForeignKey('course.courseID'), nullable=False)
-
+    active = db.Column(db.String(255), nullable=True)
+    expiration_date = db.Column(db.DateTime, nullable=True)  # New column for expiration datetime
     course = db.relationship('Course', backref=db.backref('announcement', lazy=True))
 
     def __repr__(self):
         return f'<Announcement {self.announcementID}>'
+    
+    @property
+    def active(self):
+        if self.expiration_date is None:
+            return True
+        return datetime.utcnow() <= self.expiration_date
 
 
 @app.route('/')
