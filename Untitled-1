@@ -1,0 +1,10 @@
+-- database: /workspaces/Classify/data.db
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+CREATE TABLE announcement (
+    announcementID INTEGER PRIMARY KEY,
+    courseID INTEGER NOT NULL,
+    text TEXT NOT NULL,
+    FOREIGN KEY (courseID) REFERENCES course(courseID)
+    );

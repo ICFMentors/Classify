@@ -77,6 +77,7 @@ class Course(db.Model):
 
 
 class Teacher(db.Model):
+    __tablename__ = 'teacher'
     teacherID = db.Column(db.Integer, primary_key=True)
     qualifications = db.Column(db.String(400), nullable=False)
     experience = db.Column(db.String(400), nullable=False)
@@ -90,6 +91,7 @@ class Teacher(db.Model):
         return '<Teacher %r>' % self.teacherID
 
 class Parent(db.Model):
+    __tablename__ = 'parent'
     parentID = db.Column(db.Integer, primary_key=True)
     student1ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
     student2ID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
@@ -107,6 +109,7 @@ class Parent(db.Model):
 
 
 class FAQ(db.Model):
+    __tablename__ = 'FAQ'
     faqID = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(255), nullable=False)
     answer = db.Column(db.String(255), nullable=False)
@@ -115,6 +118,7 @@ class FAQ(db.Model):
         return '<FAQ %r>' % self.id
 
 class Announcement(db.Model):
+    __tablename__ = 'announcement'
     announcementID = db.Column(db.Integer, primary_key=True)
     courseID = db.Column(db.Integer, db.ForeignKey('course.courseID'), nullable=False)
     text = db.Column(db.String(255), nullable=False)
