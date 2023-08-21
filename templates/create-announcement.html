@@ -28,7 +28,44 @@
 
 
       <div class="container">
-        <h2>Create Announcement</h2>
+        <!-- Select Class to announce to -->
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="course">Select Course:</label>
+            <div class="col-md-4">
+            <select id="course_id" name="course_id" class="form-control2">
+                {% for course in courses %}
+                    {% if course.teacherID == user_id %}
+                        <option value="{{ course.courseID }}">{{ course.courseName }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+            <div class="mb-3">
+                <label for="announcement" class="form-label">Announcement Text:</label>
+                <textarea class="form-control" name="announcement_text" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Announcement</button>
+        </form>
+    </div>
+</body>
+
+<!-- Select Class to announce to -->
+  <!-- <div class="form-group">
+    <label class="col-md-4 control-label" for="course">Select Course:</label>
+    <div class="col-md-4">
+      <select id="course_id" name="course_id" class="form-control2">
+        {% for course in courses %}
+            {% if course.teacherID == user_id %}
+                <option value="{{ course.courseID }}">{{ course.courseName }}</option>
+            {% endif %}
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+
+<h2>Create Announcement</h2>
         <form action="/create-announcement" method="POST">
             <div class="mb-3">
                 <label for="course" class="form-label">Select Course:</label>
@@ -39,12 +76,4 @@
                         {% endif %}
                     {% endfor %}
                 </select>
-            </div>
-            <div class="mb-3">
-                <label for="announcement" class="form-label">Announcement Text:</label>
-                <textarea class="form-control" name="announcement_text" rows="5" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Create Announcement</button>
-        </form>
-    </div>
-</body>
+            </div> -->
