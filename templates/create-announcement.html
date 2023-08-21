@@ -28,19 +28,20 @@
 
 
     <div class="container">
-        <!-- Select Class to announce to -->
-        <div class="form-group">
-            <label class="col-md-4 control-label" for="course">Select Course:</label>
-            <div class="col-md-4">
-            <select id="course_id" name="course_id" class="form-control2">
-                {% for course in courses %}
-                    <!-- {% if course.teacherID == user.userID %} -->
-                    <option value="{{ course.courseID }}">{{ course.courseName }}</option>
-                    <!-- {% endif %} -->
-                {% endfor %}
-            </select>
+        <form method="POST" action="/create-announcement">
+            <!-- Select Class to announce to -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="course">Select Course:</label>
+                <div class="col-md-4">
+                <select id="course_id" name="course_id" class="form-control2">
+                    {% for course in courses %}
+                        <!-- {% if course.teacherID == user.userID %} -->
+                        <option value="{{ course.courseID }}">{{ course.courseName }}</option>
+                        <!-- {% endif %} -->
+                    {% endfor %}
+                </select>
+                </div>
             </div>
-        </div>
             <div class="mb-3">
                 <label for="announcement" class="form-label">Announcement Text:</label>
                 <textarea class="form-control" name="announcement_text" rows="5" required></textarea>
