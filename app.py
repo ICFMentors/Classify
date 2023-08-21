@@ -150,7 +150,7 @@ def studentHome():
 
     # Fetch announcements for the courses the student is enrolled in
     course_ids = [course.courseID for course in courses]
-    announcements = Announcement.query.filter(Announcement.courseID.in_(course_ids)).all()
+    announcements = Announcement.query.filter(Announcement.courseID.in_(course_ids),Announcement.active == 1).all()
     return render_template('student-home.html', student=student, courses=courses, announcements=announcements)
 
 
@@ -442,6 +442,62 @@ def create_announcement():
 
     else:
         return render_template('create-announcement.html', user=user, courses=courses)
+    
+
+@app.route('/update-announcement/<int:announcement_id>', methods=['POST'])
+@login_required
+def update_announcement(announcement_id):
+    # Fetch the announcement to be updated
+    announcement = Announcement.query.get(announcement_id)
+
+    if not announcement:
+        return "Announcement not found", 404
+
+    # Get the teacher's ID
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+
+    # Check if the teacher is the instructor of the announcement's course
+    if announcement.course.teacherID != teacher.teacherID:
+        return "You are not authorized to update this announcement", 403
+
+    # Update announcement details from the form data
+    announcement.courseID = int(request.form['course_id'])
+    announcement.text = request.form['announcement_text']
+
+    # Check if the "disable_announcement" checkbox was selected
+    if request.form.get('disable_announcement'):
+        announcement.active = 0
+    else:
+        announcement.active = 1
+
+    try:
+        db.session.commit()
+        return redirect('/teacher-home')  # Redirect to teacher's home page
+    except Exception as e:
+        error_message = 'There was an issue updating the announcement. Please try again later.'
+        return render_template('edit-announcement.html', announcement=announcement, error_message=error_message)
+
+
+@app.route('/deactivate-announcement/<int:announcement_id>', methods=['POST'])
+@login_required
+def deactivate_announcement(announcement_id):
+    announcement = Announcement.query.get(announcement_id)
+
+    if not announcement:
+        return "Announcement not found", 404
+
+    # Check if the teacher is the instructor of the announcement's course
+    teacher_id = session.get('user_id')
+    teacher = Teacher.query.get(teacher_id)
+    if announcement.course.teacherID != teacher.teacherID:
+        return "You are not authorized to deactivate this announcement", 403
+
+    announcement.active = 0  # Deactivate the announcement
+    db.session.commit()
+
+    return redirect('/teacher-home')  # Redirect to teacher's home page
+
 
 
 @app.route('/about-us-teacher')
