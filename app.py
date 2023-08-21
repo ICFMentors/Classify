@@ -405,13 +405,13 @@ def aboutUsStudent():
 @app.route('/create-announcement', methods=['GET', 'POST'])
 @login_required
 def create_announcement():
+    # Fetch courses taught by the teacher
+    user_id = session.get('user_id')
+    teacher = User.query.get(user_id)
+    user = User.query.get(user_id)
+    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
+
     if request.method == 'POST':
-        # Fetch courses taught by the teacher
-        user_id = session.get('user_id')
-        teacher = User.query.get(user_id)
-        user = User.query.get(user_id)
-        courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
-        
         course_id = int(request.form['course_id'])
         announcement_text = request.form['announcement_text']
 
@@ -433,11 +433,6 @@ def create_announcement():
             return render_template('create-announcement.html', user=user, courses=courses, error_message=error_message)
 
     else:
-        # Fetch courses taught by the teacher
-        user_id = session.get('user_id')
-        teacher = User.query.get(user_id)
-        user = User.query.get(user_id)
-        courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
         return render_template('create-announcement.html', user=user, courses=courses)
 
 
