@@ -120,8 +120,10 @@ class FAQ(db.Model):
 class Announcement(db.Model):
     __tablename__ = 'announcement'
     announcementID = db.Column(db.Integer, primary_key=True)
-    courseID = db.Column(db.Integer, db.ForeignKey('course.courseID'), nullable=False)
     text = db.Column(db.String(255), nullable=False)
+    courseID = db.Column(db.Integer, db.ForeignKey('course.courseID'), nullable=False)
+
+    course = db.relationship('Course', backref=db.backref('announcement', lazy=True))
 
     def __repr__(self):
         return f'<Announcement {self.announcementID}>'
