@@ -13,13 +13,17 @@ h2 {
   color: #000000;
 }
 
-form{
+
+form {
   width: 600px ;
   margin: 0 auto;
   border: 3px solid #0c7f02;
   background-color: #e7f3e6;
   padding: 10px;
 }
+
+
+
 label { 
   text-align:left; 
   width:100px; 
@@ -38,9 +42,10 @@ input {
   padding: 10px;
 }
 
-body{
+body {
   background-color: #bff3b6;
 } 
+
 legend {
   width: 190px;
             padding: 2px;
@@ -265,9 +270,9 @@ legend {
 
 
 
-/*Button 57 is the same thing as button 57 but we are using it for the log-in*/
+/*Button 56 is the same thing as button 57 but we are using it for the log-in*/
 
-.button-57 {
+.button-56 {
   align-items: center;
   background-color: #fee6e3;
   border: 2px solid #111;
@@ -338,3 +343,69 @@ legend {
 .btn-group {
   float: right;
 }
+
+/* Button 59 is a copy of button 56 but without the border for the course catalog*/
+
+.button-59 {
+  align-items: center;
+  background-color: #fee6e3;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-59:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.button-59:hover:after {
+  transform: translate(0, 0);
+}
+
+.button-59:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.button-59:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .button-59 {
+    padding: 0 40px;
+  }
+}
+
+
+.h1 {
+  background-color: #111;
+}
+
