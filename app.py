@@ -158,12 +158,17 @@ def index():
 def studentHome():
     user_id = session.get('user_id')
     student = User.query.get(user_id)
-    courses = student.enrolled_courses  # Change this to student.enrolled_courses
+    courses = student.enrolled_courses
 
-    # Fetch announcements for the courses the student is enrolled in
+    # Fetch announcements and associated teachers for the courses the student is enrolled in
     course_ids = [course.courseID for course in courses]
-    announcements = Announcement.query.filter(Announcement.courseID.in_(course_ids),Announcement.active == 1).all()
-    return render_template('student-home.html', student=student, courses=courses, announcements=announcements)
+    announcements_with_teachers = db.session.query(Announcement, Teacher).\
+        join(Course).join(Teacher).\
+        filter(Announcement.courseID.in_(course_ids), Announcement.active == 1).\
+        all()
+
+    return render_template('student-home.html', student=student, courses=courses, announcements_with_teachers=announcements_with_teachers)
+
 
 
 @app.route('/student-settings')
