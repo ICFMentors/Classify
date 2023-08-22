@@ -408,7 +408,7 @@ def createClass():
     else:
         return render_template('create-class.html')
 
-@app.route('/faq-teacher')
+@app.route('/faq-teacher', methods=['GET', 'POST'])
 def faqTeacher():
     faq_entries = FAQ.query.all()
     user_id = session.get('user_id')
@@ -433,12 +433,31 @@ def faqTeacher():
         return render_template('faq-teacher.html', faq_entries=faq_entries)
     
 
-@app.route('/faq-student')
+@app.route('/faq-student', methods=['GET', 'POST'])
 def faqStudent():
     faq_entries = FAQ.query.all()
-    return render_template('faq-student.html', faq_entries=faq_entries)
+    user_id = session.get('user_id')
+    if request.method == 'POST':
+        # Retrieve form data
+        question = request.form['textarea']
 
-@app.route('/faq-parent')
+        new_question = Question(
+            query = question,
+            userID = user_id,
+            answer = ""
+        )
+
+        try:
+            db.session.add(new_question)
+            db.session.commit()
+            return redirect('/student-home')  # Redirect to home page
+        except Exception as e:
+            error_message = 'There was an issue sending the question. Please try again later.'
+            return render_template('faq-student.html', faq_entries=faq_entries, error_message=error_message)
+    else:
+        return render_template('faq-student.html', faq_entries=faq_entries)
+
+@app.route('/faq-parent', methods=['GET', 'POST'])
 def faqParent():
     faq_entries = FAQ.query.all()
     return render_template('faq-parent.html', faq_entries=faq_entries)
