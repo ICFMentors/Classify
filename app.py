@@ -427,7 +427,6 @@ def create_announcement():
     if request.method == 'POST':
         course_id = int(request.form['course_id'])
         announcement_text = request.form['announcement_text']
-        flag=1
 
         # Check if the teacher is the instructor of the selected course
         course = Course.query.get(course_id)
@@ -436,7 +435,7 @@ def create_announcement():
             return render_template('create-announcement.html', user=user, courses=courses, error_message=error_message)
 
         # Create a new announcement and add it to the database
-        new_announcement = Announcement(courseID=course_id, text=announcement_text, active=flag)
+        new_announcement = Announcement(courseID=course_id, text=announcement_text, active=1)
 
         try:
             db.session.add(new_announcement)
