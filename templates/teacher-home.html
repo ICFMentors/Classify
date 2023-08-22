@@ -119,6 +119,34 @@
                         </button>
                     </div>
 
+                    <!-- Table to display active announcements -->
+                    <div class="announcement-table">
+                        <h2 class="my-classes">Active Announcements</h2>
+
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Announcement Text</th>
+                                    <th>Course</th>
+                                    <th>Edit</th>
+                                    <th>Deactivate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for announcement in announcements %}
+                                <tr>
+                                    <td>{{ announcement.text }}</td>
+                                    <td>{{ announcement.course.courseName }}</td>
+                                    <td><a href="/edit-announcement/{{ announcement.announcementID }}" class="btn btn-primary">Edit</a></td>
+                                    <td><form action="/deactivate-announcement/{{ announcement.announcementID }}" method="POST">
+                                        <button type="submit" class="btn btn-danger">Deactivate</button>
+                                    </form></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div><a href="/create-class"><button class= "add"><i class="bi-plus-circle"></i>Create Class</button></a></div>
                     <div><a href="/create-announcement"><button class= "add"><i class="bi bi-megaphone-fill"></i>Make an Announcement!</button></a></div>
                 </div>
