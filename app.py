@@ -117,6 +117,18 @@ class FAQ(db.Model):
 
     def __repr__(self):
         return '<FAQ %r>' % self.id
+    
+class Question(db.Model):
+    __tablename__ = 'question'
+    questionID = db.Column(db.Integer, primary_key=True)
+    query = db.Column(db.String(500), nullable=False)
+    answer = db.Column(db.String(255), nullable=True)
+    userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
+
+    user = db.relationship('User', backref=db.backref('teacher', uselist=False))
+
+    def __repr__(self):
+        return '<FAQ %r>' % self.id
 
 class Announcement(db.Model):
     __tablename__ = 'announcement'
@@ -399,7 +411,27 @@ def createClass():
 @app.route('/faq-teacher')
 def faqTeacher():
     faq_entries = FAQ.query.all()
-    return render_template('faq-teacher.html', faq_entries=faq_entries)
+    user_id = session.get('user_id')
+    if request.method == 'POST':
+        # Retrieve form data
+        question = request.form['textarea']
+
+        new_question = Question(
+            query = question,
+            userID = user_id,
+            answer = ""
+        )
+
+        try:
+            db.session.add(new_question)
+            db.session.commit()
+            return redirect('/teacher-home')  # Redirect to home page
+        except Exception as e:
+            error_message = 'There was an issue sending the question. Please try again later.'
+            return render_template('faq-teacher.html', faq_entries=faq_entries, error_message=error_message)
+    else:
+        return render_template('faq-teacher.html', faq_entries=faq_entries)
+    
 
 @app.route('/faq-student')
 def faqStudent():
