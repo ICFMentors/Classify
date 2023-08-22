@@ -125,7 +125,7 @@ class Question(db.Model):
     answer = db.Column(db.String(255), nullable=True)
     userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
 
-    user = db.relationship('User', backref=db.backref('teacher', uselist=False))
+    user = db.relationship('User', backref=db.backref('question', uselist=False))
 
     def __repr__(self):
         return '<FAQ %r>' % self.id
