@@ -449,7 +449,7 @@ def create_announcement():
         return render_template('create-announcement.html', user=user, courses=courses)
     
 
-@app.route('/edit-announcement/<int:announcement_id>', methods=['POST'])
+@app.route('/edit-announcement/<int:announcement_id>', methods=['GET', 'POST'])
 @login_required
 def edit_announcement(announcement_id):
     # Fetch the announcement to be updated
