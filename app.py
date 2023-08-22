@@ -466,22 +466,26 @@ def edit_announcement(announcement_id):
     if announcement.course.teacherID != teacher.teacherID:
         return "You are not authorized to update this announcement", 403
 
-    # Update announcement details from the form data
-    announcement.courseID = int(request.form['course_id'])
-    announcement.text = request.form['announcement_text']
+    if request.method == 'POST':
+        # Update announcement details from the form data
+        announcement.courseID = int(request.form['course_id'])
+        announcement.text = request.form['announcement_text']
 
-    # Check if the "disable_announcement" checkbox was selected
-    if request.form.get('disable_announcement'):
-        announcement.active = 0
+        # Check if the "disable_announcement" checkbox was selected
+        if request.form.get('disable_announcement'):
+            announcement.active = 0
+        else:
+            announcement.active = 1
+
+        try:
+            db.session.commit()
+            return redirect('/teacher-home')  # Redirect to teacher's home page
+        except Exception as e:
+            error_message = 'There was an issue updating the announcement. Please try again later.'
+            return render_template('edit-announcement.html', user=user, courses=courses, announcement=announcement, error_message=error_message)
+        
     else:
-        announcement.active = 1
-
-    try:
-        db.session.commit()
-        return redirect('/teacher-home')  # Redirect to teacher's home page
-    except Exception as e:
-        error_message = 'There was an issue updating the announcement. Please try again later.'
-        return render_template('edit-announcement.html', announcement=announcement, error_message=error_message)
+        return render_template('edit-announcement.html', user=user, courses=courses, announcement=announcement)
 
 
 @app.route('/deactivate-announcement/<int:announcement_id>', methods=['POST'])
