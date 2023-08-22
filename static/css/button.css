@@ -110,3 +110,8 @@
     background-color: #bff3b6;
   }
   
+  .btn-group {
+    float: right;
+    padding-right: 10px;
+}
+
