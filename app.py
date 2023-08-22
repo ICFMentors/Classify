@@ -461,6 +461,9 @@ def edit_announcement(announcement_id):
     # Get the teacher's ID
     teacher_id = session.get('user_id')
     teacher = Teacher.query.get(teacher_id)
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
 
     # Check if the teacher is the instructor of the announcement's course
     if announcement.course.teacherID != teacher.teacherID:
