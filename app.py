@@ -131,7 +131,7 @@ class Announcement(db.Model):
         return f'<Announcement {self.announcementID}>'
     
     @property
-    def active(self):
+    def activated(self):
         if self.expiration_date is None:
             return True
         return datetime.utcnow() <= self.expiration_date
