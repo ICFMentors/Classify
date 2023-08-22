@@ -6,6 +6,7 @@ import sys
 import os
 from flask_login import LoginManager, UserMixin
 from datetime import datetime
+from sqlalchemy.orm import aliased
 
 
 app = Flask(__name__)
@@ -153,21 +154,25 @@ class Announcement(db.Model):
 def index():
     return render_template('index.html')
 
-
 @app.route('/student-home')
 def studentHome():
     user_id = session.get('user_id')
     student = User.query.get(user_id)
     courses = student.enrolled_courses
 
-    # Fetch announcements and associated teachers for the courses the student is enrolled in
-    course_ids = [course.courseID for course in courses]
-    announcements_with_teachers = db.session.query(Announcement, Teacher).\
-        join(Course).join(Teacher).\
-        filter(Announcement.courseID.in_(course_ids), Announcement.active == 1).\
-        all()
+    # Create an alias for the Announcement model to handle the join condition
+    announcement_alias = aliased(Announcement)
 
-    return render_template('student-home.html', student=student, courses=courses, announcements_with_teachers=announcements_with_teachers)
+    # Fetch announcements for the courses the student is enrolled in
+    announcements = db.session.query(Announcement).join(
+        announcement_alias,
+        Announcement.courseID == announcement_alias.courseID
+    ).filter(
+        Announcement.courseID.in_(course.courseID for course in courses),
+        Announcement.active == 1
+    ).all()
+
+    return render_template('student-home.html', student=student, courses=courses, announcements=announcements)
 
 
 
