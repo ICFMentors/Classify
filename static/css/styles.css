@@ -272,7 +272,7 @@ legend {
 
 /*Button 56 is the same thing as button 57 but we are using it for the log-in*/
 
-.button-56 {
+.button-57 {
   align-items: center;
   background-color: #fee6e3;
   border: 2px solid #111;
@@ -346,6 +346,7 @@ legend {
 
 /* Button 59 is a copy of button 56 but without the border for the course catalog*/
 
+/*
 .button-59 {
   align-items: center;
   background-color: #fee6e3;
@@ -409,3 +410,4 @@ legend {
   background-color: #111;
 }
 
+*\
