@@ -138,6 +138,7 @@ class Announcement(db.Model):
     courseID = db.Column(db.Integer, db.ForeignKey('course.courseID'), nullable=False)
     active = db.Column(db.String(255), nullable=True)
     expiration_date = db.Column(db.DateTime, nullable=True)  # New column for expiration datetime
+    
     course = db.relationship('Course', backref=db.backref('announcement', lazy=True))
 
     def __repr__(self):

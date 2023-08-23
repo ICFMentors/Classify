@@ -39,6 +39,7 @@
 
 
         <div class="btn-group">
+            <a href="/teacher-home">        <button type="button" class="btn btn-warning">Switch to Teacher</button></a>
             <a href="/about-us-student">        <button type="button" class="btn btn-primary">About Us!</button></a>
             <a href="/faq-student">     <button type="button" class="btn btn-secondary"><i class="bi-question-lg"></i></button></a>
             <a href="/student-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
@@ -91,8 +92,8 @@
                     <div class="my-classes">
                         <h2 class="my-classes">My Announcements</h2>
                         <ul>
-                            {% for announcement, teacher in announcements_with_teachers %}
-                                <strong>Teacher:</strong> {{ teacher.user.first_name }} {{ teacher.user.last_name }}<br>
+                            {% for announcement in announcements %}
+                                <strong>Teacher:</strong> {{ announcement.course.teacher.user.first_name }} {{ announcement.course.teacher.user.last_name }}
                                 <strong>Announcement:</strong> {{ announcement.text }}
                             {% endfor %}
                         </ul>
