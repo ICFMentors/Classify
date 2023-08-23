@@ -86,8 +86,8 @@
                     <div class="my-classes">
                         <h2 class="my-classes">My Announcements</h2>
                         <ul>
-                            {% for announcement, teacher in announcements_with_teachers %}
-                                <strong>Teacher:</strong> {{ teacher.user.first_name }} {{ teacher.user.last_name }}<br>
+                            {% for announcement in announcements %}
+                                <strong>Teacher:</strong> {{ announcement.teacher.user.first_name }} {{ announcement.teacher.user.last_name }}<br>
                                 <strong>Announcement:</strong> {{ announcement.text }}
                             {% endfor %}
                         </ul>
