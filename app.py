@@ -316,6 +316,18 @@ def signUp():
             session['user_id'] = new_user.userID
             login_user(new_user)
 
+            new_teacher = Teacher(
+                teacherID=new_user.userID,
+                userID=new_user.userID,
+                qualifications=" ",
+                experience=" ",
+                department=" ",
+                status=" ",
+            )
+
+            db.session.add(new_teacher)
+            db.session.commit()
+
             return redirect('/student-home')
         except Exception as e:
             error_message = 'There was an issue signing you up. Please try again later.'
