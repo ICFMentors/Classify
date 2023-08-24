@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_login import current_user, login_user, logout_user, login_required
 from flask_sqlalchemy import SQLAlchemy
-import sqlite3
+#import sqlite3
 import sys
 import os
 from flask_login import LoginManager, UserMixin
@@ -10,8 +10,12 @@ from sqlalchemy.orm import aliased
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-app.secret_key = 'your_secret_key'  # Set a secret key for session security
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+#app.secret_key = 'your_secret_key'  # Set a secret key for session security
+
+app.secret_key = 'summer2023project'  # Set a secret key for session security
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://classifydbuser:WeakPass@23@34.106.105.100/school'
+#app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 ############################################################################3
