@@ -47,20 +47,20 @@
           </div>
           </header>
       
-       <div class="row">
-        </div>
-            
-        <div class="col">
-            <div class="classtable">
-                <h2 class="my-classes">My Classes</h2>
+          <div class="container-fluid">   
+            <div class="row">
+                <div class="col">
+                    <div class="classtable">
+                
+                    <h2 class="my-classes">My Classes</h2>
     
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Class</th>
                             <th>Teacher</th>
-                            <th>Assignments Due</th>
-                            <th>Meeting Time</th>
+                            <th>Dates</th>
+                            <th>Timings</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -69,40 +69,47 @@
                         <tr>
                             <td>{{ course.courseName }}</td>
                             <td><a href="/teacher-profile/{{ course.teacher.teacherID }}">{{ course.teacher.user.first_name }} {{ course.teacher.user.last_name }}</a></td>
-                            <td>{{ course.assignments_due }}</td>
+                            <td>{{ course.dates }} {{ course.days }}</td>
                             <td>{{ course.timings }}</td>
+
                         </tr>
                         {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
-            </div>
+            
             </div>
         </div> 
-<row>
-
-    <div>
-        <a href="{{ url_for('courseCatalog') }}"><button class = "add"><i class="bi-plus-circle"></i>Add Class</button></a>
-</div>
-
-                <div class="col">
-                    <div class="calendar"><h2 class="my-classes">Upcoming Events, Classes and More!</h2><iframe class="thecalendar" src="https://calendar.google.com/calendar/embed?src=b199fbbdb07c86fcee6b546927d27bf5b28183a1fc99e20213c9b256fafc82f7%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border:solid 1px #777" width="689" height="460" frameborder="0" scrolling="no"></iframe></div>
-                </div>
-                <div class="col">
-                    <div class="my-classes">
-                        <h2 class="my-classes">My Announcements</h2>
-                        <ul>
-                            {% for announcement in announcements %}
-                                <strong>Teacher:</strong> {{ announcement.course.teacher.user.first_name }} {{ announcement.course.teacher.user.last_name }}
-                                <strong>Announcement:</strong> {{ announcement.text }}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-<div class="row">
-                <div class="col carous">
-                    <h4 class="my-classes">This Month's Featured Classes and Events!</h4>
-                    <div id="demo" class="carousel slide carousel-container" data-bs-ride="carousel">
+        <div class="container">
+        <div class="row">
+            <div class="announcement-table">
+                <h2 class="my-classes">My Announcements</h2>
+                <ul>
+                    {% for announcement in announcements %}
+                        <strong>Teacher:</strong> {{ announcement.course.teacher.user.first_name }} {{ announcement.course.teacher.user.last_name }}
+                        <strong>Announcement:</strong> {{ announcement.text }}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+    </div>
+    <div class="row">
+        <div class="col">
+            <div><a href="/course-catalog"><button class= "add"><i class="bi-plus-circle"></i>Add Class</button></a></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="calendar">
+                <h2 class="my-classes">Upcoming Events, Classes and More!</h2>
+                <iframe class="thecalendar" src="https://calendar.google.com/calendar/embed?src=b199fbbdb07c86fcee6b546927d27bf5b28183a1fc99e20213c9b256fafc82f7%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border:solid 1px #777" width=100% height="460" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="demo" class="carousel slide carousel-container" data-bs-ride="carousel">
+                <h4 class="my-classes">This Month's Featured Classes and Events!</h4>
                         <!-- Indicators/dots -->
                         <div class="carousel-indicators">
                             <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
@@ -132,11 +139,10 @@
                             <span class="carousel-control-next-icon"></span>
                         </button>
                     </div>
+                    </div>
 
-            
-            </div>
-            </div>
-</row>
+
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
