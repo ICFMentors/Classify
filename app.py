@@ -242,9 +242,8 @@ def updateTeacher():
     teacher = Teacher.query.get(teacher_id)
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    pass
     
-    if teacher:
+    if user.password == request.form['current_password']:
         # Update teacher information from the form data
         teacher.qualifications = request.form['qualifications']
         teacher.experience = request.form['experience']
@@ -258,7 +257,7 @@ def updateTeacher():
             error_message = 'There was an issue updating the teacher information. Please try again later.'
             return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
     else:
-        error_message = 'Teacher not found.'
+        error_message = 'Incorrect password! Please try again!'
         return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
     
 @app.route('/teacher-profile/<int:teacher_id>')
