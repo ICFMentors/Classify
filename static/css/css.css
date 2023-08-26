@@ -83,6 +83,10 @@ leave this commented out */
     padding-bottom: 50px;
 }
 
+.container {
+    margin-top: 20px;
+}
+
 .add {
     display: block;
     width: 500px;
@@ -98,10 +102,21 @@ leave this commented out */
     text-align: center;
     height: 100px;
   }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+}
   
   .add:hover {
     background-color: #e2c984;
   }
+
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+}
 
   .classtable {
     background-color: beige;
@@ -126,6 +141,20 @@ leave this commented out */
 .col {
     display: flex;
     flex-wrap: wrap;
+}
+
+.col-md-4 {
+    flex: 0 0 33.33%;
+    max-width: 33.33%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-md-8 {
+    flex: 0 0 66.66%;
+    max-width: 66.66%;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .calendar,
