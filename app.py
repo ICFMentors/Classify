@@ -193,7 +193,7 @@ def updateStudent():
     user = User.query.get(user_id)
     pass
     
-    if user:
+    if user.password == request.form['current_password']:
         # Update user information from the form data
         user.first_name = request.form['first']
         user.last_name = request.form['last']
@@ -201,7 +201,8 @@ def updateStudent():
         user.username = request.form['username']
         user.age = int(request.form['selectbasic'])
         user.gender = request.form['radios']
-        user.password = request.form['new_password']
+        if request.form['new_password']:
+            user.password = request.form['new_password']
         
         try:
             db.session.commit()
