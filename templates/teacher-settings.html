@@ -84,20 +84,6 @@
       </div>
     </div>
 
-    <script>
-      const form = document.querySelector('.form-container');
-      const existingPassword = "{{ user.password }}";
-    
-      form.addEventListener('submit', function(event) {
-        const currentPassword = document.getElementById('current_password').value;
-        
-    
-        if (currentPassword !== existingPassword) {
-          event.preventDefault(); // Prevent form submission
-          alert('Current password is incorrect!');
-        }
-      });
-    </script>
     
   <!-- Button -->
   <div class="form-group">

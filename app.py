@@ -10,8 +10,12 @@ from sqlalchemy.orm import aliased
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.secret_key = 'your_secret_key'  # Set a secret key for session security
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+
+#app.secret_key = 'summer2023project'  # Set a secret key for session security
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://classifydbuser:WeakPass@23@34.106.105.100/school'
+#app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 ############################################################################3
@@ -238,9 +242,8 @@ def updateTeacher():
     teacher = Teacher.query.get(teacher_id)
     user_id = session.get('user_id')
     user = User.query.get(user_id)
-    pass
     
-    if teacher:
+    if user.password == request.form['current_password']:
         # Update teacher information from the form data
         teacher.qualifications = request.form['qualifications']
         teacher.experience = request.form['experience']
@@ -254,7 +257,7 @@ def updateTeacher():
             error_message = 'There was an issue updating the teacher information. Please try again later.'
             return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
     else:
-        error_message = 'Teacher not found.'
+        error_message = 'Incorrect password! Please try again!'
         return render_template('teacher-settings.html', teacher=teacher, error_message=error_message)
     
 @app.route('/teacher-profile/<int:teacher_id>')
@@ -315,6 +318,18 @@ def signUp():
             # Store the user ID in the session
             session['user_id'] = new_user.userID
             login_user(new_user)
+
+            new_teacher = Teacher(
+                teacherID=new_user.userID,
+                userID=new_user.userID,
+                qualifications=" ",
+                experience=" ",
+                department=" ",
+                status=" ",
+            )
+
+            db.session.add(new_teacher)
+            db.session.commit()
 
             return redirect('/student-home')
         except Exception as e:
