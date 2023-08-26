@@ -94,42 +94,41 @@
         </div> 
 
     <div class="container">
-    </div>
-    <div class="row">
-        <div class="col">
-            <div>
-                <a href="/course-catalog"><button class= "add"><i class="bi-plus-circle"></i> Add Class</button></a>
-                <a href="/create-announcement"><button class= "add"><i class="bi bi-megaphone-fill"></i> Make an Announcement!</button></a>
+    
+        <div class="row">
+            <div class="col">
+                    <a href="/course-catalog"><button class= "add"><i class="bi-plus-circle"></i> Add Class</button></a>
+                    <a href="/create-announcement"><button class= "add"><i class="bi bi-megaphone-fill"></i> Make an Announcement!</button></a>
+            </div>
+
+            <!-- Table to display active announcements -->
+            <div class="announcement-table">
+                <h2 class="my-classes">Active Announcements</h2>
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Announcement Text</th>
+                            <th>Course</th>
+                            <th>Edit</th>
+                            <th>Deactivate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for announcement in announcements %}
+                        <tr>
+                            <td>{{ announcement.text }}</td>
+                            <td>{{ announcement.course.courseName }}</td>
+                            <td><a href="/edit-announcement/{{ announcement.announcementID }}" class="btn btn-primary">Edit</a></td>
+                            <td><form action="/deactivate-announcement/{{ announcement.announcementID }}" method="POST">
+                                <button type="submit" class="btn btn-danger">Deactivate</button>
+                            </form></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-
-    <!-- Table to display active announcements -->
-    <div class="announcement-table">
-        <h2 class="my-classes">Active Announcements</h2>
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Announcement Text</th>
-                    <th>Course</th>
-                    <th>Edit</th>
-                    <th>Deactivate</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for announcement in announcements %}
-                <tr>
-                    <td>{{ announcement.text }}</td>
-                    <td>{{ announcement.course.courseName }}</td>
-                    <td><a href="/edit-announcement/{{ announcement.announcementID }}" class="btn btn-primary">Edit</a></td>
-                    <td><form action="/deactivate-announcement/{{ announcement.announcementID }}" method="POST">
-                        <button type="submit" class="btn btn-danger">Deactivate</button>
-                    </form></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
     </div>
 
     <div class="row">
