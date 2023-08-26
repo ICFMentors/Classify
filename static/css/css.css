@@ -163,11 +163,11 @@ leave this commented out */
 }
 
 .announcement-container {
-    margin-left: 20px !important;
+    margin-left: 25px !important;
     background-color:beige;
     color:black;
     border-style:solid;
-    width: 80% !important;
+    width: 70% !important;
     overflow-x:auto;
 }
 
