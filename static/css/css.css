@@ -157,8 +157,9 @@ leave this commented out */
     background-color: beige;
     color: black;
     border-style:solid;
-    margin-left: 20px;
+    margin-left: 25px;
     margin-right:20px;
+    width: 1000px !important;
     overflow-x: auto;
 }
 
