@@ -195,18 +195,12 @@ def updateStudent():
     
     if user.password == request.form['current_password']:
         # Update user information from the form data
-        if request.form['first']:
-            user.first_name = request.form['first']
-        if request.form['last']:
-            user.last_name = request.form['last']
-        if request.form['email']:
-            user.email = request.form['email']
-        if request.form['username']:
-            user.username = request.form['username']
-        if request.form['selectbasic']:
-            user.age = int(request.form['selectbasic'])
-        if request.form['radios']:
-            user.gender = request.form['radios']
+        user.first_name = request.form['first']
+        user.last_name = request.form['last']
+        user.email = request.form['email']
+        user.username = request.form['username']
+        user.age = int(request.form['selectbasic'])
+        user.gender = request.form['radios']
         if request.form['new_password']:
             user.password = request.form['new_password']
         
