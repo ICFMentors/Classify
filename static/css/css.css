@@ -144,15 +144,15 @@ leave this commented out */
 }
 
 .col-md-4 {
-    flex: 0 0 33.33%;
-    max-width: 33.33%;
+    flex: 0 0 30%; /* Adjust this value */
+    max-width: 30%;
     padding-right: 15px;
     padding-left: 15px;
 }
 
 .col-md-8 {
-    flex: 0 0 66.66%;
-    max-width: 66.66%;
+    flex: 0 0 70%; /* Adjust this value */
+    max-width: 70%;
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -185,11 +185,13 @@ leave this commented out */
 .announcement-table {
     background-color: beige;
     color: black;
-    border-style:solid;
+    border-style: solid;
     margin-left: 15px;
-    margin-right:10px;
-    width: 800px !important;
+    margin-right: 10px;
+    /* Remove width declaration */
     overflow-x: auto;
+    width: calc(100% - 25px - 15px); /* Adjust the width calculation */
+    max-width: 100%; /* Ensure the table doesn't overflow its container */
 }
 
 .announcement-container {
