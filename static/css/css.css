@@ -90,8 +90,8 @@ leave this commented out */
     background-color: beige;
     color: black;
     padding: 10px;
-    margin: 20px;
-    margin-right: 30px;
+    margin: 10px;
+    /*margin-right: 30px;*/
     margin-left: 20px;
     font-size: 20px;
     cursor: pointer;
