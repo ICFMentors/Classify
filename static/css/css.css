@@ -190,7 +190,7 @@ leave this commented out */
     margin-right: 10px;
     /* Remove width declaration */
     overflow-x: auto;
-    width: calc(100% - 25px - 15px); /* Adjust the width calculation */
+    width: calc(100% - 25px - 10px); /* Adjust the width calculation */
     max-width: 100%; /* Ensure the table doesn't overflow its container */
 }
 
