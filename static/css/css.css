@@ -60,7 +60,7 @@ header {
     margin-right: auto
     margin-left: 0; 
 }
-*/
+leave this commented out */
 
 .calendar {
     background-color: beige;
@@ -141,6 +141,8 @@ header {
     background-color:beige;
     color:black;
     border-style:solid;
+    margin-left: auto !important;
+    margin-right: 20px !important;
 }
 
 .calendar {
@@ -153,4 +155,14 @@ header {
     color: black;
     border-style:solid;
     margin-left: 20px;
+    overflow-x: auto;
+}
+
+.announcement-container {
+    margin-left: 20px !important;
+    background-color:beige;
+    color:black;
+    border-style:solid;
+    width: 100% !important;
+    overflow-x:auto;
 }
