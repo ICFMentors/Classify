@@ -654,5 +654,5 @@ if __name__ == '__main__':
     if not os.path.exists('data.db'):
         db.create_all()
 
-    app.run(debug=True, port=80)
+    app.run(debug=True, port=8080)
 
