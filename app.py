@@ -1,21 +1,35 @@
-from flask import Flask, render_template, request, redirect, session
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import Flask, render_template, request, redirect, session, flash, abort, url_for
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager, UserMixin
 from flask_sqlalchemy import SQLAlchemy
 import sqlite3
 import sys
 import os
-from flask_login import LoginManager, UserMixin
 from datetime import datetime
 from sqlalchemy.orm import aliased
+import pyrebase
 
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Set a secret key for session security
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
-
-#app.secret_key = 'summer2023project'  # Set a secret key for session security
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://classifydbuser:WeakPass@23@34.106.105.100/school'
+app.secret_key = 'summer2023project'  # Set a secret key for session security
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://classifydbuser:WeakPass@23@34.106.105.100/school'
 #app.config['SQLALCHEMY_TRACK_NOTIFICATIONS'] = False
+
+# For Firebase JS SDK v7.20.0 and later, measurementId is optional
+config = {
+    'apiKey': "AIzaSyBWQXbSBC6oKNZk96jMP53qvHJqekG0T1Q",
+    'authDomain': "summer-2023-396400.firebaseapp.com",
+    'projectId': "summer-2023-396400",
+    'storageBucket': "summer-2023-396400.appspot.com",
+    'messagingSenderId': "900862315561",
+    'appId': "1:900862315561:web:fa9f9ccf3f5f2b4f6b6038",
+    'measurementId': "G-XYTJ9FBMVG",
+    'databaseURL': " "
+}
+
+firebase = pyrebase.initialize_app(config)
+auth = firebase.auth()
+
 db = SQLAlchemy(app)
 
 ############################################################################3
@@ -161,36 +175,41 @@ def index():
 
 @app.route('/student-home')
 def studentHome():
-    user_id = session.get('user_id')
-    student = User.query.get(user_id)
-    courses = student.enrolled_courses
+    # Check if the user is authenticated
+    if 'user' in session:
+        # Fetch user data from your database based on the Firebase UID
+        user_email = session.get('user')
+        student = User.query.filter_by(email=user_email).first()
+        courses = student.enrolled_courses
+        # Create an alias for the Announcement model to handle the join condition
+        announcement_alias = aliased(Announcement)
 
-    # Create an alias for the Announcement model to handle the join condition
-    announcement_alias = aliased(Announcement)
+        # Fetch announcements for the courses the student is enrolled in
+        announcements = db.session.query(Announcement).join(
+            announcement_alias,
+            Announcement.courseID == announcement_alias.courseID
+        ).filter(
+            Announcement.courseID.in_(course.courseID for course in courses),
+            Announcement.active == 1
+        ).all()
 
-    # Fetch announcements for the courses the student is enrolled in
-    announcements = db.session.query(Announcement).join(
-        announcement_alias,
-        Announcement.courseID == announcement_alias.courseID
-    ).filter(
-        Announcement.courseID.in_(course.courseID for course in courses),
-        Announcement.active == 1
-    ).all()
-
-    return render_template('student-home.html', student=student, courses=courses, announcements=announcements)
+        return render_template('student-home.html', student=student, courses=courses, announcements=announcements)
+    
+    else:
+        return redirect('/')
 
 
 
 @app.route('/student-settings')
 def studentSettings():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     return render_template('student-settings.html', user=user)
 
 @app.route('/update-student', methods=['POST'])
 def updateStudent():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     pass
     
     if user.password == request.form['current_password']:
@@ -218,10 +237,10 @@ def updateStudent():
 
 @app.route('/teacher-home')
 def teacherHome():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
-    teacher = Teacher.query.get(user_id)
-    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
+    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user.userID).all()
     course_ids = [course.courseID for course in courses]
     announcements = Announcement.query.filter(Announcement.courseID.in_(course_ids),Announcement.active == 1).all()
 
@@ -231,18 +250,16 @@ def teacherHome():
 
 @app.route('/teacher-settings')
 def teacherSettings():
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
     return render_template('teacher-settings.html', teacher=teacher, user=user)
 
 @app.route('/update-teacher', methods=['POST'])
 def updateTeacher():
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
     
     if user.password == request.form['current_password']:
         # Update teacher information from the form data
@@ -264,20 +281,20 @@ def updateTeacher():
 @app.route('/teacher-profile/<int:teacher_id>')
 def teacher_profile(teacher_id):
     teacher = Teacher.query.get(teacher_id)
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     return render_template('teacher-profile.html', teacher=teacher, user=user)
 
 @app.route('/parent-home')
 def parentHome():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     return render_template('parent-home.html', user=user)
 
 @app.route('/parent-settings')
 def parentSettings():
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     return render_template('parent-settings.html', user=user)
 
 @app.route('/sign-up', methods=['GET', 'POST'])
@@ -316,9 +333,15 @@ def signUp():
             db.session.add(new_user)
             db.session.commit()
 
+            # Create a new Firebase user
+            auth.create_user_with_email_and_password(email, password)
+            auth.sign_in_with_email_and_password(email, password)
+            session['user'] = email
+            user = User.query.filter_by(email=email).first()
+
             # Store the user ID in the session
-            session['user_id'] = new_user.userID
-            login_user(new_user)
+            #session['user_id'] = new_user.userID
+            login_user(user)
 
             new_teacher = Teacher(
                 teacherID=new_user.userID,
@@ -334,7 +357,8 @@ def signUp():
 
             return redirect('/student-home')
         except Exception as e:
-            error_message = 'There was an issue signing you up. Please try again later.'
+            print('There was an issue signing you up. Please try again later.')
+            error_message = 'There was an issue signing you up. Please try again later.' + e
             return render_template('sign-up.html', error_message=error_message)
     else:
         return render_template('sign-up.html')
@@ -343,17 +367,15 @@ def signUp():
 def log_in():                  #WE CHANGED logIn to log_in ##########################3
     if request.method == 'POST':
         # Retrieve form data
-        username = request.form['username']
+        email = request.form['username']
         password = request.form['password']
         login_role = request.form['login_role']
 
-        # Check if the user exists in the database
-        user = User.query.filter_by(username=username, password=password).first()
-
-        if user:
-            # Store the user ID in the session
+        try:
+            auth.sign_in_with_email_and_password(email, password)
+            session['user'] = email
+            user = User.query.filter_by(email=email).first()
             login_user(user)
-            session['user_id'] = user.userID
 
             if login_role == 'student':
                 return redirect('/student-home')
@@ -362,36 +384,36 @@ def log_in():                  #WE CHANGED logIn to log_in #####################
             elif login_role == 'parent':
                 return redirect('/parent-home')
             else:
-                error_message = 'Invalid login role. Please try again.'
-        else:
-            error_message = 'Invalid username or password. Please try again.'
+                error_message = 'Invalid login role. Please try again.'    
 
-        return render_template('log-in.html', error_message=error_message)
+        except Exception as e:
+            error_message = 'Invalid username or password. Please try again.' + str(e)
+            print(error_message)
+            return render_template('log-in.html', error_message=error_message)
     else:
         return render_template('log-in.html')
 
+
 @app.route('/logout')
-@login_required
 def logout():
-    logout_user()
+    #logout_user()
     return redirect('/')  # Redirect to the main page after logging out
 
 
 @app.route('/course-catalog')
 def courseCatalog():
     courses = Course.query.all()
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     registered_course_ids = [course.courseID for course in user.enrolled_courses]
     return render_template('course-catalog.html', courses=courses, registered_course_ids=registered_course_ids)
 
 
 @app.route('/create-class', methods=['GET', 'POST'])
 def createClass():
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
     if request.method == 'POST':
         # Retrieve form data
         courseName = request.form['courseName']
@@ -438,14 +460,15 @@ def createClass():
 @app.route('/faq-teacher', methods=['GET', 'POST'])
 def faqTeacher():
     faq_entries = FAQ.query.all()
-    user_id = session.get('user_id')
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     if request.method == 'POST':
         # Retrieve form data
         question = request.form['textarea']
 
         new_question = Question(
             query = question,
-            userID = user_id,
+            userID = user.userID,
             answer = ""
         )
 
@@ -463,14 +486,15 @@ def faqTeacher():
 @app.route('/faq-student', methods=['GET', 'POST'])
 def faqStudent():
     faq_entries = FAQ.query.all()
-    user_id = session.get('user_id')
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
     if request.method == 'POST':
         # Retrieve form data
         question = request.form['textarea']
 
         new_question = Question(
             query = question,
-            userID = user_id,
+            userID = user.userID,
             answer = ""
         )
 
@@ -494,13 +518,12 @@ def aboutUsStudent():
     return render_template('about-us-student.html')
 
 @app.route('/create-announcement', methods=['GET', 'POST'])
-@login_required
 def create_announcement():
     # Fetch courses taught by the teacher
-    user_id = session.get('user_id')
-    teacher = Teacher.query.get(user_id)
-    user = User.query.get(user_id)
-    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
+    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user.userID).all()
 
     if request.method == 'POST':
         course_id = int(request.form['course_id'])
@@ -528,7 +551,6 @@ def create_announcement():
     
 
 @app.route('/edit-announcement/<int:announcement_id>', methods=['GET', 'POST'])
-@login_required
 def edit_announcement(announcement_id):
     # Fetch the announcement to be updated
     announcement = Announcement.query.get(announcement_id)
@@ -537,11 +559,10 @@ def edit_announcement(announcement_id):
         return "Announcement not found", 404
 
     # Get the teacher's ID
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
-    user_id = session.get('user_id')
-    user = User.query.get(user_id)
-    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user_id).all()
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
+    courses = Course.query.join(Teacher).join(User).filter(Teacher.userID == user.userID).all()
 
     # Check if the teacher is the instructor of the announcement's course
     if announcement.course.teacherID != teacher.teacherID:
@@ -570,7 +591,6 @@ def edit_announcement(announcement_id):
 
 
 @app.route('/deactivate-announcement/<int:announcement_id>', methods=['POST'])
-@login_required
 def deactivate_announcement(announcement_id):
     announcement = Announcement.query.get(announcement_id)
 
@@ -578,8 +598,9 @@ def deactivate_announcement(announcement_id):
         return "Announcement not found", 404
 
     # Check if the teacher is the instructor of the announcement's course
-    teacher_id = session.get('user_id')
-    teacher = Teacher.query.get(teacher_id)
+    user_email = session.get('user')
+    user = User.query.filter_by(email=user_email).first()
+    teacher = Teacher.query.filter_by(teacherID=user.userID).first()
     if announcement.course.teacherID != teacher.teacherID:
         return "You are not authorized to deactivate this announcement", 403
 
@@ -599,8 +620,7 @@ def aboutUsParent():
     return render_template('about-us-parent.html')
 
 
-@app.route('/register-course/<int:course_id>', methods=['POST'])
-@login_required  # Ensure the user is logged in before registering
+@app.route('/register-course/<int:course_id>', methods=['POST'])  # Ensure the user is logged in before registering
 def register_course(course_id):
     course = Course.query.get(course_id)
 
@@ -617,7 +637,6 @@ def register_course(course_id):
     return redirect('/student-home')  # Redirect to the student's home page
 
 @app.route('/delete_course/<int:course_id>', methods=['POST'])
-@login_required
 def delete_course(course_id):
     course = Course.query.get(course_id)
 
