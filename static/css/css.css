@@ -186,6 +186,8 @@ leave this commented out */
     background-color: beige;
     color: black;
     border-style: solid;
+    padding: 5px;
+    margin: 5px;
     margin-left: 15px;
     margin-right: 10px;
     /* Remove width declaration */
@@ -195,11 +197,13 @@ leave this commented out */
 }
 
 .announcement-container {
+    padding: 5px;
+    margin: 5px;
     margin-left: 25px !important;
     background-color:beige;
     color:black;
     border-style:solid;
-    width: 1000px !important;
+    width: 935px !important;
     overflow-x:auto;
 }
 

@@ -29,21 +29,20 @@
         <div class="row">
             {% for course in courses %}
             {% if course.active == 1 %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ course.courseName }}</h5>
-                            <p class="card-text">{{ course.description }}</p>
-                            <p>Teacher: {{ course.teacher.user.first_name }} {{course.teacher.user.last_name }}</p>
-                            <p>Section: {{ course.section }}</p>
-                            <p>Seats Available: {{ course.totalSeats - course.seatsTaken }}</p>
-                                <form action="{{ url_for('register_course', course_id=course.courseID) }}" method="POST">
-                                    
-                                    <button type="submit" class="button-56">Register</button>
-                                </form>
-                        </div>
+            <div class="col-md-4">
+                <div class="card course-container">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.courseName }}</h5>
+                        <p class="card-text">{{ course.description }}</p>
+                        <p>Teacher: {{ course.teacher.user.first_name }} {{course.teacher.user.last_name }}</p>
+                        <p>Section: {{ course.section }}</p>
+                        <p>Seats Available: {{ course.totalSeats - course.seatsTaken }}</p>
+                        <form action="{{ url_for('register_course', course_id=course.courseID) }}" method="POST">
+                            <button type="submit" class="btn btn-primary register-button">Register</button>
+                        </form>
                     </div>
                 </div>
+            </div>
             {% endif %}
             {% endfor %}
         </div>
