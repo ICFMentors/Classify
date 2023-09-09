@@ -20,7 +20,7 @@
 
 body {
     font-family: 'Times New Roman', Times, serif;
-    background-color:#35b442;
+    background-color:#bff3b6;
     color: white;
     margin: 0px;
     padding: 0px;
@@ -42,9 +42,9 @@ header {
     color: black;
     margin: 20px;
     padding: 20px;
-    width: 1000px;
+   /* width: 1000px;
     float: left;
-    margin-left: 50px;
+    margin-left: 50px;*/
 }
 
 .title {
@@ -53,10 +53,10 @@ header {
 }
 
 
-.wrapper {
+/*.wrapper {
   max-width: 35%;
 }
-
+*/
 
 
 .accordion {
@@ -108,13 +108,12 @@ header {
     color: black;
     margin: 20px;
     padding: 20px;
-    width: 1000px;
+    /*width: 1000px;
     float: right;
-    margin-right: 50px;
+    margin-right: 50px;*/
 }
 
 #textarea {
-    width: 500px;
     height: 300px;
     margin: 10px;
 }

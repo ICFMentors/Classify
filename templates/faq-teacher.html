@@ -16,52 +16,55 @@
     <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" height="50%" width="auto">
 </head>
 
-<body class="row">
-    <header>
-        <a href="/teacher-home"><img class="logo" src="../static/images/classifylogoside.png"></a>
+<body>
+    <header class="container-fluid">
+        <a href="/student-home"><img class="logo" src="../static/images/classifylogoside.png"></a>
         <div class="btn-group">
-            <a href="/about-us-teacher" class="btn btn-primary">About Us!</a>
-            <a href="/teacher-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
+            <a href="/about-us-student" class="btn btn-primary">About Us!</a>
+            <a href="/student-settings"><button type="button" class="btn btn-dark"><i class="bi-person-circle"></i></button></a>
             <a href="/"><button type="button" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i></button></a>
         </div>
         <h1 class="title">Questions and Answers</h1>
     </header>
+    <div class="container">
+        <div class="row">
+            <div class="wrapper FAQ col-md-5">
+                <h3>Frequently Asked Questions</h3>
 
-    <div class="wrapper FAQ col">
-        <h3>Frequently Asked Questions</h3>
-
-        {% for entry in faq_entries %}
-        <div class="faq">
-            <button class="accordion">
-                Q: {{ entry.question }}
-                <i class="fa-solid fa-chevron-down"></i>
-            </button>
-            <div class="pannel">
-                <p>
-                    A: {{ entry.answer }}
-                </p>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-    <div class="aaq col">
-        <!-- Textarea -->
-        <div class="form-group">
-            <label class="col-md-4 control-label label" for="textarea">Ask us a Question</label>
-            <form action="/faq-teacher" method="POST">
-                <div class="col-md-4">
-                    <textarea class="form-control" id="textarea" name="textarea"></textarea>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-8">
-                        <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="button" class="btn btn-danger" onclick="clearTextarea()">Cancel</button>
+                {% for entry in faq_entries %}
+                <div class="faq">
+                    <button class="accordion">
+                        Q: {{ entry.question }}
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </button>
+                    <div class="pannel">
+                        <p>
+                            A: {{ entry.answer }}
+                        </p>
                     </div>
                 </div>
-            </form>
+                {% endfor %}
+            </div>
+            
+
+
+            <div class="aaq col-md-6">
+                <!-- Textarea -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label label" for="textarea">Ask Us a Question</label>
+                    <form action="/faq-student" method="POST">
+                            <textarea class="form-control" id="textarea" name="textarea" width="100%"></textarea>                    <div class="form-group">
+                        <div class="col-md-8">
+                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="button" class="btn btn-danger" onclick="clearTextarea()">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
+
 
     <script>
         function clearTextarea() {
