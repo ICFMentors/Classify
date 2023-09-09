@@ -116,5 +116,15 @@ h1{
   .btn-group {
     float: right;
     padding-right: 10px;
+    padding-top: 50px;
 }
+
+/* Add custom class for button styling */
+.btn-custom {
+    width: 150px; /* Set a fixed width for all buttons */
+    margin-right: 10px; /* Add spacing between buttons */
+    padding-right: 10px; /* Add spacing between buttons */
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
 
