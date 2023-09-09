@@ -112,12 +112,12 @@ leave this commented out */
   .add:hover {
     background-color: #e2c984;
   }
-
+/*
   .table {
     width: 100%;
     margin-bottom: 1rem;
     color: #212529;
-}
+}*/
 
   .classtable {
     background-color: beige;
@@ -198,14 +198,13 @@ leave this commented out */
 }
 
 .announcement-container {
-    padding: 5px;
-    margin: 5px;
-    margin-left: 25px !important;
-    background-color:beige;
-    color:black;
-    border-style:solid;
-    width: 935px !important;
-    overflow-x:auto;
+    background-color: beige;
+    color: #000;
+    padding: 10px;
+    border-style: solid;
+    margin: 20px;
+    margin-left: 20px;
+    width:100% 
 }
 
 .calendar-container {
@@ -221,11 +220,35 @@ leave this commented out */
 
 @media only screen and (max-width: 620px) {
     /* For mobile phones: */
-    .btn-group {
+ /*   .btn-group {
       width: 100%;
     }
     .announcement-container{
         width: 600px;
         margin: 10px;
     }
+  }*/
+
+  .button-56 {
+    align-items: center;
+    background-color: #fee6e3;
+    border: 2px solid #111;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #111;
+    cursor: pointer;
+    display: flex;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    height: 48px;
+    justify-content: center;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
   }
