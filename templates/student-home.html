@@ -95,20 +95,24 @@
         <div class="row">
             <!-- Table Column -->
             <div class="container-fluid">   
-                <div class="announcement-container">
-                    <h2 class="my-classes">My Announcements</h2>
-                    <table class="table table-striped">
-                        <tr><td>
-                                <ul>
-                                    {% for announcement in announcements %}
-                                        <strong>Teacher:</strong> {{ announcement.course.teacher.user.first_name }} {{ announcement.course.teacher.user.last_name }}
-                                        <strong>Announcement:</strong> {{ announcement.text }}
-                                    {% endfor %}
-                                </ul>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="classtable2">
+                            <h2 class="my-classes">My Announcements</h2>
+                            <table class="table table-striped">
+                                <tr><td>
+                                        <ul>
+                                            {% for announcement in announcements %}
+                                                <strong>Teacher:</strong> {{ announcement.course.teacher.user.first_name }} {{ announcement.course.teacher.user.last_name }}
+                                                <strong>Announcement:</strong> {{ announcement.text }}
+                                            {% endfor %}
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
             </div>
         </div>
         
