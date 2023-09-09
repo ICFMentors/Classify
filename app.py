@@ -64,7 +64,6 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(50), nullable=False)
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    username = db.Column(db.String(50), unique=True, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='student')
@@ -302,7 +301,7 @@ def signUp():
         email = request.form['email']
         password = request.form['password']
         age = int(request.form['selectbasic'])
-        gender = request.form['radios']
+        gender = int(request.form['radios'])
 
         # Check if a user with the same username or email already exists
         existing_user = User.query.filter(
@@ -351,7 +350,7 @@ def signUp():
             return redirect('/student-home')
         except Exception as e:
             print('There was an issue signing you up. Please try again later.')
-            error_message = 'There was an issue signing you up. Please try again later.' + e
+            error_message = 'There was an issue signing you up. Please try again later.' + str(e)
             return render_template('sign-up.html', error_message=error_message)
     else:
         return render_template('sign-up.html')
