@@ -29,6 +29,7 @@
         <div class="row">
             {% for course in courses %}
             {% if course.active == 1 %}
+            {% if course.teacher.teacherID != user.userID %}
             <div class="col-md-4">
                 <div class="card course-container">
                     <div class="card-body">
@@ -43,6 +44,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             {% endif %}
             {% endfor %}
         </div>

@@ -403,7 +403,7 @@ def courseCatalog():
     user_email = session.get('user')
     user = User.query.filter_by(email=user_email).first()
     registered_course_ids = [course.courseID for course in user.enrolled_courses]
-    return render_template('course-catalog.html', courses=courses, registered_course_ids=registered_course_ids)
+    return render_template('course-catalog.html', user=user, courses=courses, registered_course_ids=registered_course_ids)
 
 
 @app.route('/create-class', methods=['GET', 'POST'])
