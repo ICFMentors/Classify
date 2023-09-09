@@ -216,7 +216,6 @@ def updateStudent():
         user.first_name = request.form['first']
         user.last_name = request.form['last']
         user.email = request.form['email']
-        user.username = request.form['username']
         user.age = int(request.form['selectbasic'])
         user.gender = request.form['radios']
         
@@ -301,14 +300,13 @@ def signUp():
         first_name = request.form['first_name']
         last_name = request.form['last_name']
         email = request.form['email']
-        username = request.form['username']
         password = request.form['password']
         age = int(request.form['selectbasic'])
         gender = request.form['radios']
 
         # Check if a user with the same username or email already exists
         existing_user = User.query.filter(
-            (User.username == username) | (User.email == email)
+            (User.email == email)
         ).first()
 
         if existing_user:
@@ -320,8 +318,6 @@ def signUp():
             first_name=first_name,
             last_name=last_name,
             email=email,
-            username=username,
-            password=password,
             age=age,
             gender=gender
         )
