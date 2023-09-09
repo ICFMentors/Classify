@@ -367,7 +367,7 @@ def signUp():
 def log_in():                  #WE CHANGED logIn to log_in ##########################3
     if request.method == 'POST':
         # Retrieve form data
-        email = request.form['username']
+        email = request.form['email']
         password = request.form['password']
         login_role = request.form['login_role']
 
