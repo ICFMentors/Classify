@@ -10,7 +10,7 @@
     <script>
       function confirmLeave() {
         if (confirm("Are you sure you want to leave this page? Any unsaved changes will be lost.")) {
-          window.location.href = "/student-home";
+          window.location.href = "/teacher-home";
         }
       }
     </script>
@@ -73,14 +73,6 @@
       <div class="col-md-4">                     
         <!-- <textarea class="form-control" id="textarea" name="textarea"></textarea> -->
         <input id="status" name="status" type="text" placeholder="status" class="form-control" required="" value="{{ teacher.status }}">
-      </div>
-    </div>
-
-    <!-- Password input - Old Password -->
-    <div class="form-group">
-      <label class="col-md-4 control-label" for="current_password">Current Password</label>
-      <div class="col-md-4">                     
-        <input id="current_password" name="current_password" type="password" placeholder="Current Password" class="form-control" required>
       </div>
     </div>
 

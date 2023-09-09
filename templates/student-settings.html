@@ -64,40 +64,6 @@
             <input id="username" name="username" type="text" placeholder="Username" class="form-control" required="" value="{{ user.username }}">
           </div>
         </div>
-        
-        <!-- Password input - New Password -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="new_password">New Password</label>
-          <div class="col-md-4">                     
-              <input id="new_password" name="new_password" type="password" placeholder="New Password" class="form-control">
-          </div>
-        </div>
-
-        <!-- Password input - Confirm Password -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="confirm_password">Confirm Password</label>
-          <div class="col-md-4">                     
-              <input id="confirm_password" name="confirm_password" type="password" placeholder="Confirm Password" class="form-control">
-          </div>
-        </div>
-
-        <script>
-          // Get references to the input fields
-          var newPasswordInput = document.getElementById('new_password');
-          var confirmPasswordInput = document.getElementById('confirm_password');
-
-          // Add an event listener to the "New Password" input
-          newPasswordInput.addEventListener('input', function() {
-              // If the "New Password" input has a value, make the "Confirm Password" input required
-              // Otherwise, remove the required attribute
-              if (newPasswordInput.value.trim() !== '') {
-                  confirmPasswordInput.setAttribute('required', 'required');
-              } else {
-                  confirmPasswordInput.removeAttribute('required');
-              }
-          });
-        </script>
-
 
         <!-- Select Basic - Age -->
         <div class="form-group">
@@ -123,14 +89,6 @@
               <input type="radio" name="radios" id="radios-1" value="2">
               Female
             </label>
-          </div>
-        </div>
-
-        <!-- Password input - Old Password -->
-        <div class="form-group">
-          <label class="col-md-4 control-label" for="current_password">Current Password</label>
-          <div class="col-md-4">                     
-            <input id="current_password" name="current_password" type="password" placeholder="Current Password" class="form-control" required>
           </div>
         </div>
 

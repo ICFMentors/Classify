@@ -65,7 +65,6 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     username = db.Column(db.String(50), unique=True, nullable=False)
-    password = db.Column(db.String(100), nullable=False)
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     role = db.Column(db.String(20), nullable=False, default='student')
@@ -212,7 +211,7 @@ def updateStudent():
     user = User.query.filter_by(email=user_email).first()
     pass
     
-    if user.password == request.form['current_password']:
+    if user:
         # Update user information from the form data
         user.first_name = request.form['first']
         user.last_name = request.form['last']
@@ -220,8 +219,6 @@ def updateStudent():
         user.username = request.form['username']
         user.age = int(request.form['selectbasic'])
         user.gender = request.form['radios']
-        if request.form['new_password']:
-            user.password = request.form['new_password']
         
         try:
             db.session.commit()
@@ -261,7 +258,7 @@ def updateTeacher():
     user = User.query.filter_by(email=user_email).first()
     teacher = Teacher.query.filter_by(teacherID=user.userID).first()
     
-    if user.password == request.form['current_password']:
+    if teacher:
         # Update teacher information from the form data
         teacher.qualifications = request.form['qualifications']
         teacher.experience = request.form['experience']
