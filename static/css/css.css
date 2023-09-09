@@ -8,6 +8,7 @@
 .btn-group {
     float: right;
     padding-right: 10px;
+    padding-left: 10px;
 }
 
 
@@ -186,6 +187,8 @@ leave this commented out */
     background-color: beige;
     color: black;
     border-style: solid;
+    padding: 5px;
+    margin: 5px;
     margin-left: 15px;
     margin-right: 10px;
     /* Remove width declaration */
@@ -195,11 +198,13 @@ leave this commented out */
 }
 
 .announcement-container {
+    padding: 5px;
+    margin: 5px;
     margin-left: 25px !important;
     background-color:beige;
     color:black;
     border-style:solid;
-    width: 1000px !important;
+    width: 935px !important;
     overflow-x:auto;
 }
 
@@ -213,3 +218,14 @@ leave this commented out */
     padding: 20px;
     margin-top: 10px;
 }
+
+@media only screen and (max-width: 620px) {
+    /* For mobile phones: */
+    .btn-group {
+      width: 100%;
+    }
+    .announcement-container{
+        width: 600px;
+        margin: 10px;
+    }
+  }
