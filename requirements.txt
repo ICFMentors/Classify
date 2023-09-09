@@ -10,3 +10,4 @@ Werkzeug==1.0.1
 flask_login
 pymysql
 python-dotenv
+pyrebase4
