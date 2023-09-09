@@ -8,6 +8,7 @@
 .btn-group {
     float: right;
     padding-right: 10px;
+    padding-left: 10px;
 }
 
 
@@ -213,3 +214,14 @@ leave this commented out */
     padding: 20px;
     margin-top: 10px;
 }
+
+@media only screen and (max-width: 620px) {
+    /* For mobile phones: */
+    .btn-group {
+      width: 100%;
+    }
+    .announcement-container{
+        width: 600px;
+        margin: 10px;
+    }
+  }
