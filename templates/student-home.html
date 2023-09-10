@@ -105,6 +105,7 @@
                                             {% for announcement in announcements %}
                                                 <strong>Teacher:</strong> {{ announcement.course.teacher.user.first_name }} {{ announcement.course.teacher.user.last_name }}
                                                 <strong>Announcement:</strong> {{ announcement.text }}
+                                                <br/> 
                                             {% endfor %}
                                         </ul>
                                     </td>
