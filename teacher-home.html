@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" height="50%" width="auto">
+
+    <title>Teacher Home</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/css2.css" rel="stylesheet" type="text/css">
+ 
+    <style>
+         .carousel-container, .carous {
+            width: 550px;
+            padding: 20px;
+            margin: 10px
+        }
+            .carousel-image {
+            width: 100%;
+            height: auto;
+        }
+
+        /*
+        .classtable {
+            width: 95%; /* Adjust width as needed 
+            margin: 0 auto; 
+        }
+        */
+
+        @media only screen and (max-width: 620px) {
+        /* For mobile phones: */
+        .menu, .main, .right {
+        width: 100%;
+        }
+    }
+    </style>     
+
+
+</head>
+
+<body>
+    
+        <header>
+            <div style="padding:15px;">
+                <img class="logo" src="../static/images/classifylogoside.png">
+                <div class="btn-group">
+                    <a href="/student-home" class="btn btn-warning btn-custom">Switch to Student</a>
+                    <a href="/about-us-teacher" class="btn btn-primary btn-custom">About Us!</a>
+                    <a href="/faq-teacher" class="btn btn-secondary btn-custom"><i class="bi-question-lg"></i></a>
+                    <a href="/teacher-settings" class="btn btn-dark btn-custom"><i class="bi-person-circle"></i></a>
+                    <a href="/" class="btn btn-danger btn-custom"><i class="bi bi-box-arrow-right"></i></a>
+                </div>
+
+                <div class ="btn-group">
+                    <a href="/create-class" class="btn btn-success"><i class="bi-plus-circle"></i> Create Class</button></a>
+                    <a href="/create-announcement" class="btn btn-success"><i class="bi bi-megaphone-fill"></i> Make an Announcement!</button></a>
+                </div>
+            </div>
+        </header>
+      
+            
+        <div class="container-fluid">   
+            <div class="row">
+                <div class="col">
+                    <div class="classtable">
+                
+                    <h2 class="my-classes">My Classes</h2>
+    
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Dates</th>
+                                <th>Students (Enrolled/Capacity)</th>
+                                <th>Timings</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                            {% if course.active == 1 %}
+                            <tr>
+                            <td>{{ course.courseName }}</td>
+                            <td>{{ course.dates }}</a></td>
+                            <td>{{ course.seatsTaken }} / {{ course.totalSeats }}</td>
+                            <td>{{ course.timings }}</td>
+                            <td><form action="/delete_course/{{ course.courseID }}" method="POST">
+                                <button type="submit" class="btn btn-danger">Delete Course</button>
+                            </form></td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <div class="row">
+            <!-- Table Column -->
+            <div class="container-fluid">   
+                <div class="row">
+                    <div class="col">
+                        <div class="classtable2">
+                        <h2 class="my-classes">Active Announcements</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Announcement Text</th>
+                                <th>Course</th>
+                                <th>Edit</th>
+                                <th>Deactivate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for announcement in announcements %}
+                            <tr>
+                                <td>{{ announcement.text }}</td>
+                                <td>{{ announcement.course.courseName }}</td>
+                                <td><a href="/edit-announcement/{{ announcement.announcementID }}" class="btn btn-primary">Edit</a></td>
+                                <td>
+                                    <form action="/deactivate-announcement/{{ announcement.announcementID }}" method="POST">
+                                        <button type="submit" class="btn btn-danger">Deactivate</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="calendar-container">
+                <h2 class="my-classes">Upcoming Events, Classes and More!</h2>
+                <iframe class="thecalendar" src="https://calendar.google.com/calendar/embed?src=b199fbbdb07c86fcee6b546927d27bf5b28183a1fc99e20213c9b256fafc82f7%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border:solid 1px #777" width=100% height="460" frameborder="0" scrolling="no"></iframe>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div id="demo" class="carousel slide carousel-container" data-bs-ride="carousel">
+                <h4 class="my-classes">This Month's Featured Classes and Events!</h4>
+                        <!-- Indicators/dots -->
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+                            <button type="button" data-bs-target="#demo" data-bs-slide-to="3"></button>
+                        </div>
+    
+                        <!-- The slideshow/carousel -->
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="../static/images/arduino_camp.png" alt="No Featured Class at the Moment!" class="carousel-image">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../static/images/Camp_Tawheed_Flyer.png" alt="No Featured Class at the Moment!" class="carousel-image">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="../static/images/pythoncamp.png" alt="No Featured Class at the Moment!" class="carousel-image">
+                            </div>
+                        </div>
+    
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

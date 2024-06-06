@@ -1,0 +1,46 @@
+<!-- index.html -->
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>HTML Viewer</title>
+    <link href="../static/css/styles.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico" height="50%" width="auto">
+    <style>
+        /* Additional styles specific to index.html */
+        .button-container {
+            padding: 20px;
+        }
+
+        .button-container img {
+            max-width: 80%;
+            height: auto;
+        }
+
+        .button-container .button-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        /* Media query for small screens (e.g., mobile phones) */
+        @media (max-width: 767px) {
+            .button-container img {
+                margin: 10px 0;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="button-container text-center">
+            <img src="../static/images/classifylogoside.png" alt="Classify Logo">
+            <div class="button-group">
+                <a href="/sign-up"><button class="button-56">Sign Up</button></a>
+                <a href="/log-in"><button class="button-56">Log In</button></a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
